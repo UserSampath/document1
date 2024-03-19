@@ -1,0 +1,46 @@
+.button-1 {
+  color: white;
+  height: 45px;
+  padding: 10px 12px;
+  background-color: var(--title-color);
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Center vertically */
+  font-weight: 600;
+  transition: all 0.3s;
+  width: 100%;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); /* Adjust values as needed */
+
+}
+
+.button-2 {
+  color: black;
+  background-color:green;
+  height: 45px;
+  padding: 12px 40px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  font-weight: 600;
+  transition: all 0.3s;
+  width: 100%;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); /* Adjust values as needed */
+
+
+}
+
+.button-1:hover {
+  background-color:  var(--color4) !important;
+  border-radius: 1px 20px;
+  height: 46px;
+  color: white;
+  cursor: pointer;
+}
+
+.button-2:hover{
+  border-radius: 1px 20px;
+  background-color:  var(--color4);
+  color: white;
+  cursor: pointer;
+}

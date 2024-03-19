@@ -1,0 +1,184 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@200;300;400;500;600&family=Oswald:wght@200&family=Titillium+Web:wght@300;400;600&display=swap");
+
+:root {
+  --primary: #ffffff;
+  --color2: #99000000;
+  --color3: #ffffff;
+  --color4: #008080;
+  --color5: rgba(255, 255, 255, 0.25);
+  --buttonColor: #1f9ad6;
+
+  /* ===Fonts and Typography===*/
+  /* --body-font: "Open Sans", sans-serif;
+  --second-font: "Poppins", sans-serif; */
+
+  --big-fon-size: 50px;
+  --h1-font-size: 50px;
+  --h2-font-size: 35px;
+  --h3-font-size: 24px;
+  --large-font-size: 18px;
+  --normal-font-size: 17px;
+  --small-font-size: 15px;
+  --smaller-font-size: 14px;
+  --tiny-font-size: 12px;
+
+  --weight-400: 400;
+  --weight-500: 500;
+  --weight-600: 600;
+  --weight-700: 700;
+  --weight-800: 800;
+
+  --title-color: #203EC0F7;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* font-family: "Poppins", sans-serif; */
+  scroll-behavior: smooth;
+  font-family: "Barlow Condensed", sans-serif;
+  font-family: "Oswald", sans-serif;
+  font-family: "Titillium Web", sans-serif;
+}
+
+body,
+input,
+textarea {
+  font-family: var(--body-font) !important;
+  font-size: var(--normal-font-size) !important;
+  font-weight: var(--weight-500) !important;
+}
+
+body {
+  background-color: #e8e8e8 !important;
+  color: black;
+}
+
+h1,
+h3,
+h4 {
+  color: black;
+  /* font-family: var(--body-font) !important; */
+  font-weight: var(--weight-700) !important;
+}
+h2 {
+  color: var(--title-color) !important;
+  /* font-family: var(--body-font) !important; */
+  font-weight: var(--weight-700) !important;
+  font-size: var(--h2-font-size) !important;
+}
+
+a {
+  text-decoration: none !important;
+}
+p {
+
+}
+
+/*=====================reuseable css============= */
+
+/* .container {
+  max-width: 1140px !important;
+  margin-inline: auto !important;
+  padding-inline: 15px !important;
+} */
+
+.boxContainer {
+  max-width: 100% !important;
+  min-height: 100% !important;
+  position: absolute !important;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+}
+.signInBox {
+  background-color: var(--color5);
+  width: 100vh;
+  padding-top: 8%;
+  position: relative;
+}
+
+.boxMiddle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* ---------scrollbar----------- */
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #990000;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color2);
+}
+
+::-webkit-scrollbar-track {
+  background-color: #ffdcdc;
+}
+
+.signedInUser:hover {
+  cursor: pointer;
+}
+
+/* others */
+.search-close-button:hover {
+  background-color: #f8cecec4 !important;
+}
+.user-delete-button:hover {
+  background-color: #ffdcdc !important;
+  font-size: 20px !important;
+}
+
+
+
+.discountChallangeDelete :hover{
+  background-color: #ffdcdc !important;
+  font-size: 20px !important;
+}
+
+.discountChallangeEdit :hover {
+  background-color: #ffdcdc !important;
+  font-size: 20px !important;
+}
+
+.search-correct-button:hover {
+  background-color: #defddef7 !important;
+}
+
+.custom-button {
+  display: inline-block;
+  color: rgb(69, 69, 69);
+  font-weight: 600;
+  border: 2px solid rgb(153, 0, 0);
+  padding: 5px 40px;
+  border-radius: 3px;
+  font-size: 16px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s ease-in-out;
+}
+
+.custom-button:hover {
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+}
+.custom-button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgb(153, 0, 0);
+  transform: translateX(100%);
+
+  z-index: -1;
+  transition: all 0.3s ease-out;
+}
+.custom-button:hover::before {
+  transform: translateX(0);
+}

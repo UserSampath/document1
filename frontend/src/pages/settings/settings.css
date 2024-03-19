@@ -1,0 +1,65 @@
+.showCard {
+  margin-top: 3%;
+}
+.formData {
+  margin-top: 3%;
+}
+.InputData {
+  position: relative;
+  width: 290px;
+}
+.mainCard {
+  background-color: white;
+  width: 700px;
+  padding: 10px;
+  margin-top: 50px;
+  border-radius: 4px;
+}
+
+.InputDataLeft {
+  position: relative;
+  width: 290px;
+}
+
+.errorContainer {
+  position: absolute;
+  top: 55%;
+  right: -15px;
+  transform: translateY(-50%);
+}
+.errorIcon {
+  position: absolute;
+  color: red;
+  right: -25px;
+}
+
+.errorText {
+  position: absolute; /* Change to relative to make ::before position relative to this */
+  bottom: 30%; /* Adjusted from your example */
+  left: -35px; /* Adjusted from your example */
+  width: 100px; /* Adjusted from your example */
+  color: white;
+  background-color: #eb2929;
+  border: 1px solid #eb2929;
+  padding: 2px 5px;
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+.errorText::before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 8px;
+  border-style: solid;
+  border-color: #eb2929 transparent transparent transparent;
+  font-size: 10px;
+}
+
+.change-password-submit-button {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}

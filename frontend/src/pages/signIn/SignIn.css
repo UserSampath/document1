@@ -1,0 +1,185 @@
+.signInContainer {
+  padding-top: 80px;
+}
+.signUpPage {
+  overflow-y: hidden;
+}
+.boxContainer {
+  background-color: var(--color5);
+  background-image: url("../../../image/background.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.adminLog {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.imageContainerSignIn {
+  background-color: var(--color2);
+}
+.adminLog h2 {
+  text-align: center;
+}
+.centerSignIn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.buttonsContainer {
+  margin-top: 25px;
+  display: flex;
+}
+
+.forgotPassword {
+  text-decoration: underline;
+  margin-top: 15px;
+  margin-right: 80px;
+  font-size: 14px;
+  transition: ease 0.2s;
+}
+
+.forgotPassword:hover {
+  color: var(--buttonColor);
+  cursor: pointer;
+}
+
+.boxContainer {
+  display: flex;
+}
+
+.imgContainerTextSign {
+  padding: 50px;
+  margin-left: 100px;
+}
+
+.newHereButton {
+  margin-left: 18px;
+  margin-top: 5px;
+}
+.whiteH2 {
+  color: var(--color3) !important;
+}
+.image {
+  width: 900px;
+  height: 500px;
+}
+.newHereContainer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+.leftContainner {
+  margin-left: 17%;
+  margin-top: 5%;
+}
+
+.mainwWelcome {
+  color: white;
+}
+.inputPass {
+  margin-top: 20px;
+}
+
+.inputWithIcon {
+  position: relative;
+}
+
+.errorContainer {
+  position: absolute;
+  top: 1px;
+  right: -15px;
+  transform: translateY(-50%);
+}
+.errorIcon {
+  position: absolute;
+  color: red;
+  right: -25px;
+}
+
+.errorText {
+  position: absolute; /* Change to relative to make ::before position relative to this */
+  bottom: 50%; /* Adjusted from your example */
+  left: -35px; /* Adjusted from your example */
+  width: 100px; /* Adjusted from your example */
+  color: white;
+  background-color: #eb2929;
+  border: 1px solid #eb2929;
+  padding: 2px 5px;
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+.errorText::before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 8px;
+  border-style: solid;
+  border-color: #eb2929 transparent transparent transparent;
+  font-size: 10px;
+}
+.succesContainer {
+  position: absolute;
+  top: 25%;
+  right: -15px;
+  transform: translateY(-50%);
+}
+.successIcon {
+  position: absolute;
+
+  color: green;
+  right: -25px;
+}
+
+@media only screen and (max-width: 768px) {
+  .imageContainerSignIn {
+    display: none;
+  }
+
+  .signInContainer {
+    padding-top: 50px;
+  }
+
+  .inputbox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .imageContainerSignIn {
+    display: none;
+  }
+
+  .leftContainner {
+    display: none;
+  }
+
+  .signInContainer {
+    padding-top: 60px;
+    display: block;
+  }
+  .admindiv {
+    margin-top: 40%;
+  }
+
+  .Button {
+    width: 100%;
+  }
+}
+
+@media only screen and (min-width: 769px) {
+  .ContainerTextSign {
+    display: none;
+  }
+}

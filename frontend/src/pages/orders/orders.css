@@ -1,0 +1,60 @@
+.pagination .page-item.active .page-link {
+  background-color: #ffdcdc; /* Change this to the desired background color */
+  color: #990000; /* Change this to the desired text color */
+  border: #990000;
+}
+
+.page-item a {
+  outline: none !important;
+  box-shadow: none !important;
+  color: rgb(91, 91, 91);
+}
+
+.form-control::placeholder {
+  font-size: 16px;
+}
+
+.userDetails-container:hover {
+  background-color: #f9eeee82;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.form-select:focus {
+  border-color: transparent; /* Set the border color to transparent to remove it */
+  box-shadow: none; /* Remove any box shadow */
+  outline: 0; /* Remove the outline */
+}
+
+.date-picker {
+  text-align: center;
+  font-size: 14px !important;
+  padding: 4px 2px;
+  border: none !important;
+  border-radius: 4px;
+  color: black !important;
+}
+.date-picker :focus {
+  border: none !important;
+  outline: none;
+}
+.date-picker::placeholder {
+  color: #000000;
+}
+
+.customx {
+  background-color: #d1d1d1;
+  width: 18px;
+  height: 18px;
+}
+
+.customx:active,
+.customx:focus,
+.customx.active {
+  outline: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.customx:hover {
+  border: 2px solid gray;
+}
