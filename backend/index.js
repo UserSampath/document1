@@ -4,14 +4,7 @@ import bodyParser from "body-parser";
 import sequelize from "./config/db.connection.js";
 import adminRoutes from "./routes/admin.router.js";
 import userRoutes from "./routes/user.router.js";
-import challengeRoute from "./routes/challenge.route.js"
-import paymentRoute from "./routes/payment.router.js";
 import productRoute from "./routes/product.router.js";
-import OrderRoute from "./routes/order.route.js";
-import NotificationRoute from "./routes/notification.route.js"
-import discountChallengeRoute from "./routes/discountChallenge.route.js"
-import discountRoute from "./routes/discount.route.js"
-
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -58,15 +51,7 @@ sequelize
 // Main Routes
 app.use("/admin", adminRoutes);
 app.use("/user", userRoutes);
-app.use("/challenge", challengeRoute);
-app.use("/payment", paymentRoute);
 app.use("/product", productRoute);
-app.use("/order", OrderRoute);
-app.use("/notification", NotificationRoute);
-app.use("/discountChallenge", discountChallengeRoute);
-app.use("/discount", discountRoute);
-
-
 
 
 //run server
