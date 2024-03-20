@@ -1,7 +1,4 @@
-.signContainer2 {
-padding-top: 30px;
-  /* padding-left: 80px;   */
-  }
+
 
 .centerSignIn{
    display: flex;
@@ -12,7 +9,6 @@ padding-top: 30px;
 .buttonsContainer{
   margin-top: 25px;
   display: flex;
-  gap: 10px;
  
 }
 
@@ -41,9 +37,8 @@ cursor: pointer;
 
 }
 
-.boxContainer{
+.boxDataContainer{
   display: flex;
-  
 }
 
 .imageBox{
@@ -62,18 +57,25 @@ cursor: pointer;
 }
 
 .newHereContainer{
-  display: flex;
+  display:  !important;
   justify-content: center;
-  margin-top: 10px;
+  margin-top: 30px;
 }
 
-.newHereButton2{
-  margin-left: 100px;
+.newHereButton{
+  /* margin-left: 18px; */
   margin-top: 5px;
 }
+.whiteH2{
+  color: white !important;
+}
+.userSignInBox{
+  background-color: white;
+  display: flex;
+  justify-content:center;
+  align-items: center;
+ width: 600px;
+  
+  position: relative;
 
-.signUpPage{
-  height: 100vh;
-  width: 100%;
-  background-color: var(--primary);
 }
