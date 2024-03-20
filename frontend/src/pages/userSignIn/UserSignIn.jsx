@@ -14,17 +14,16 @@ const UserSignIn = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
-
-const signInButtonClicked = async() => {
-  if (!email) {
-    setEmailError("Enter email");
-  } else if (!validator.isEmail(email)) {
-    setEmailError("Enter valid email");
-  } else if (!password) {
-    setPasswordError("Enter password");
-  } else if (!validator.isLength(password, { min: 8 })) {
-    setPasswordError("Password must be at least 8 characters long");
-  }else {
+  const signInButtonClicked = async () => {
+    if (!email) {
+      setEmailError("Enter email");
+    } else if (!validator.isEmail(email)) {
+      setEmailError("Enter valid email");
+    } else if (!password) {
+      setPasswordError("Enter password");
+    } else if (!validator.isLength(password, { min: 8 })) {
+      setPasswordError("Password must be at least 8 characters long");
+    } else {
       await axios
         .post("http://localhost:4000/api/user/login", {
           email,
@@ -35,7 +34,9 @@ const signInButtonClicked = async() => {
             localStorage.setItem("token", JSON.stringify(res.data.token));
             localStorage.setItem(
               "userName",
-              JSON.stringify(`${res.data.user.firstName} ${res.data.user.lastName}`)
+              JSON.stringify(
+                `${res.data.user.firstName} ${res.data.user.lastName}`
+              )
             );
 
             Swal.fire({
@@ -51,7 +52,7 @@ const signInButtonClicked = async() => {
         })
         .catch((err) => {
           if (err.response.data.error) {
-             Swal.fire({
+            Swal.fire({
               title: "Sign Up failed",
               text: err.response.data.error,
               icon: "question",
@@ -59,82 +60,103 @@ const signInButtonClicked = async() => {
           }
         });
     }
-
-
-};
+  };
 
   return (
-    <div className="signUpPage" style={{padding:"0px 150px", backgroundColor:"#C3CBEC"}}>
-      <div  style={{ display:"flex",justifyContent:"center",alignItems:"center",height:"100vh"}}>
-      <div style={{backgroundColor:"#3053EB",display:"flex"}}>
-      <div className="boxDataContainer">
-       
-        <div className="userSignInBox">
-          <div className="centerSignIn">
-            <div style={{padding:"120px"}}>
-              <h2>Sign In</h2>
-              <TextInput
-                type={"text"}
-                icon={"mail"}
-                inputName={"Email"}
-                placeholder={"Enter Email"}
-                value={email}
-                onChange={(value) => setEmail(value)}
-                errorMessage={emailError}
-                onFocus={() => setEmailError("")}
-              />
-              <TextInput
-                type={"password"}
-                icon={"lock"}
-                inputName={"Password"}
-                placeholder={"Enter Password"}
-                value={password}
-                onChange={(value) => setPassword(value)}
-                errorMessage={passwordError}
-                onFocus={() => setPasswordError("")}
-              />
+    <div
+      className="signUpPage"
+      style={{ padding: "0px 150px", backgroundColor: "#C3CBEC" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}>
+        <div
+          style={{
+            backgroundColor: "#3053EB",
+            display: "flex",
+            boxShadow: "0 12px 16px rgba(0, 0, 0, 0.3)",
+          }}>
+          <div className="boxDataContainer">
+            <div className="userSignInBox">
+              <div className="centerSignIn">
+                <div style={{ padding: "50px" }}>
+                  <h2>Sign In</h2>
+                  <TextInput
+                    type={"text"}
+                    icon={"mail"}
+                    inputName={"Email"}
+                    placeholder={"Enter Email"}
+                    value={email}
+                    onChange={(value) => setEmail(value)}
+                    errorMessage={emailError}
+                    onFocus={() => setEmailError("")}
+                  />
+                  <TextInput
+                    type={"password"}
+                    icon={"lock"}
+                    inputName={"Password"}
+                    placeholder={"Enter Password"}
+                    value={password}
+                    onChange={(value) => setPassword(value)}
+                    errorMessage={passwordError}
+                    onFocus={() => setPasswordError("")}
+                  />
 
-              <div className="buttonsContainer">
-                <Button
-                  onClick={signInButtonClicked}
-                  type={"1"}
-                  text="Sign In"
-                />
-              
-              </div>
-              <div>
-              <div style={{display:"flex",marginTop:"20px",alignItems:"center"}}>
-                  <h3>New Here?</h3>
-                  <div className="newHereButton">
+                  <div className="buttonsContainer">
                     <Button
-                      onClick={() => navigate("/usersignup")}
-                      type={"2"}
-                      text="Sign Up"
+                      onClick={signInButtonClicked}
+                      type={"1"}
+                      text="Sign In"
                     />
+                  </div>
+                  <div>
+                    <div
+                      style={{
+                        display: "flex",
+                        marginTop: "20px",
+                        alignItems: "center",
+                      }}>
+                      <h3>New Here?</h3>
+                      <div className="newHereButton">
+                        <Button
+                          onClick={() => navigate("/usersignup")}
+                          type={"2"}
+                          text="Sign Up"
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        </div>
-        
 
-        <div className="imageContainer">
-          <div className="imageBox">
-            <div>
-              <div className="imgContainerText">
-                <h2 className="whiteH2">Welcome to</h2>
-                <h1>Employee Management System</h1>
-                <p>Log in to access your account. </p>
+          <div className="imageContainer">
+            <div className="imageBox">
+              <div>
+                <div className="imgContainerText">
+                  <h2 className="whiteH2">Welcome to</h2>
+                  <h1 style={{ color: "#b7caeb" }}>
+                    Employee Management System
+                  </h1>
+                  <p style={{ color: "white" }}>
+                    {" "}
+                    Log in to access your account.{" "}
+                  </p>
+                </div>
+                <img
+                  className="signInImage"
+                  src="../../image/pic1.png"
+                  alt=""
+                />
               </div>
-              <img className="signInImage" src="../../image/pic1.png" alt="" />
             </div>
           </div>
         </div>
       </div>
-      </div>
-       
     </div>
   );
 };
