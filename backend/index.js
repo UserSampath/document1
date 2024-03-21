@@ -5,6 +5,9 @@ import sequelize from "./config/db.connection.js";
 import adminRoutes from "./routes/admin.router.js";
 import userRoutes from "./routes/user.router.js";
 import productRoute from "./routes/product.router.js";
+import documentRoute from "./routes/document.router.js";
+
+
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -52,6 +55,8 @@ sequelize
 app.use("/admin", adminRoutes);
 app.use("/user", userRoutes);
 app.use("/product", productRoute);
+app.use("/document", documentRoute);
+
 
 
 //run server
