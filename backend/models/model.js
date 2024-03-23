@@ -85,7 +85,7 @@ export const Document = sequelize.define(
 
 export const UserDocument = sequelize.define(
     "UserDocument", {
-    status: {
+        is_agreed: {
             type: DataTypes.BOOLEAN,
         defaultValue: false,
         allowNull: false,
@@ -95,64 +95,5 @@ export const UserDocument = sequelize.define(
 
 Document.belongsToMany(User, { through: 'UserDocument' });
 User.belongsToMany(Document, { through: 'UserDocument' });
-
-// Associations
-// User.hasMany(Challenge, {
-//     as: 'created_user',
-//     foreignKey: "created_user_id",
-//     onDelete: 'CASCADE',
-// });
-// Challenge.belongsTo(User, {
-//     as: 'created_user',
-//     foreignKey: "created_user_id",
-// });
-
-// User.hasMany(Challenge, {
-//     as: 'challenged_user',
-//     foreignKey: "challenged_user_id",
-//     onDelete: 'CASCADE',
-// });
-// Challenge.belongsTo(User, {
-//     as: 'challenged_user',
-//     foreignKey: "challenged_user_id",
-// });
-
-// Products.belongsToMany(Order, { through: 'OrderProduct' });
-// Order.belongsToMany(Products, { through: 'OrderProduct' });
-
-// User.hasMany(Order, {
-//     foreignKey: 'user_id',
-//     onDelete: 'CASCADE'
-// })
-// Order.belongsTo(User, {
-//     foreignKey: "user_id",
-// })
-
-// User.hasMany(Payments, {
-//     foreignKey: "user_id",
-//     onDelete: 'CASCADE'
-
-// });
-// Payments.belongsTo(User, {
-//     foreignKey: "user_id",
-
-// });
-
-// User.hasMany(Discount, {
-//     foreignKey: "user_id",
-//     onDelete: 'CASCADE'
-
-// });
-// Discount.belongsTo(User, {
-//     foreignKey: "user_id",
-// });
-
-// DiscountChallenge.hasMany(Discount, {
-//     foreignKey: "discount_challenge_id",
-
-// });
-// Discount.belongsTo(DiscountChallenge, {
-//     foreignKey: "discount_challenge_id",
-// });
 
 
