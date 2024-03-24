@@ -31,12 +31,12 @@ const documentController = {
             const data = await cloudinary.uploader.upload(file.tempFilePath, {
                 public_id: `${Date.now()}`,
                 resource_type: 'auto',
-                folder: "documents",    
+                folder: "documents",
             })
             if (!data.secure_url) {
                 throw new Error("Cannot upload document")
             }
-            const result = await documentService.createDocument(name,data.secure_url);
+            const result = await documentService.createDocument(name, data.secure_url);
             if (result.status) {
                 res.status(200).json({
                     response_code: 200,
