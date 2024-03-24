@@ -2,13 +2,17 @@ import React,{useState} from 'react';
 import "./Invite.css";
 import Button from "../../components/Button/Button";
 import SendInvitationCom from '../../components/InvitationCom/SendInvitationCom';
-const backendUrl = import.meta.env.VITE_BACKEND_URL;
+import SideBar from "../../components/side/SideBar";
 const SendInvitation = () => {
 
     const [show, setShow] = useState(false);
-
+    const [sidebarOpen, setSidebarOpen] = useState(
+      localStorage.getItem("sideBarOpen") === "true"
+    );
   return (
     <div >
+    <SideBar setSidebarOpen={setSidebarOpen} selectedNav="SendInvitation">
+
       <div>
         <div className="buttonContainner" >
         <Button
@@ -18,7 +22,7 @@ const SendInvitation = () => {
                   />
         </div>
       </div>
-
+    </SideBar>
       <SendInvitationCom  
       show={show}
         setShow={setShow}

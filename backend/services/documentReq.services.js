@@ -19,5 +19,30 @@ const documentReqService = {
         }
 
     },
+    getAllDocumentRequests: async () => {
+        try {
+            const result = await documentRequestRepo.getAllDocumentRequests();
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    },
+    getDocumentRequestById: async (id) => {
+        try {
+            const result = await documentRequestRepo.getDocumentRequestsById(id);
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    },
+
+    deleteDocumentById: async (id) => {
+        try {
+            const result = await documentRequestRepo.deleteDocumentRequestsById(id);
+            return result > 0;
+        } catch (error) {
+            throw error;
+        }
+    },
 }
 export default documentReqService;

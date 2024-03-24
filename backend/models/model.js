@@ -98,7 +98,6 @@ export const documentRequest = sequelize.define(
         },
         is_agreed:{
             type: DataTypes.ENUM("true","false"),
-            allowNull: false,
         }
     },{
         tableName: "documentRequests",

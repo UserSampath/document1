@@ -8,13 +8,12 @@ const backendUrl = import.meta.env.VITE_BACKEND_URL;
 const SendInvitationCom = ({ handleClose, show, setShow }) => {
   const [email, setEmail] = useState('');
   const [employeeStatus, setEmployeeStatus] = useState('');
-  const [isAgreed, setIsAgreed] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      if (!email || !employeeStatus || !isAgreed) {
+      if (!email || !employeeStatus ) {
         toast.error("Please fill in all fields");
         return;
       }
@@ -22,7 +21,6 @@ const SendInvitationCom = ({ handleClose, show, setShow }) => {
       const requestEmail = {
         email: email,
         employeeStatus: employeeStatus,
-        is_agreed: isAgreed
       };
       
       const response = await axios.post(
@@ -35,7 +33,6 @@ const SendInvitationCom = ({ handleClose, show, setShow }) => {
         setShow(false);
         setEmail("");
         setEmployeeStatus("");
-        setIsAgreed("");
       }
     } catch (error) {
       toast.error('Failed to send invitation.');
@@ -65,14 +62,6 @@ const SendInvitationCom = ({ handleClose, show, setShow }) => {
               </Form.Control>
             </Form.Group>
 
-            <Form.Group controlId="formIsAgreed">
-              <Form.Label>Is Agreed</Form.Label>
-              <Form.Control as="select" value={isAgreed} onChange={(e) => setIsAgreed(e.target.value)}>
-                <option value="">Select</option>
-                <option value="true">True</option>
-                <option value="false">False</option>
-              </Form.Control>
-            </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
