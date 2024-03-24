@@ -134,7 +134,7 @@ const SignIn = () => {
         </div>
         <div className="leftContainner">
           <h1 className="mainwWelcome">Welcome to</h1>
-          <h1 className="mainwWelcome"> DeltaMax Admin Panel</h1>
+          <h1 className="mainwWelcome"> Document Management System</h1>
           <p className="mainwWelcome">Log in to access your account. </p>
         </div>
       </div>

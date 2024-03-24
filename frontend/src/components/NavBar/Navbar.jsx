@@ -41,7 +41,7 @@ const NavBar = ({ sidebarOpen }) => {
           <span
             style={{ color: "#6b6b6b", fontWeight: "600" }}
             className="ms-4">
-            DeltaMax
+            Document Management System
           </span>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

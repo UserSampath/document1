@@ -18,10 +18,10 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/adminlogin" element={<SignIn />}></Route>
-          <Route path="/userlogin" element={<UserSignIn />}></Route>
-          <Route path="/usersignup" element={<UserSignUp />}></Route>
+          {/* <Route path="/userlogin" element={<UserSignIn />}></Route>
+          <Route path="/usersignup" element={<UserSignUp />}></Route> */}
 
-          <Route path="/sendInvitaion" element={<SendInvitaion />}></Route>
+          <Route path="/SendInvitation" element={<SendInvitaion />}></Route>
 
           {/* <Route path="products" element={<Products />}></Route> */}
           <Route path="/" element={<UserManagement />}></Route>

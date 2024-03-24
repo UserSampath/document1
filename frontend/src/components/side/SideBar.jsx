@@ -22,7 +22,7 @@ const SideBar = ({ children, selectedNav, setSidebarOpen }) => {
 
   const Menus = [
     { title: "User Management", navigation: "/" },
-    { title: "DiscountChallanges", navigation: "/DiscountChallanges" },
+    { title: "Settings", navigation: "/Settings" },
     { title: "SendInvitation", navigation: "/SendInvitation" },
   ];
 
