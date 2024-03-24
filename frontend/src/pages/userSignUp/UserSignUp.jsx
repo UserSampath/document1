@@ -82,90 +82,110 @@ const userSignUp = () => {
   };
 
   return (
-    <div className="signUpPage">
-      <div className="boxContainer">
-        <div className="userSignInBox">
-          <div className="centerSignIn">
-            <div className="signContainer2">
-              <h2>Sign Up</h2>
-              <TextInput
-                type={"text"}
-                icon={"profile"}
-                inputName={"First Name"}
-                placeholder={"Enter First Name"}
-                value={firstName}
-                onChange={(value) => setFirstName(value)}
-                errorMessage={firstNameError}
-                onFocus={() => setFirstNameError("")}
-              />
-              <TextInput
-                type={"text"}
-                icon={"profile"}
-                inputName={"Last Name"}
-                placeholder={"Enter Last Name"}
-                value={lastName}
-                onChange={(value) => setLastName(value)}
-                errorMessage={lastNameError}
-                onFocus={() => setLastNameError("")}
-              />
-              <TextInput
-                type={"email"}
-                icon={"mail"}
-                inputName={"email"}
-                placeholder={"Enter Email"}
-                value={email}
-                onChange={(value) => setEmail(value)}
-                errorMessage={emailError}
-                onFocus={() => setEmailError("")}
-              />
-
-              <TextInput
-                type={"password"}
-                icon={"lock"}
-                inputName={"Password"}
-                placeholder={"Enter Password"}
-                value={password}
-                onChange={(value) => setPassword(value)}
-                errorMessage={passwordError}
-                onFocus={() => setPasswordError("")}
-              />
-
-              <TextInput
-                type={"password"}
-                icon={"lock"}
-                inputName={"Registration Key"}
-                placeholder={"Enter Registration Key"}
-                value={registrationKey}
-                onChange={(value) => setRegistrationKey(value)}
-                errorMessage={registrationKeyError}
-                onFocus={() => setRegistrationKeyError("")}
-              />
-
-              <div className="buttonsContainer">
-                <Button
-                  type={"1"}
-                  text="Sign Up"
-                  onClick={signUpButtonClicked}
+    <div style={{ backgroundColor: "#c3cbec" }}>
+      <div
+        style={{
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: "0px 10%",
+        }}>
+        <div
+          style={{
+            display: "flex",
+            backgroundColor: "#3053eb",
+            boxShadow: "0 12px 16px rgba(0, 0, 0, 0.3)",
+          }}>
+          <div className="userSignInBox">
+            <div className="centerSignIn">
+              <div className="signContainer2">
+                <h2 style={{ textAlign: "center", marginTop: "5px" }}>
+                  Sign Up
+                </h2>
+                <TextInput
+                  type={"text"}
+                  icon={"profile"}
+                  inputName={"First Name"}
+                  placeholder={"Enter First Name"}
+                  value={firstName}
+                  onChange={(value) => setFirstName(value)}
+                  errorMessage={firstNameError}
+                  onFocus={() => setFirstNameError("")}
                 />
-                <Button
-                  onClick={() => navigate("/userlogin")}
-                  type={"2"}
-                  text="Sign In"
+                <TextInput
+                  type={"text"}
+                  icon={"profile"}
+                  inputName={"Last Name"}
+                  placeholder={"Enter Last Name"}
+                  value={lastName}
+                  onChange={(value) => setLastName(value)}
+                  errorMessage={lastNameError}
+                  onFocus={() => setLastNameError("")}
                 />
+                <TextInput
+                  type={"email"}
+                  icon={"mail"}
+                  inputName={"email"}
+                  placeholder={"Enter Email"}
+                  value={email}
+                  onChange={(value) => setEmail(value)}
+                  errorMessage={emailError}
+                  onFocus={() => setEmailError("")}
+                />
+
+                <TextInput
+                  type={"password"}
+                  icon={"lock"}
+                  inputName={"Password"}
+                  placeholder={"Enter Password"}
+                  value={password}
+                  onChange={(value) => setPassword(value)}
+                  errorMessage={passwordError}
+                  onFocus={() => setPasswordError("")}
+                />
+
+                <TextInput
+                  type={"password"}
+                  icon={"lock"}
+                  inputName={"Registration Key"}
+                  placeholder={"Enter Registration Key"}
+                  value={registrationKey}
+                  onChange={(value) => setRegistrationKey(value)}
+                  errorMessage={registrationKeyError}
+                  onFocus={() => setRegistrationKeyError("")}
+                />
+
+                <div className="buttonsContainer">
+                  <Button
+                    type={"1"}
+                    text="Sign Up"
+                    onClick={signUpButtonClicked}
+                  />
+                  <Button
+                    onClick={() => navigate("/userlogin")}
+                    type={"2"}
+                    text="Sign In"
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="imageContainer">
-          <div className="imageBox">
-            <div>
-              <div className="imgContainerText">
-                <h2 className="whiteH2">Welcome to</h2>
-                <h1>Employee Management System</h1>
-                <p>Register to create your account </p>
+          <div className="imageContainer">
+            <div className="imageBox">
+              <div>
+                <div className="imgContainerText">
+                  <h2 className="whiteH2">Welcome to</h2>
+                  <h1>Employee Management System</h1>
+                  <p>Register to create your account </p>
+                </div>
+                <img
+                  className="signInImage"
+                  src="../../image/pic1.png"
+                  alt=""
+                />
               </div>
-              <img className="signInImage" src="../../image/pic1.png" alt="" />
             </div>
           </div>
         </div>

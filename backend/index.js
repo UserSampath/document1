@@ -6,6 +6,9 @@ import adminRoutes from "./routes/admin.router.js";
 import userRoutes from "./routes/user.router.js";
 import productRoute from "./routes/product.router.js";
 import documentRoute from "./routes/document.router.js";
+import fileUpload from "express-fileupload";
+
+
 
 
 
@@ -16,6 +19,12 @@ app.use(express.urlencoded({ limit: '50mb' }));
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(fileUpload({
+    useTempFiles: true,
+    limits: { fileSize: 50 * 2024 * 1024 }
+}));
+
 app.use(function (req, res, next) {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader(

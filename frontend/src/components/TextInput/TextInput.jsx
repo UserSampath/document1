@@ -33,7 +33,7 @@ const TextInput = ({
         }>
         {errorMessage && errorMessage}
       </div>
-      <p className="inputName">{inputName}</p>
+      <div className="inputName">{inputName}</div>
 
       <div className={getErrorClass()}>
         {icon === "mail" && <HiOutlineMail className="icon" />}

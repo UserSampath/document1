@@ -3,7 +3,7 @@ const documentService = {
     createDocument: async (name, src) => {
 
         try {
-            const result = await documentRepo.createProduct(name, src);
+            const result = await documentRepo.createDocument(name, src);
             if (result) {
                 return { status: true, message: "Document created successfully", result }
             } else {

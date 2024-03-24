@@ -7,8 +7,12 @@
 }
 
 .buttonsContainer{
- margin-top: 25px;
+ margin-top: 10px;
  display: flex;
+ margin-bottom: 10px;
+ gap: 5px;
+ justify-content:center ;
+
 
 }
 
@@ -56,11 +60,6 @@ cursor: pointer;
  padding-top: 10px;
 }
 
-.newHereContainer{
- display:  !important;
- justify-content: center;
- margin-top: 30px;
-}
 
 .newHereButton{
  /* margin-left: 18px; */

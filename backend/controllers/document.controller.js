@@ -1,41 +1,42 @@
-import { v2 as cloudinary } from 'cloudinary';
+// import { v2 as cloudinary } from 'cloudinary';
 import documentService from "../services/document.services.js";
-// Configure Cloudinary
-cloudinary.config({
-    cloud_name: 'dcif58he2',
-    api_key: process.env.API_KEY,
-    api_secret: process.env.API_SECRET
-});
+// // Configure Cloudinary
+// cloudinary.config({
+//     cloud_name: 'dcif58he2',
+//     api_key: process.env.API_KEY,
+//     api_secret: process.env.API_SECRET
+// });
 
 const opts = {
     overwrite: true,
     invalidate: true,
-    resource_type: "auto",
+    resource_type: "",
 }
+
+
+import { v2 as cloudinary } from 'cloudinary';
+
+cloudinary.config({
+    cloud_name: 'deqpqbovu',
+    api_key: '819577974911333',
+    api_secret: 'Dbf4eM17mLT3BLWOHFkeooQ7fmA'
+});
 
 
 const documentController = {
     createDocument: async (req, res) => {
         try {
-            const { name, src } = req.body;
-            console.log(req.body)
-            // Check if file is provided in the form data
-            if (!req) {
-                return res.status(400).json({
-                    response_code: 400,
-                    status: false,
-                    error: "File is required"
-                });
+            const { name } = req.body;
+            const file = req.files.pdf;
+            const data = await cloudinary.uploader.upload(file.tempFilePath, {
+                public_id: `${Date.now()}`,
+                resource_type: 'auto',
+                folder: "documents",    
+            })
+            if (!data.secure_url) {
+                throw new Error("Cannot upload document")
             }
-
-            // Upload image to Cloudinary
-            const cloudinaryResponse = await cloudinary.uploader.upload(req.file.path, opts);
-
-            // Extract secure URL of the uploaded image from Cloudinary response
-            const imageUrl = cloudinaryResponse.secure_url;
-
-            // Create product with imageUrl
-            const result = await documentService.createDocument(name, src);
+            const result = await documentService.createDocument(name,data.secure_url);
             if (result.status) {
                 res.status(200).json({
                     response_code: 200,

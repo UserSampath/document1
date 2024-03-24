@@ -112,11 +112,11 @@ p {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #990000;
+  background-color: #645cfe;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: var(--color2);
+  background-color:#1209ba ;
 }
 
 ::-webkit-scrollbar-track {

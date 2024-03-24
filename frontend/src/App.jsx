@@ -10,6 +10,7 @@ import Settings from "./pages/settings/Settings";
 import { AuthProvider } from "./utils/AuthContext";
 import UserSignIn from "./pages/userSignIn/UserSignIn";
 import UserSignUp from "./pages/userSignUp/UserSignUp";
+import Document from "./pages/Document/Document";
 
 function App() {
   return (
@@ -17,14 +18,16 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/adminlogin" element={<SignIn />}></Route>
-          <Route path="/userlogin" element={<UserSignIn />}></Route>
-          <Route path="/usersignup" element={<UserSignUp />}></Route>
-
+          <Route path="/login" element={<UserSignIn />}></Route>
+          <Route path="/signUp" element={<UserSignUp />}></Route>
+          <Route path="/document" element={<Document />}></Route>
 
           {/* <Route path="products" element={<Products />}></Route> */}
           <Route path="/" element={<UserManagement />}></Route>
           {/* <Route path="/orders" element={<Orders />}></Route> */}
-          <Route path="/DiscountChallanges" element={<DiscountChallanges />}></Route>
+          <Route
+            path="/DiscountChallanges"
+            element={<DiscountChallanges />}></Route>
           <Route path="/Settings" element={<Settings />}></Route>
         </Routes>
       </BrowserRouter>
