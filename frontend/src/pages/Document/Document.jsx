@@ -120,6 +120,7 @@ const Document = () => {
               }}>
               Agreed
             </div>
+            
             <input style={{ width: "16px", height: "16px" }} type="checkbox" />
 
             <div
