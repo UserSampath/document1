@@ -70,6 +70,8 @@ export const Products = sequelize.define(
 }
 );
 
+
+
 export const Document = sequelize.define(
     "Document", {
     name: {
@@ -82,6 +84,27 @@ export const Document = sequelize.define(
     },
 }
 );
+
+
+export const documentRequest = sequelize.define(
+    "documentRequest ", {
+        email: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        employeeStatus:{
+            type: DataTypes.ENUM("employee","nonEmployee"),
+            allowNull: false,
+        },
+        is_agreed:{
+            type: DataTypes.ENUM("true","false"),
+            allowNull: false,
+        }
+    },{
+        tableName: "documentRequests",
+
+    }
+)
 
 export const UserDocument = sequelize.define(
     "UserDocument", {

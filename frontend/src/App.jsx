@@ -10,6 +10,7 @@ import Settings from "./pages/settings/Settings";
 import { AuthProvider } from "./utils/AuthContext";
 import UserSignIn from "./pages/userSignIn/UserSignIn";
 import UserSignUp from "./pages/userSignUp/UserSignUp";
+import SendInvitaion from "./pages/Invitation/SendInvitaion";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/userlogin" element={<UserSignIn />}></Route>
           <Route path="/usersignup" element={<UserSignUp />}></Route>
 
+          <Route path="/sendInvitaion" element={<SendInvitaion />}></Route>
 
           {/* <Route path="products" element={<Products />}></Route> */}
           <Route path="/" element={<UserManagement />}></Route>

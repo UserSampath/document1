@@ -6,8 +6,7 @@ import adminRoutes from "./routes/admin.router.js";
 import userRoutes from "./routes/user.router.js";
 import productRoute from "./routes/product.router.js";
 import documentRoute from "./routes/document.router.js";
-
-
+import documentReqroute from "./routes/documentRequest.router.js"
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -56,7 +55,7 @@ app.use("/admin", adminRoutes);
 app.use("/user", userRoutes);
 app.use("/product", productRoute);
 app.use("/document", documentRoute);
-
+app.use("/docmentReq", documentReqroute)
 
 
 //run server
