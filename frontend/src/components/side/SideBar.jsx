@@ -8,6 +8,7 @@ import "./side.css";
 import { CiSettings } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
 import { IoCartOutline } from "react-icons/io5";
+import { MdInsertInvitation } from "react-icons/md";
 import { GoGoal } from "react-icons/go";
 const SideBar = ({ children, selectedNav, setSidebarOpen }) => {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ const SideBar = ({ children, selectedNav, setSidebarOpen }) => {
   const Menus = [
     { title: "User Management", navigation: "/" },
     { title: "DiscountChallanges", navigation: "/DiscountChallanges" },
-    { title: "Settings", navigation: "/Settings" },
+    { title: "SendInvitation", navigation: "/SendInvitation" },
   ];
 
   const clickedSideButton = () => {
@@ -88,7 +89,7 @@ const SideBar = ({ children, selectedNav, setSidebarOpen }) => {
                     fontSize: "15px",
                   }}>
                   {Menu.title === "User Management" && <CiUser size={20} />}
-                  {Menu.title === "Orders" && <IoCartOutline size={20} />}
+                  {Menu.title === "SendInvitation" && <MdInsertInvitation size={20} />}
                   {Menu.title === "Setting 2" && (
                     <TbReportAnalytics size={20} />
                   )}

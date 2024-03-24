@@ -11,6 +11,7 @@ import { AuthProvider } from "./utils/AuthContext";
 import UserSignIn from "./pages/userSignIn/UserSignIn";
 import UserSignUp from "./pages/userSignUp/UserSignUp";
 import Document from "./pages/Document/Document";
+import SendInvitaion from "./pages/Invitation/SendInvitaion";
 
 function App() {
   return (
@@ -18,9 +19,11 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/adminlogin" element={<SignIn />}></Route>
-          <Route path="/login" element={<UserSignIn />}></Route>
-          <Route path="/signUp" element={<UserSignUp />}></Route>
           <Route path="/document" element={<Document />}></Route>
+          <Route path="/userlogin" element={<UserSignIn />}></Route>
+          <Route path="/usersignup" element={<UserSignUp />}></Route>
+
+          <Route path="/sendInvitaion" element={<SendInvitaion />}></Route>
 
           {/* <Route path="products" element={<Products />}></Route> */}
           <Route path="/" element={<UserManagement />}></Route>

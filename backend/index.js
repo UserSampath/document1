@@ -11,6 +11,7 @@ import fileUpload from "express-fileupload";
 
 
 
+import documentReqroute from "./routes/documentRequest.router.js"
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -65,7 +66,7 @@ app.use("/admin", adminRoutes);
 app.use("/user", userRoutes);
 app.use("/product", productRoute);
 app.use("/document", documentRoute);
-
+app.use("/docmentReq", documentReqroute)
 
 
 //run server
