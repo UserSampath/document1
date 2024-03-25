@@ -35,7 +35,14 @@ const documentReqService = {
             throw error;
         }
     },
-
+    getAllReqDocByPage: async ({page,limit,orderBy,sortBy,keyword}) => {
+        try {
+          const allUsers = await documentRequestRepo.getReqDocByPage({ page, limit, orderBy, sortBy, keyword });
+          return allUsers;
+        } catch (error) {
+          throw error;
+        }
+      },
     deleteDocumentById: async (id) => {
         try {
             const result = await documentRequestRepo.deleteDocumentRequestsById(id);

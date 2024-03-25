@@ -24,6 +24,8 @@ const SideBar = ({ children, selectedNav, setSidebarOpen }) => {
     { title: "User Management", navigation: "/" },
     { title: "Settings", navigation: "/Settings" },
     { title: "SendInvitation", navigation: "/SendInvitation" },
+    { title: "Upload Document", navigation: "/UploadDocument" },
+
   ];
 
   const clickedSideButton = () => {
@@ -90,7 +92,7 @@ const SideBar = ({ children, selectedNav, setSidebarOpen }) => {
                   }}>
                   {Menu.title === "User Management" && <CiUser size={20} />}
                   {Menu.title === "SendInvitation" && <MdInsertInvitation size={20} />}
-                  {Menu.title === "Setting 2" && (
+                  {Menu.title === "Upload Document" && (
                     <TbReportAnalytics size={20} />
                   )}
                   {Menu.title === "Products" && (

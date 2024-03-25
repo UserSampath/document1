@@ -1,7 +1,7 @@
 import React from "react";
 
-const Invites = ({ userData }) => {
-    console.log(userData[0].email)
+const Invites = ({ fetchDocData, DocReq}) => {
+    console.log(DocReq)
     return (
         <div
             onClick={() => console.log("user clicked")}
@@ -17,14 +17,14 @@ const Invites = ({ userData }) => {
                         color: "#353434dd",
                     }}>
                     <div className="col-4">
-                        <div style={{ fontSize: "16px" }}> {userData[0].email}</div> {/* Corrected property name */}
+                        <div style={{ fontSize: "16px" }}> {DocReq}</div> {/* Corrected property name */}
                     </div>
                     <div className="col-4">
-                        <div style={{ fontSize: "16px" }}>{userData[0].EmployeeStatus}</div> {/* Corrected property name */}
+                        <div style={{ fontSize: "16px" }}>{DocReq}</div> {/* Corrected property name */}
                     </div>
                     <div className="col-4">
                         <div style={{ fontSize: "16px", paddingLeft: "8px" }}>
-                            {userData[0].is_agreed ? "Agreed" : "Not Agreed"} {/* Corrected property name */}
+                            {DocReq} {/* Corrected property name */}
                         </div>
                     </div>
 

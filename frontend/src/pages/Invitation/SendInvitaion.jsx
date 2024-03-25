@@ -1,5 +1,5 @@
 // SendInvitation.jsx
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import "./Invite.css";
 import Button from "../../components/Button/Button";
 import SendInvitationCom from '../../components/InvitationCom/SendInvitationCom';
@@ -7,6 +7,9 @@ import SideBar from "../../components/side/SideBar";
 import NavBar from "../../components/NavBar/Navbar";
 import InSearchBar from '../../components/InvitesSearchBar/InSearchBar';
 import Invites from '../../components/Invites/Invites';
+import axios from "axios";
+import Pagination from '../../components/pagination/Pagination';
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const SendInvitation = () => {
     const [show, setShow] = useState(false);
@@ -14,8 +17,42 @@ const SendInvitation = () => {
         localStorage.getItem("sideBarOpen") === "true"
     );
     const [searchText, setSearchText] = useState("");
-
+    const [currentPage, setCurrentPage] = useState(1);
+    const [DocReqs, setDocReq] = useState([]);
     // Dummy user data
+
+
+    useEffect(() => {
+        setCurrentPage(1);
+      }, [searchText]);
+    
+      useEffect(() => {
+        fetchDocData();
+      }, [searchText, currentPage]);
+
+
+      const fetchDocData = async() =>{
+        await axios
+        .get(`${backendUrl}/docmentReq/getReqDocByPage`, {
+          params: {
+            limit: 10,
+            page: currentPage,
+            sortBy: "asc",
+            keyword: searchText,
+          }
+        })
+        .then((res) => {
+          if (res.data.success) {
+            setDocReq(res.data.requirmentDoc);
+            console.log(res.data.requirmentDoc.data)
+            console.log(DocReqs);
+
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      }
     const dummyUserData = [
         {
             id: 1,
@@ -38,12 +75,31 @@ const SendInvitation = () => {
                             paddingTop: "50px",
                             paddingLeft: sidebarOpen ? "240px" : "50px",
                         }}>
+
+                <div className=" d-flex justify-content-center align-items-center">
+                  <Pagination
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                    totalPages={DocReqs.totalPages ? DocReqs.totalPages : 1}
+                  />
+                  <div
+                    style={{
+                      fontSize: "16px",
+                      color: "gray",
+                      paddingTop: "5px",
+                    }}>
+                    {DocReqs.totalPages !== 0
+                      ? `${currentPage} of ${
+                        DocReqs.totalPages ? DocReqs.totalPages : 1
+                        } pages`
+                      : "No ReqDoc available"}
+                  </div>
+                </div>
                         <div style={{ display: "flex", alignItems: "center", marginLeft: "65%", marginRight: "5%", gap: "50px" }}>
                             <InSearchBar
                                 setSearchText={setSearchText}
                                 searchText={searchText}
                             />
-
                             <Button
                                 type={"1"}
                                 text="send Invitation"
@@ -83,8 +139,18 @@ const SendInvitation = () => {
                                         </div>
                                     </div>
                                 </div>
+
+                                {/* {DocReqs.data?.map((DocReq, index) => {
+                                    return (
+                                        <Invites
+                                        key={index}
+                                        DocReq={DocReq}
+                                        index={index}
+                                        fetchDocData={fetchDocData}
+                                        />
+                                    );
+                                    })} */}
                                 {/* Render Invites component with dummy user data */}
-                                <Invites userData={dummyUserData} />
                             </div>
                         </div>
                     </div>

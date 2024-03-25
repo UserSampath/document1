@@ -9,7 +9,6 @@ import Pagination from "../../components/pagination/Pagination";
 import axios from "axios";
 import { useAuth } from "../../utils/AuthContext";
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const UserManagement = () => {
