@@ -21,11 +21,10 @@ const SideBar = ({ children, selectedNav, setSidebarOpen }) => {
   }, [open]);
 
   const Menus = [
-    { title: "User Management", navigation: "/" },
-    { title: "Settings", navigation: "/Settings" },
-    { title: "SendInvitation", navigation: "/SendInvitation" },
+    { title: "Send Invitation", navigation: "/" },
+    { title: "Accepted Users", navigation: "/AcceptedUsers" },
     { title: "Upload Document", navigation: "/UploadDocument" },
-
+    { title: "Settings", navigation: "/Settings" },
   ];
 
   const clickedSideButton = () => {
@@ -77,7 +76,7 @@ const SideBar = ({ children, selectedNav, setSidebarOpen }) => {
                 className="d-flex  align-items-center sidebarButton mt-1"
                 style={{
                   height: "40px",
-                  backgroundColor: Menu.title == selectedNav ? "#f0f0f0ba" : "",
+                  backgroundColor: Menu.title == selectedNav ? "#dee8f9b8" : "",
                   justifyContent: open ? "left" : "center",
                   borderRadius: "2px",
                   borderRight:
@@ -88,25 +87,26 @@ const SideBar = ({ children, selectedNav, setSidebarOpen }) => {
                   style={{
                     cursor: "pointer",
                     color: "#6f6f6f",
-                    fontSize: "15px",
+                    fontSize: "18px",
                   }}>
-                  {Menu.title === "User Management" && <CiUser size={20} />}
-                  {Menu.title === "SendInvitation" && <MdInsertInvitation size={20} />}
+                  {Menu.title === "Accepted Users" && <CiUser size={24} />}
+                  {Menu.title === "Send Invitation" && (
+                    <MdInsertInvitation size={24} />
+                  )}
                   {Menu.title === "Upload Document" && (
-                    <TbReportAnalytics size={20} />
+                    <TbReportAnalytics size={24} />
                   )}
                   {Menu.title === "Products" && (
-                    <HiOutlineQueueList size={20} />
+                    <HiOutlineQueueList size={24} />
                   )}{" "}
-                  {Menu.title === "Setting 1" && <IoLinkOutline size={20} />}{" "}
-                  {Menu.title === "DiscountChallanges" && <GoGoal size={20} />}{" "}
-                  {Menu.title === "Settings" && <CiSettings size={20} />}
+                  {Menu.title === "Settings" && <CiSettings size={24} />}
                   <span
                     style={{
                       display: !open ? "none" : "inline",
                       transformOrigin: "left",
                       transitionDuration: "200ms",
                       fontWeight: "600",
+                      marginLeft: "10px",
                     }}>
                     {Menu.title}
                   </span>

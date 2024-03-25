@@ -28,3 +28,24 @@
   border-radius: 5px !important;
   cursor: pointer;
 }
+.notAllowedSubmitButton:hover{
+  cursor: not-allowed;
+}
+
+.documentErrorMessageShow {
+  position: absolute;
+  background-color: rgba(250, 217, 217, 0.908);
+  border: 1px red solid;
+  color: red;
+  padding: 2px 8px 2px 8px;
+  /* width: 268px; */
+  border-radius: 0px 5px 5px 5px;
+  margin-left: 6px;
+  margin-top: 30px;
+  font-size: 14px;
+}
+
+.documentErrorMessageHide {
+  display: none;
+}
+

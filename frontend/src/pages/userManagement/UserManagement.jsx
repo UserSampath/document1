@@ -66,7 +66,7 @@ const UserManagement = () => {
 
   return (
     <div>
-      <SideBar setSidebarOpen={setSidebarOpen} selectedNav="User Management">
+      <SideBar setSidebarOpen={setSidebarOpen} selectedNav="Accepted Users">
         <div>
           <NavBar sidebarOpen={sidebarOpen} />
 

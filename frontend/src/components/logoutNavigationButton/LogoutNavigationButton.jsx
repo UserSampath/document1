@@ -40,7 +40,7 @@ const LogoutNavigationButton = ({ setShowLogOut }) => {
             src={AdminPhoto}
             alt="Admin"
           />
-          <div style={{ fontWeight: "600" }}>DeltaMax Admin</div>
+          <div style={{ fontWeight: "600" }}>DMS Admin</div>
         </div>
         <div className="d-flex justify-content-center align-items-center mt-4">
           <div onClick={clickLogOut} className="custom-button">

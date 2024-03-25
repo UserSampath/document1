@@ -14,7 +14,7 @@ const userRepo = {
       })
 
       if (existingUser) {
-        throw new Error("User already submitted")
+        throw new Error("You have already submitted")
       }
       const result = await User.create({ user_id: request_id, firstName, lastName, phone, reference_no });
       await documentRequest.update({

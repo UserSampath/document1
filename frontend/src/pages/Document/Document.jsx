@@ -3,7 +3,7 @@ import "./document.css";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import { toast } from "react-toastify";
 const Document = () => {
   const { userId } = useParams();
 
@@ -14,13 +14,12 @@ const Document = () => {
   const [referenceNo, setReferenceNo] = useState("");
   const [employeeStatus, setEmployeeStatus] = useState("");
   const [src, setSrc] = useState("");
-  
+  const [agree, setAgree] = useState(false);
+
   const [firstNameError, setFirstNameError] = useState("");
   const [lastNameError, setLastNameError] = useState("");
   const [phoneError, setPhoneError] = useState("");
   const [referenceNoError, setReferenceNoError] = useState("");
-
-
 
   const navigate = useNavigate();
 
@@ -29,8 +28,12 @@ const Document = () => {
       await axios
         .get(`http://localhost:8000/docmentReq/getByID/${userId}`)
         .then((response) => {
+          console.log(response);
           if (!response.data.success) {
             navigate("/documentNotFound");
+          }
+          if (response.data.result.is_agreed) {
+            toast.warning("You have already agreed");
           }
           // console.log(response);
           setEmail(response.data.result.email);
@@ -66,6 +69,43 @@ const Document = () => {
     }
   }, [employeeStatus]);
 
+  const submitDocument = async () => {
+    if (!firstName) {
+      setFirstNameError("First name is required");
+    }
+    if (!lastName) {
+      setLastNameError("Last name is required");
+    }
+    if (!phone) {
+      setPhoneError("Phone number is required");
+    }
+    if (!referenceNo) {
+      if (employeeStatus == "employee") {
+        setReferenceNoError("Employee number is required");
+      } else {
+        setReferenceNoError("NIC number is required");
+      }
+    }
+    if (firstName && lastName && phone && referenceNo && agree) {
+      await axios
+        .post("http://localhost:8000/user/createUser", {
+          request_id: userId,
+          firstName,
+          lastName,
+          phone,
+          reference_no: referenceNo,
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error.response.data.error);
+          if (error.response.data.error) {
+            toast.error(error.response.data.error);
+          }
+        });
+    }
+  };
   return (
     <div
       className="documentBackground"
@@ -94,11 +134,28 @@ const Document = () => {
           <div style={{ width: "460px" }}>
             <div className=" d-flex align-items-center mt-2">
               <div
-                style={{ width: "60px", fontWeight: "600", color: "#333334" }}>
+                style={{
+                  width: "60px",
+                  fontWeight: "600",
+                  color: "#333334",
+                }}>
                 Name
               </div>
-              <div className="inputLine2">
+              <div
+                className="inputLine2"
+                style={{
+                  border: firstNameError ? "2px solid #f09b9b" : "none",
+                }}>
+                <div
+                  className={
+                    firstNameError && firstNameError != ""
+                      ? "documentErrorMessageShow"
+                      : "documentErrorMessageHide"
+                  }>
+                  {firstNameError && firstNameError}
+                </div>
                 <input
+                  onFocus={() => setFirstNameError("")}
                   onChange={(e) => setFirstName(e.target.value)}
                   value={firstName}
                   className="input"
@@ -107,8 +164,21 @@ const Document = () => {
                 />
               </div>
 
-              <div className="inputLine2 ms-2">
+              <div
+                className="inputLine2 ms-2 "
+                style={{
+                  border: lastNameError ? "2px solid #f09b9b" : "none",
+                }}>
+                <div
+                  className={
+                    lastNameError && lastNameError != ""
+                      ? "documentErrorMessageShow"
+                      : "documentErrorMessageHide"
+                  }>
+                  {lastNameError && lastNameError}
+                </div>
                 <input
+                  onFocus={() => setLastNameError("")}
                   onChange={(e) => setLastName(e.target.value)}
                   value={lastName}
                   className="input"
@@ -137,8 +207,22 @@ const Document = () => {
                 style={{ width: "60px", fontWeight: "600", color: "#333334" }}>
                 Phone
               </div>
-              <div className="inputLine2 " style={{ width: "405px" }}>
+              <div
+                className="inputLine2 "
+                style={{
+                  border: phoneError ? "2px solid #f09b9b" : "none",
+                  width: "405px",
+                }}>
+                <div
+                  className={
+                    phoneError && phoneError != ""
+                      ? "documentErrorMessageShow"
+                      : "documentErrorMessageHide"
+                  }>
+                  {phoneError && phoneError}
+                </div>
                 <input
+                  onFocus={() => setPhoneError("")}
                   onChange={(e) => setPhone(e.target.value)}
                   value={phone}
                   className="input"
@@ -154,8 +238,22 @@ const Document = () => {
                   ? "E No"
                   : "NIC No"}
               </div>
-              <div className="inputLine2 " style={{ width: "405px" }}>
+              <div
+                className="inputLine2 "
+                style={{
+                  border: referenceNoError ? "2px solid #f09b9b" : "none",
+                  width: "405px",
+                }}>
+                <div
+                  className={
+                    referenceNoError && referenceNoError != ""
+                      ? "documentErrorMessageShow"
+                      : "documentErrorMessageHide"
+                  }>
+                  {referenceNoError && referenceNoError}
+                </div>
                 <input
+                  onFocus={() => setReferenceNoError("")}
                   onChange={(e) => setReferenceNo(e.target.value)}
                   value={referenceNo}
                   className="input"
@@ -190,19 +288,44 @@ const Document = () => {
               Agreed
             </div>
 
-            <input style={{ width: "16px", height: "16px" }} type="checkbox" />
-
-            <div
-              className="document_submit_button"
-              style={{
-                marginLeft: "20px",
-                backgroundColor: "#6464ff",
-                borderRadius: "5px",
-                transition: "0.5s ease-in-out",
-                boxShadow: "0 8px 10px rgba(0, 0, 0, 0.178)",
-              }}>
-              <div style={{ padding: "6px 12px", color: "white" }}> Submit</div>
-            </div>
+            <input
+              onChange={(e) => setAgree(e.target.checked)}
+              style={{ width: "16px", height: "16px" }}
+              type="checkbox"
+            />
+            {firstName && lastName && phone && referenceNo && agree ? (
+              <div
+                onClick={submitDocument}
+                className="document_submit_button"
+                style={{
+                  marginLeft: "20px",
+                  backgroundColor: "#6464ff",
+                  borderRadius: "5px",
+                  transition: "0.5s ease-in-out",
+                  boxShadow: "0 8px 10px rgba(0, 0, 0, 0.178)",
+                }}>
+                <div style={{ padding: "6px 12px", color: "white" }}>
+                  {" "}
+                  Submit
+                </div>
+              </div>
+            ) : (
+              <div
+                onClick={submitDocument}
+                className="notAllowedSubmitButton"
+                style={{
+                  marginLeft: "20px",
+                  backgroundColor: "#5f5f62",
+                  borderRadius: "5px",
+                  transition: "0.5s ease-in-out",
+                  boxShadow: "0 8px 10px rgba(0, 0, 0, 0.178)",
+                }}>
+                <div style={{ padding: "6px 12px", color: "white" }}>
+                  {" "}
+                  Submit
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -40,7 +40,7 @@ const SignIn = () => {
             "token",
             JSON.stringify(response.data.result.token)
           );
-          toast.success("Login successfully!");
+
           navigate("/");
         } else if (response.status === 500) {
           const errorMessage = response.data.error;
@@ -68,7 +68,7 @@ const SignIn = () => {
             <div className="signInContainer">
               <div className="ContainerTextSign">
                 <h2>Welcome to</h2>
-                <h2> DeltaMax Admin Panel</h2>
+                <h2> DMS Admin Panel</h2>
                 <p>Log in to access your account. </p>
               </div>
               <div className="admindiv">
