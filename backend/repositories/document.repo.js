@@ -14,7 +14,7 @@ const documentRepo = {
     },
     getAllDocuments: async () => {
         try {
-            const result = await Products.findAll();
+            const result = await DocumentType.findAll();
             return result;
         } catch (error) {
             throw error;

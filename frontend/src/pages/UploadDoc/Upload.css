@@ -1,21 +1,18 @@
-.empFiles{
-    margin-top:2%;
-}
 
 .uploadData{
-    margin-left:5%;
-    margin-top:3%;
-
+    margin-left:50px;
 }
 
-
-.uploader{
-    margin-top:2%;
-    
-}
-.buttonCon{
-    width:10%;
-    margin-top:2%;
-    margin-left:24%;
+.document_update_button :hover{
+     background-color: #4a4aff; 
+  transform: scale(1.03);
+  border-radius: 5px !important;
+  cursor: pointer;
 }
 
+.document_view_button:hover{
+     background-color: #076205; 
+  transform: scale(1.01);
+  border-radius: 5px !important;
+  cursor: pointer;
+}

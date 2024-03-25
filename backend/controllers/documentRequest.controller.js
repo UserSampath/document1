@@ -136,7 +136,35 @@ const documentRequest  ={
 
             });
         }
-    }
+    },
+    getUserByPage: async (req, res) => {
+        try {
+            const { page = 1, limit = 3, orderBy = 'firstName', sortBy = 'asc', keyword } = req.query;
+
+
+            const users = await documentReqService.getAllUserByPage({
+                page: +page ? +page : 1,
+                limit: +limit ? +limit : 3,
+                orderBy,
+                sortBy,
+                keyword
+            });
+
+            res.status(200).json(
+                {
+                    response_code: 200,
+                    success: true,
+                    users
+                });
+
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({
+                response_code: 500,
+                success: false, message: 'Error occurred while fetching users'
+            });
+        }
+    },
 
 }
 

@@ -1,4 +1,4 @@
-import { documentRequest } from "../models/model.js";
+import { documentRequest,User } from "../models/model.js";
 import sequelize from "../config/db.connection.js"
 import { Op, where } from "sequelize";
 
@@ -27,7 +27,10 @@ const documentRequestRepo = {
             const result = await documentRequest.findOne({
                 where: {
                     id
-                },
+              },
+              include: [{
+                model: User,
+              }]
             });
             return result;
         } catch (error) {
@@ -81,7 +84,43 @@ const documentRequestRepo = {
         } catch (error) {
           throw error;
         }
-      },
+  },
+    
+  getUsersByPage: async ({ page, limit, orderBy, sortBy, keyword }) => {
+    try {
+      const query = {};
+      if (keyword) {
+        query[Op.or] = [
+          { firstName: { [Op.startsWith]: keyword } },
+          { lastName: { [Op.startsWith]: keyword } }
+        ];
+      }
+      const queries = {
+        offset: (page - 1) * limit,
+        limit
+      }
+
+      if (orderBy) {
+        queries.order = [[orderBy, sortBy]]
+      }
+      const users = await User.findAndCountAll({
+        where: query,
+        include: [{
+          model: documentRequest,
+        }
+        ],
+        ...queries
+      })
+
+      return {
+        totalPages: Math.ceil(users?.count / limit),
+        totalItems: users?.count,
+        data: users?.rows
+      };
+    } catch (error) {
+      throw error;
+    }
+  },
 }
 
 export default documentRequestRepo;

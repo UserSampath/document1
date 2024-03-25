@@ -51,5 +51,14 @@ const documentReqService = {
             throw error;
         }
     },
+
+    getAllUserByPage: async ({ page, limit, orderBy, sortBy, keyword }) => {
+        try {
+            const allUsers = await documentRequestRepo.getUsersByPage({ page, limit, orderBy, sortBy, keyword });
+            return allUsers;
+        } catch (error) {
+            throw error;
+        }
+    },
 }
 export default documentReqService;

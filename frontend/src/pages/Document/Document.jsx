@@ -96,7 +96,10 @@ const Document = () => {
           reference_no: referenceNo,
         })
         .then((response) => {
-          console.log(response);
+          console.log(response.data.result);
+          if (response.data.result.status) {
+            toast.success("your data has submitted successfully");
+          }
         })
         .catch((error) => {
           console.log(error.response.data.error);

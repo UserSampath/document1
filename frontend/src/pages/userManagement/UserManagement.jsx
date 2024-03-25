@@ -42,7 +42,7 @@ const UserManagement = () => {
 
   const fetchUserData = async () => {
     await axios
-      .get(`${backendUrl}/user/getUserByPage`, {
+      .get(`${backendUrl}/docmentReq/getUserByPage`, {
         params: {
           limit: 10,
           page: currentPage,
@@ -56,6 +56,7 @@ const UserManagement = () => {
       })
       .then((res) => {
         if (res.data.success) {
+          console.log(res.data.users);
           setUsers(res.data.users);
         }
       })
@@ -118,7 +119,7 @@ const UserManagement = () => {
                 }}
                 className="bg-white mt-1 pb-1">
                 <div className="container-fluid mt-1">
-                  <div style={{ margin: "0px 10px 0px 30px" }}>
+                  <div style={{ margin: "0px 10px 0px 20px" }}>
                     <div
                       className="row align-items-center container-fluid"
                       style={{
@@ -128,16 +129,12 @@ const UserManagement = () => {
                         padding: "5px 0px 5px 0px",
                         marginBottom: "5px",
                       }}>
-                      <div className="col-3 ">
-                        <div style={{ paddingLeft: "45px" }}>Name</div>
-                      </div>
-                      <div className="col-4" style={{ paddingLeft: "15px" }}>
-                        Email
-                      </div>
-                      <div className="col-3" style={{ paddingLeft: "10px" }}>
-                        Joined Date{" "}
-                      </div>
-                      <div className="col-1">Points</div>
+                      <div className="col-2">Name</div>
+                      <div className="col-3">Email</div>
+                      <div className="col-2">Phone</div>
+                      <div className="col-1">employee</div>
+                      <div className="col-2">Reference</div>
+                      <div className="col-2">Accept Date</div>
                     </div>
                   </div>
                 </div>
