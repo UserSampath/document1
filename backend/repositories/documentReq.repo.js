@@ -1,5 +1,6 @@
 import { documentRequest } from "../models/model.js";
 import sequelize from "../config/db.connection.js"
+import { Op, where } from "sequelize";
 
 const documentRequestRepo = {
 
@@ -46,7 +47,41 @@ const documentRequestRepo = {
         } catch (error) {
             throw error;
         }
-    }
+    },
+
+    getReqDocByPage: async ({ page, limit, orderBy, sortBy, keyword }) => {
+
+        try {
+          const query = {};
+          if (keyword) {
+            query[Op.or] = [
+              { email: { [Op.startsWith]: keyword } },
+            ];
+          }
+    
+          const queries = {
+            offset: (page - 1) * limit,
+            limit
+          }
+    
+          if (orderBy) {
+            queries.order = [[orderBy, sortBy]]
+          }
+          const users = await documentRequest.findAndCountAll({
+            where: query,
+            attributes: ['id',  'email', 'employeeStatus','is_agreed', "createdAt"],
+            ...queries
+          })
+    
+          return {
+            totalPages: Math.ceil(users?.count / limit),
+            totalItems: users?.count,
+            data: users?.rows
+          };
+        } catch (error) {
+          throw error;
+        }
+      },
 }
 
 export default documentRequestRepo;

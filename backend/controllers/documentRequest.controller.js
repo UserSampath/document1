@@ -76,9 +76,37 @@ const documentRequest  ={
                 success: false, message: 'Error occurred while fetching document'
             });
         }
-
-
     },
+
+    getReqDocByPage: async (req, res) => {
+        try {
+          const { page = 1, limit = 3, orderBy = 'email', sortBy = 'asc', keyword } = req.query;
+    
+          const requirmentDoc = await documentReqService.getAllReqDocByPage({
+            page: +page ? +page : 1,
+            limit: +limit ? +limit : 3,
+            orderBy,
+            sortBy,
+            keyword
+          });
+    
+          res.status(200).json(
+            {
+              response_code: 200,
+              success: true,
+              requirmentDoc
+            });
+    
+        } catch (error) {
+          console.error(error);
+          res.status(500).json({
+            response_code: 500,
+            success: false,
+             message: 'Error occurred while fetching users'
+          });
+        }
+      },
+
     deleteDocumentReq: async (req, res) => {
         const id = req.params.id;
 
