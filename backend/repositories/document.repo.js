@@ -1,4 +1,4 @@
-import { Document } from "../models/model.js";
+import { DocumentType } from "../models/model.js";
 import sequelize from "../config/db.connection.js"
 
 const documentRepo = {
@@ -6,7 +6,7 @@ const documentRepo = {
     createDocument: async (name, src) => {
         try {
             await sequelize.sync();
-            const result = await Document.create({ name,src});
+            const result = await DocumentType.create({ name, src });
             return result;
         } catch (error) {
             throw error;
@@ -22,7 +22,7 @@ const documentRepo = {
     },
     getDocumentById: async (id) => {
         try {
-            const result = await Document.findOne({
+            const result = await DocumentType.findOne({
                 where: {
                     id
                 },
@@ -33,13 +33,13 @@ const documentRepo = {
 
         }
     },
-    updateDocument: async (id, name) => {
+    updateDocument: async (id, src) => {
         try {
-            const updatedRaws = await Document.update({
-                name
-            }, { where: { id} });
+            const updatedRaws = await DocumentType.update({
+                src
+            }, { where: { id } });
             if (updatedRaws > 0) {
-                const result = await Document.findByPk(id);
+                const result = await DocumentType.findByPk(id);
                 return result;
             }
         } catch (error) {
@@ -48,7 +48,7 @@ const documentRepo = {
     },
     deleteDocumentById: async (id) => {
         try {
-            const result = await Document.destroy({
+            const result = await DocumentType.destroy({
                 where: {
                     id
                 }
@@ -57,7 +57,20 @@ const documentRepo = {
         } catch (error) {
             throw error;
         }
-    }
+    },
+    getDocumentByName: async (name) => {
+        try {
+            const result = await DocumentType.findOne({
+                where: {
+                    name
+                },
+            });
+            return result;
+        } catch (error) {
+            throw error;
+
+        }
+    },
 
 }
 

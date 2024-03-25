@@ -26,7 +26,7 @@ const documentService = {
         }
     },
 
-    getDocumentById: async (id) => {
+    getDocumentByName: async (id) => {
         try {
             const result = await documentRepo.getDocumentById(id);
             return result;
@@ -35,10 +35,10 @@ const documentService = {
         }
     },
 
-    updateDocument: async (id, name) => {
+    updateDocument: async(id, src) => {
         try {
 
-            const result = await documentRepo.updateDocument(id, name);
+            const result = await documentRepo.updateDocument(id, src);
             if (result) {
                 return {
                     status: true,
@@ -61,6 +61,14 @@ const documentService = {
         try {
             const result = await documentRepo.deleteDocumentById(id);
             return result > 0;
+        } catch (error) {
+            throw error;
+        }
+    },
+    getDocumentByName: async (name) => {
+        try {
+            const result = await documentRepo.getDocumentByName(name);
+            return result;
         } catch (error) {
             throw error;
         }

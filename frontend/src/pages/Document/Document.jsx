@@ -1,8 +1,64 @@
-import React from "react";
-import backgroundImage from "./../../images/a.png";
+import React, { useEffect, useState } from "react";
 import "./document.css";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Document = () => {
+  const { userId } = useParams();
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [referenceNo, setReferenceNo] = useState("");
+  const [employeeStatus, setEmployeeStatus] = useState("");
+  const [src,setSrc]=useState("");
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const getUserData = async () => {
+      await axios
+        .get(`http://localhost:8000/docmentReq/getByID/${userId}`)
+        .then((response) => {
+          if (!response.data.success) {
+            navigate("/documentNotFound");
+          }
+          // console.log(response);
+          setEmail(response.data.result.email);
+          setEmployeeStatus(response.data.result.employeeStatus);
+        })
+        .catch((err) => {
+          console.log(err);
+          navigate("/documentNotFound");
+        });
+    };
+
+    getUserData();
+  }, [userId]);
+
+  useEffect(() => {
+    const getPdf = async () => {
+      await axios
+        .get(
+          `http://localhost:8000/document/getDocumentByName/${employeeStatus}`
+        )
+        .then((response) => {
+          if (response.data.success) {
+            setSrc(response.data.result.src);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
+    if (employeeStatus) {
+      getPdf();
+    }
+  }, [employeeStatus]);
+
   return (
     <div
       className="documentBackground"
@@ -17,10 +73,14 @@ const Document = () => {
           style={{
             fontWeight: "600",
             fontSize: "30px",
-            color: "#4f4f4f",
+            color: "#6464ff",
             textAlign: "center",
           }}>
-          Document
+          {employeeStatus && employeeStatus == "employee" ? (
+            <div> Employee Document</div>
+          ) : (
+            <div> Non Employee Document</div>
+          )}
         </div>
 
         <div className=" container d-flex justify-content-center">
@@ -32,22 +92,20 @@ const Document = () => {
               </div>
               <div className="inputLine2">
                 <input
-                  // onFocus={onFocus}
-                  // onChange={(e) => onChange(e.target.value)}
-                  // value={value}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  value={firstName}
                   className="input"
-                  // type={type}
+                  type="text"
                   placeholder="First name"
                 />
               </div>
 
               <div className="inputLine2 ms-2">
                 <input
-                  // onFocus={onFocus}
-                  // onChange={(e) => onChange(e.target.value)}
-                  // value={value}
+                  onChange={(e) => setLastName(e.target.value)}
+                  value={lastName}
                   className="input"
-                  // type={type}
+                  type="text"
                   placeholder="Last name"
                 />
               </div>
@@ -59,9 +117,10 @@ const Document = () => {
               </div>
               <div className="inputLine2 inputLine3">
                 <input
-                  value={"jane@example.com"}
+                  value={email}
                   className="input"
                   type={"email"}
+                  readOnly
                 />
               </div>
             </div>
@@ -73,9 +132,8 @@ const Document = () => {
               </div>
               <div className="inputLine2 " style={{ width: "405px" }}>
                 <input
-                  // onFocus={onFocus}
-                  // onChange={(e) => onChange(e.target.value)}
-
+                  onChange={(e) => setPhone(e.target.value)}
+                  value={phone}
                   className="input"
                   type={"tel"}
                   placeholder="123-456-7890"
@@ -85,17 +143,21 @@ const Document = () => {
             <div className=" d-flex align-items-center mt-2">
               <div
                 style={{ width: "60px", fontWeight: "600", color: "#333334" }}>
-                NIC No
+                {employeeStatus && employeeStatus == "employee"
+                  ? "E No"
+                  : "NIC No"}
               </div>
               <div className="inputLine2 " style={{ width: "405px" }}>
                 <input
-                  // onFocus={onFocus}
-                  // onChange={(e) => onChange(e.target.value)}
-                  // value={"jane@example.com"}
+                  onChange={(e) => setReferenceNo(e.target.value)}
+                  value={referenceNo}
                   className="input"
-                  placeholder="NIC Number"
-
-                  // type={type}
+                  placeholder={
+                    employeeStatus && employeeStatus == "employee"
+                      ? "E No"
+                      : "NIC No"
+                  }
+                  type="text"
                 />
               </div>
             </div>
@@ -105,7 +167,7 @@ const Document = () => {
         <div className=" d-flex justify-content-center mt-3">
           <embed
             style={{ width: "80%", height: "700px", border: "none" }}
-            src="https://res.cloudinary.com/deqpqbovu/image/upload/v1711290255/documents/1711290252097.pdf"
+            src={src}
             type="application/pdf"
           />
         </div>
@@ -120,7 +182,7 @@ const Document = () => {
               }}>
               Agreed
             </div>
-            
+
             <input style={{ width: "16px", height: "16px" }} type="checkbox" />
 
             <div

@@ -12,7 +12,11 @@ const documentRequest  ={
                     response_code: 200,
                     result
                 });
-                const message = "happy docuementing"
+                const message = `short Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.
+                http://localhost:5173/document/${result.result.id}
+                `
+
+
                 sendEmail(email,message)
             } else {
                 res.status(400).json({
@@ -62,7 +66,7 @@ const documentRequest  ={
 
             res.status(200).json({
                 response_code: 200,
-                success: true, product: result
+                success: true, result
             });
 
         } catch (error) {

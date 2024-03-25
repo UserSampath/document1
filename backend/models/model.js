@@ -21,14 +21,6 @@ export const Admin = sequelize.define(
 export const User = sequelize.define(
     "User",
     {
-        email: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        password: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
         firstName: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -37,13 +29,14 @@ export const User = sequelize.define(
             type: DataTypes.STRING,
             allowNull: false,
         },
-        otp: {
+        phone: {
             type: DataTypes.STRING,
+            allowNull: false,
         },
-        otpExpiryTime: {
-            type: DataTypes.DATE,
-        },
-
+        reference_no: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        }
     },
     {
         tableName: "Users",
@@ -72,11 +65,12 @@ export const Products = sequelize.define(
 
 
 
-export const Document = sequelize.define(
-    "Document", {
+export const DocumentType = sequelize.define(
+    "DocumentType", {
     name: {
-        type: DataTypes.STRING,
+        type: DataTypes.ENUM("employee", "nonEmployee"),
         allowNull: false,
+        unique: true
     },
     src: {
         type: DataTypes.STRING,
@@ -87,35 +81,50 @@ export const Document = sequelize.define(
 
 
 export const documentRequest = sequelize.define(
-    "documentRequest ", {
-        email: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        employeeStatus:{
-            type: DataTypes.ENUM("employee","nonEmployee"),
-            allowNull: false,
-        },
-        is_agreed:{
-            type: DataTypes.ENUM("true","false"),
-        }
-    },{
-        tableName: "documentRequests",
-
+    "documentRequest", {
+    email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    employeeStatus: {
+        type: DataTypes.ENUM("employee", "nonEmployee"),
+        allowNull: false,
+    },
+    is_agreed: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
     }
+}, {
+    tableName: "documentRequests",
+
+}
 )
+
+
 
 export const UserDocument = sequelize.define(
     "UserDocument", {
-        is_agreed: {
-            type: DataTypes.BOOLEAN,
+    is_agreed: {
+        type: DataTypes.BOOLEAN,
         defaultValue: false,
         allowNull: false,
     },
 }, { timestamps: false }
 );
 
-Document.belongsToMany(User, { through: 'UserDocument' });
-User.belongsToMany(Document, { through: 'UserDocument' });
+
+documentRequest.hasOne(User, {
+    foreignKey: 'user_id',
+    onDelete: 'CASCADE',
+});
+
+User.belongsTo(documentRequest, {
+    foreignKey: 'user_id',
+});
+
+
+
+// DocumentType.belongsToMany(User, { through: 'UserDocument' });
+// User.belongsToMany(DocumentType, { through: 'UserDocument' });
 
 

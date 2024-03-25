@@ -3,8 +3,6 @@ import nodemailer from 'nodemailer';
 const sendEmail = async ( email ,message) => {
     console.log(email,message);
 
-    
-
     try {
         // Logic to send the email using the provided email address
         // Example using nodemailer to send the email

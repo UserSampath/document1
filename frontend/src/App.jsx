@@ -12,6 +12,7 @@ import UserSignIn from "./pages/userSignIn/UserSignIn";
 import UserSignUp from "./pages/userSignUp/UserSignUp";
 import Document from "./pages/Document/Document";
 import SendInvitaion from "./pages/Invitation/SendInvitaion";
+import DocumentNotFound from "./pages/DocumentNotFound/DocumentNotFound";
 
 function App() {
   return (
@@ -19,11 +20,14 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/adminlogin" element={<SignIn />}></Route>
-          <Route path="/document" element={<Document />}></Route>
+          <Route path="/document/:userId" element={<Document />}></Route>
           <Route path="/userlogin" element={<UserSignIn />}></Route>
           <Route path="/usersignup" element={<UserSignUp />}></Route>
 
           <Route path="/sendInvitaion" element={<SendInvitaion />}></Route>
+          <Route
+            path="/documentNotFound"
+            element={<DocumentNotFound />}></Route>
 
           {/* <Route path="products" element={<Products />}></Route> */}
           <Route path="/" element={<UserManagement />}></Route>

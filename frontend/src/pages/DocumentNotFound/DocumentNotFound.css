@@ -1,0 +1,30 @@
+.documentBackground{
+     background: radial-gradient(ellipse at 36% 63%, rgba(90, 236, 255, 1) 21%, rgba(255, 255, 255, 1) 60%, rgba(177, 255, 180, 1) 100%);
+}
+
+.document_container{
+      backdrop-filter: blur(5px);
+       background-color:#c5c5c566;
+       border-radius: 10px;
+}
+
+.inputLine2 {
+  display: flex;
+  background-color: rgb(255, 255, 255);
+  width: 200px;
+  height: 45px;
+  padding-left: 10px;
+  border-radius: 5px;
+}
+
+.inputLine3 {
+  width: 410px !important;
+
+}
+
+.document_submit_button :hover{
+     background-color: #4a4aff; 
+  transform: scale(1.03);
+  border-radius: 5px !important;
+  cursor: pointer;
+}

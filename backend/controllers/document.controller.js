@@ -1,19 +1,5 @@
 // import { v2 as cloudinary } from 'cloudinary';
 import documentService from "../services/document.services.js";
-// // Configure Cloudinary
-// cloudinary.config({
-//     cloud_name: 'dcif58he2',
-//     api_key: process.env.API_KEY,
-//     api_secret: process.env.API_SECRET
-// });
-
-const opts = {
-    overwrite: true,
-    invalidate: true,
-    resource_type: "",
-}
-
-
 import { v2 as cloudinary } from 'cloudinary';
 
 cloudinary.config({
@@ -21,7 +7,6 @@ cloudinary.config({
     api_key: '819577974911333',
     api_secret: 'Dbf4eM17mLT3BLWOHFkeooQ7fmA'
 });
-
 
 const documentController = {
     createDocument: async (req, res) => {
@@ -71,7 +56,7 @@ const documentController = {
             res.status(500).json({
                 response_code: 500,
                 success: false,
-                message: 'Error occurred while fetching users'
+                message: 'Error occurred while fetching document'
             });
         }
     },
@@ -79,7 +64,7 @@ const documentController = {
         const id = req.params.id;
 
         try {
-            const result = await documentService.getDocumentById(id);
+            const result = await documentService.getDocumentByName(id);
             if (!result) {
                 res.status(404).json({
                     response_code: 404,
@@ -104,9 +89,20 @@ const documentController = {
 
     },
     updateDocument: async (req, res) => {
-        const { id, name } = req.body;
+        const { id } = req.body;
+        const file = req.files.pdf;
         try {
-            const result = await documentService.updateDocument(id, name);
+
+            const data = await cloudinary.uploader.upload(file.tempFilePath, {
+                public_id: `${Date.now()}`,
+                resource_type: 'auto',
+                folder: "documents",
+            })
+            if (!data.secure_url) {
+                throw new Error("Cannot upload document")
+            }
+
+            const result = await documentService.updateDocument(id, data.secure_url);
             if (result.status) {
                 res.status(200).json({
                     response_code: 200,
@@ -126,6 +122,8 @@ const documentController = {
             });
         }
     },
+
+    
     deleteProduct: async (req, res) => {
         const id = req.params.id;
 
@@ -155,7 +153,36 @@ const documentController = {
 
             });
         }
-    }
+    },
+
+    getDocumentByName: async (req, res) => {
+        const name = req.params.name;
+
+        try {
+            const result = await documentService.getDocumentByName(name);
+            if (!result) {
+                res.status(404).json({
+                    response_code: 404,
+                    success: false, message: 'Document not found'
+                });
+                return;
+            }
+
+            res.status(200).json({
+                response_code: 200,
+                success: true, result
+            });
+
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({
+                response_code: 500,
+                success: false, message: 'Error occurred while fetching document'
+            });
+        }
+
+
+    },
 }
 
 export default documentController;

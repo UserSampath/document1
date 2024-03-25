@@ -13,6 +13,10 @@ router.get("/getAllDocuments", documentController.getAllDocuments);
 router.get("/getDocumentById", documentController.getDocumentById);
 router.put("/updateDocument", documentController.updateDocument);
 
+router.get("/getDocumentByName/:name", documentController.getDocumentByName);
+
+router.put("/updateDocument", documentController.updateDocument);
+
 
 
 
