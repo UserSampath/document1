@@ -13,7 +13,14 @@ const Document = () => {
   const [phone, setPhone] = useState("");
   const [referenceNo, setReferenceNo] = useState("");
   const [employeeStatus, setEmployeeStatus] = useState("");
-  const [src,setSrc]=useState("");
+  const [src, setSrc] = useState("");
+  
+  const [firstNameError, setFirstNameError] = useState("");
+  const [lastNameError, setLastNameError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
+  const [referenceNoError, setReferenceNoError] = useState("");
+
+
 
   const navigate = useNavigate();
 
