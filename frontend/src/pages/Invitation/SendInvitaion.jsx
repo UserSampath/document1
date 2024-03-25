@@ -65,44 +65,44 @@ const SendInvitation = () => {
                 paddingTop: "50px",
                 paddingLeft: sidebarOpen ? "240px" : "50px",
               }}>
-              <div className=" d-flex justify-content-center align-items-center">
-                <Pagination
-                  currentPage={currentPage}
-                  setCurrentPage={setCurrentPage}
-                  totalPages={DocReqs.totalPages ? DocReqs.totalPages : 1}
-                />
-                <div
-                  style={{
-                    fontSize: "16px",
-                    color: "gray",
-                    paddingTop: "5px",
-                  }}>
-                  {DocReqs.totalPages !== 0
-                    ? `${currentPage} of ${
-                        DocReqs.totalPages ? DocReqs.totalPages : 1
-                      } pages`
-                    : "No ReqDoc available"}
-                </div>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  marginLeft: "65%",
-                  marginRight: "5%",
-                  gap: "50px",
-                }}>
-                <InSearchBar
-                  setSearchText={setSearchText}
-                  searchText={searchText}
-                />
-                <Button
-                  type={"1"}
-                  text="send Invitation"
-                  onClick={() => setShow(true)}
-                  style={{ marginLeft: "0px" }} // Add margin between button and search bar
-                />
-              </div>
+           <div className="d-flex justify-content-between">
+  <div style={{marginLeft:"85px",display:"flex"}}>
+    <Pagination
+      currentPage={currentPage}
+      setCurrentPage={setCurrentPage}
+      totalPages={DocReqs.totalPages ? DocReqs.totalPages : 1}
+    />
+    <div
+      style={{
+        fontSize: "16px",
+        color: "gray",
+        paddingTop: "5px",
+      }}>
+      {DocReqs.totalPages !== 0
+        ? `${currentPage} of ${
+            DocReqs.totalPages ? DocReqs.totalPages : 1
+          } pages`
+        : "No ReqDoc available"}
+    </div>
+  </div>
+  <div className="d-flex " style={{marginRight:"75px",gap:"25px"}}>
+    <div>
+    <InSearchBar
+      setSearchText={setSearchText}
+      searchText={searchText}
+    />
+    </div>
+    <div>
+    <Button
+      type={"1"}
+      text="send Invitation"
+      onClick={() => setShow(true)}
+      style={{ marginLeft: "10px" }} // Add margin between button and search bar
+    /></div>
+  </div>
+</div>
+
+            
 
               <div className="d-flex justify-content-center align-items-center">
                 <div
