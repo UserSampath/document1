@@ -2,14 +2,11 @@ import { useEffect, useState } from "react";
 import { FaChevronLeft } from "react-icons/fa6";
 import { CiUser } from "react-icons/ci";
 import { HiOutlineQueueList } from "react-icons/hi2";
-import { IoLinkOutline } from "react-icons/io5";
-import { TbReportAnalytics } from "react-icons/tb";
 import "./side.css";
 import { CiSettings } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
-import { IoCartOutline } from "react-icons/io5";
-import { MdInsertInvitation } from "react-icons/md";
-import { GoGoal } from "react-icons/go";
+import { IoMailOpenOutline } from "react-icons/io5";
+import { BsFilePdf } from "react-icons/bs";
 const SideBar = ({ children, selectedNav, setSidebarOpen }) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(
@@ -91,15 +88,13 @@ const SideBar = ({ children, selectedNav, setSidebarOpen }) => {
                   }}>
                   {Menu.title === "Accepted Users" && <CiUser size={24} />}
                   {Menu.title === "Send Invitation" && (
-                    <MdInsertInvitation size={24} />
+                    <IoMailOpenOutline size={24} />
                   )}
-                  {Menu.title === "Upload Document" && (
-                    <TbReportAnalytics size={24} />
-                  )}
+                  {Menu.title === "Upload Document" && <BsFilePdf size={24} />}
                   {Menu.title === "Products" && (
                     <HiOutlineQueueList size={24} />
                   )}{" "}
-                  {Menu.title === "Settings" && <CiSettings size={24} />}
+                  {Menu.title === "Settings" && <CiSettings size={26} />}
                   <span
                     style={{
                       display: !open ? "none" : "inline",
