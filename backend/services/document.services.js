@@ -35,10 +35,10 @@ const documentService = {
         }
     },
 
-    updateDocument: async(id, src) => {
+    updateDocument: async (name, src) => {
         try {
 
-            const result = await documentRepo.updateDocument(id, src);
+            const result = await documentRepo.updateDocument(name, src);
             if (result) {
                 return {
                     status: true,

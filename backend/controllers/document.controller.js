@@ -89,7 +89,7 @@ const documentController = {
 
     },
     updateDocument: async (req, res) => {
-        const { id } = req.body;
+        const { name } = req.body;
         const file = req.files.pdf;
         try {
 
@@ -102,7 +102,7 @@ const documentController = {
                 throw new Error("Cannot upload document")
             }
 
-            const result = await documentService.updateDocument(id, data.secure_url);
+            const result = await documentService.updateDocument(name, data.secure_url);
             if (result.status) {
                 res.status(200).json({
                     response_code: 200,
@@ -123,7 +123,7 @@ const documentController = {
         }
     },
 
-    
+
     deleteProduct: async (req, res) => {
         const id = req.params.id;
 

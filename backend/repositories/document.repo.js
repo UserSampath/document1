@@ -33,13 +33,15 @@ const documentRepo = {
 
         }
     },
-    updateDocument: async (id, src) => {
+    updateDocument: async (name, src) => {
         try {
             const updatedRaws = await DocumentType.update({
                 src
-            }, { where: { id } });
+            }, { where: { name } });
             if (updatedRaws > 0) {
-                const result = await DocumentType.findByPk(id);
+                const result = await DocumentType.findOne({
+                    where:{name}
+                });
                 return result;
             }
         } catch (error) {
