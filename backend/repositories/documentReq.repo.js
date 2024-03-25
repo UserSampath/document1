@@ -4,10 +4,19 @@ import { Op, where } from "sequelize";
 
 const documentRequestRepo = {
 
-    createDocumentRequest: async (email, employeeStatus,is_agreed) => {
+    createDocumentRequest: async (email, employeeStatus) => {
         try {
             await sequelize.sync();
-            const result = await documentRequest.create({ email, employeeStatus,is_agreed});
+
+            const existingRequest = await documentRequest.findOne({
+              where: { email: email }
+            })
+          
+            if (existingRequest) {
+              throw new Error("This email already send");
+            }
+            
+            const result = await documentRequest.create({ email, employeeStatus,});
             return result;
         } catch (error) {
             throw error;

@@ -1,7 +1,6 @@
 import React from "react";
 
-const Invites = ({ fetchDocData, DocReq}) => {
-    console.log(DocReq)
+const Invites = ({ DocReq }) => {
     return (
         <div
             onClick={() => console.log("user clicked")}
@@ -17,21 +16,20 @@ const Invites = ({ fetchDocData, DocReq}) => {
                         color: "#353434dd",
                     }}>
                     <div className="col-4">
-                        <div style={{ fontSize: "16px" }}> {DocReq}</div> {/* Corrected property name */}
+                        <div style={{ fontSize: "16px" }}>{DocReq.email}</div> {/* Assuming 'email' is a property in DocReq */}
                     </div>
                     <div className="col-4">
-                        <div style={{ fontSize: "16px" }}>{DocReq}</div> {/* Corrected property name */}
+                        <div style={{ fontSize: "16px" }}>{DocReq.employeeStatus}</div> {/* Assuming 'employeeStatus' is a property in DocReq */}
                     </div>
                     <div className="col-4">
                         <div style={{ fontSize: "16px", paddingLeft: "8px" }}>
-                            {DocReq} {/* Corrected property name */}
+                            {DocReq.isAgreed ? "Yes" : "No"} {/* Assuming 'isAgreed' is a boolean property in DocReq */}
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default Invites;
