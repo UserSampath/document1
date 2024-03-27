@@ -5,8 +5,8 @@ import documentReqService from "../services/documentReq.services.js";
 const documentRequest  ={
     createDocumentRequeset: async (req, res) => {
         try{
-            const { email, employeeStatus,is_agreed } = req.body;
-            const result = await documentReqService.createDocumentRequest(email, employeeStatus,is_agreed);
+            const { email, employeeStatus } = req.body;
+            const result = await documentReqService.createDocumentRequest(email, employeeStatus);
             if (result.status) {
                 res.status(200).json({
                     response_code: 200,

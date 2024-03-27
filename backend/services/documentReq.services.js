@@ -2,10 +2,10 @@ import documentRequestRepo from "../repositories/documentReq.repo.js";
 
 
 const documentReqService = {
-    createDocumentRequest: async (email, employeeStatus,is_agreed) => {
+    createDocumentRequest: async (email, employeeStatus) => {
 
         try {
-            const result = await documentRequestRepo.createDocumentRequest(email, employeeStatus,is_agreed);
+            const result = await documentRequestRepo.createDocumentRequest(email, employeeStatus);
             if (result) {
                 return { status: true, message: "Document request created successfully", result }
             } else {

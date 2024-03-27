@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-const SendInvitationCom = ({ handleClose, show, setShow }) => {
+const SendInvitationCom = ({ handleClose, show, setShow, updateInvitations }) => { // Added updateInvitations prop
   const [email, setEmail] = useState('');
   const [employeeStatus, setEmployeeStatus] = useState('');
 
@@ -22,21 +22,24 @@ const SendInvitationCom = ({ handleClose, show, setShow }) => {
         email: email,
         employeeStatus: employeeStatus,
       };
-      
       const response = await axios.post(
         `${backendUrl}/docmentReq/createDocReq`, // Corrected URL
         requestEmail
       );
-        console.log(response);
+      console.log(response);
       if (response.status === 200) {
         toast.success('Invitation sent successfully!');
         setShow(false);
         setEmail("");
         setEmployeeStatus("");
+        updateInvitations(response.data.result); 
+      }else if(response.status===500){
+        console.log(response);
       }
     } catch (error) {
-      toast.error('Failed to send invitation.');
-      console.error(error);
+      console.log(error);
+      toast.error(error.response.data.error);
+      console.error(error.response.data.error);
     }
   };
 

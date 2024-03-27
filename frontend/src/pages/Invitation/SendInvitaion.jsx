@@ -1,5 +1,4 @@
-// SendInvitation.jsx
-import React, { useState ,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import "./Invite.css";
 import Button from "../../components/Button/Button";
 import SendInvitationCom from '../../components/InvitationCom/SendInvitationCom';
@@ -44,8 +43,6 @@ const SendInvitation = () => {
         .then((res) => {
           if (res.data.success) {
             setDocReq(res.data.requirmentDoc);
-            console.log(res.data.requirmentDoc.data)
-            console.log(DocReqs);
 
           }
         })
@@ -53,6 +50,10 @@ const SendInvitation = () => {
           console.log(err);
         });
       }
+
+      const updateInvitations = (newInvitation) => {
+        setDocReq([newInvitation, ...DocReqs]);
+      };
 
     return (
       <div>
@@ -65,45 +66,42 @@ const SendInvitation = () => {
                 paddingTop: "50px",
                 paddingLeft: sidebarOpen ? "240px" : "50px",
               }}>
-              <div className=" d-flex justify-content-center align-items-center">
-                <Pagination
-                  currentPage={currentPage}
-                  setCurrentPage={setCurrentPage}
-                  totalPages={DocReqs.totalPages ? DocReqs.totalPages : 1}
-                />
-                <div
-                  style={{
-                    fontSize: "16px",
-                    color: "gray",
-                    paddingTop: "5px",
-                  }}>
-                  {DocReqs.totalPages !== 0
-                    ? `${currentPage} of ${
-                        DocReqs.totalPages ? DocReqs.totalPages : 1
-                      } pages`
-                    : "No ReqDoc available"}
-                </div>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  marginLeft: "65%",
-                  marginRight: "5%",
-                  gap: "50px",
-                }}>
-                <InSearchBar
-                  setSearchText={setSearchText}
-                  searchText={searchText}
-                />
-                <Button
-                  type={"1"}
-                  text="send Invitation"
-                  onClick={() => setShow(true)}
-                  style={{ marginLeft: "0px" }} // Add margin between button and search bar
-                />
-              </div>
-
+           <div className="d-flex justify-content-between">
+  <div style={{marginLeft:"85px",display:"flex"}}>
+    <Pagination
+      currentPage={currentPage}
+      setCurrentPage={setCurrentPage}
+      totalPages={DocReqs.totalPages ? DocReqs.totalPages : 1}
+    />
+    <div
+      style={{
+        fontSize: "16px",
+        color: "gray",
+        paddingTop: "5px",
+      }}>
+      {DocReqs.totalPages !== 0
+        ? `${currentPage} of ${
+            DocReqs.totalPages ? DocReqs.totalPages : 1
+          } pages`
+        : "No ReqDoc available"}
+    </div>
+  </div>
+  <div className="d-flex " style={{marginRight:"75px",gap:"25px"}}>
+    <div>
+    <InSearchBar
+      setSearchText={setSearchText}
+      searchText={searchText}
+    />
+    </div>
+    <div>
+    <Button
+      type={"1"}
+      text="send Invitation"
+      onClick={() => setShow(true)}
+      style={{ marginLeft: "10px" }} // Add margin between button and search bar
+    /></div>
+  </div>
+</div>
               <div className="d-flex justify-content-center align-items-center">
                 <div
                   style={{
@@ -136,16 +134,16 @@ const SendInvitation = () => {
                     </div>
                   </div>
 
-                  {/* {DocReqs.data?.map((DocReq, index) => {
-                                    return (
-                                        <Invites
-                                        key={index}
-                                        DocReq={DocReq}
-                                        index={index}
-                                        fetchDocData={fetchDocData}
-                                        />
-                                    );
-                                    })} */}
+                  {DocReqs.data?.map((DocReq, index) => {
+                    return (
+                        <Invites
+                            key={index}
+                            DocReq={DocReq}
+                            fetchDocData={fetchDocData}
+                        />
+                    );
+                })}
+
                   {/* Render Invites component with dummy user data */}
                 </div>
               </div>
@@ -156,6 +154,7 @@ const SendInvitation = () => {
           show={show}
           setShow={setShow}
           handleClose={() => setShow(false)}
+          updateInvitations={updateInvitations} // Pass the function to update invitations
         />
       </div>
     );
