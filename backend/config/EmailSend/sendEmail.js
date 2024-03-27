@@ -30,7 +30,7 @@ const sendEmail = async ( email ,message) => {
         }
     } catch (error) {
         console.error(error);
-        throw new Error('Failed to send email');
+        
     }
 };
 

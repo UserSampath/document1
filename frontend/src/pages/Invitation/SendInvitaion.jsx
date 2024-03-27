@@ -66,42 +66,45 @@ const SendInvitation = () => {
                 paddingTop: "50px",
                 paddingLeft: sidebarOpen ? "240px" : "50px",
               }}>
-           <div className="d-flex justify-content-between">
-  <div style={{marginLeft:"85px",display:"flex"}}>
-    <Pagination
-      currentPage={currentPage}
-      setCurrentPage={setCurrentPage}
-      totalPages={DocReqs.totalPages ? DocReqs.totalPages : 1}
-    />
-    <div
-      style={{
-        fontSize: "16px",
-        color: "gray",
-        paddingTop: "5px",
-      }}>
-      {DocReqs.totalPages !== 0
-        ? `${currentPage} of ${
-            DocReqs.totalPages ? DocReqs.totalPages : 1
-          } pages`
-        : "No ReqDoc available"}
-    </div>
-  </div>
-  <div className="d-flex " style={{marginRight:"75px",gap:"25px"}}>
-    <div>
-    <InSearchBar
-      setSearchText={setSearchText}
-      searchText={searchText}
-    />
-    </div>
-    <div>
-    <Button
-      type={"1"}
-      text="send Invitation"
-      onClick={() => setShow(true)}
-      style={{ marginLeft: "10px" }} // Add margin between button and search bar
-    /></div>
-  </div>
-</div>
+              <div className="d-flex justify-content-between">
+                <div style={{ marginLeft: "85px", display: "flex" }}>
+                  <Pagination
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                    totalPages={DocReqs.totalPages ? DocReqs.totalPages : 1}
+                  />
+                  <div
+                    style={{
+                      fontSize: "16px",
+                      color: "gray",
+                      paddingTop: "5px",
+                    }}>
+                    {DocReqs.totalPages !== 0
+                      ? `${currentPage} of ${
+                          DocReqs.totalPages ? DocReqs.totalPages : 1
+                        } pages`
+                      : "No ReqDoc available"}
+                  </div>
+                </div>
+                <div
+                  className="d-flex "
+                  style={{ marginRight: "75px", gap: "25px" }}>
+                  <div>
+                    <InSearchBar
+                      setSearchText={setSearchText}
+                      searchText={searchText}
+                    />
+                  </div>
+                  <div>
+                    <Button
+                      type={"1"}
+                      text="send Invitation"
+                      onClick={() => setShow(true)}
+                      style={{ marginLeft: "10px" }} // Add margin between button and search bar
+                    />
+                  </div>
+                </div>
+              </div>
               <div className="d-flex justify-content-center align-items-center">
                 <div
                   style={{
@@ -122,12 +125,18 @@ const SendInvitation = () => {
                           marginBottom: "5px",
                         }}>
                         <div className="col-4 ">
-                          <div style={{ paddingLeft: "45px" }}>Email</div>
+                          <div
+                            style={{ paddingLeft: "45px" }}
+                            className=" d-flex justify-content-center">
+                            Email
+                          </div>
                         </div>
-                        <div className="col-4" style={{ paddingLeft: "15px" }}>
+                        <div className="col-4 d-flex justify-content-center">
                           Employee Status
                         </div>
-                        <div className="col-4" style={{ paddingLeft: "10px" }}>
+                        <div
+                          className="col-4 d-flex justify-content-center"
+                          style={{ paddingLeft: "10px" }}>
                           Is Agreed{" "}
                         </div>
                       </div>
@@ -136,13 +145,13 @@ const SendInvitation = () => {
 
                   {DocReqs.data?.map((DocReq, index) => {
                     return (
-                        <Invites
-                            key={index}
-                            DocReq={DocReq}
-                            fetchDocData={fetchDocData}
-                        />
+                      <Invites
+                        key={index}
+                        DocReq={DocReq}
+                        fetchDocData={fetchDocData}
+                      />
                     );
-                })}
+                  })}
 
                   {/* Render Invites component with dummy user data */}
                 </div>
