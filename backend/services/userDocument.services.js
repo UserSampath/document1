@@ -1,14 +1,31 @@
 import userDocumentRepo from "../repositories/userDocument.repo.js";
+
+
 const UserDocumentService = {
-    createUserDocument: async (is_agreed, DocumentId, UserId) => {
+    createUserDocument: async (documentIdList, email) => {
 
         try {
-            const result = await userDocumentRepo.createUserDocument(is_agreed, DocumentId, UserId);
+            const result = await userDocumentRepo.createUserDocument(documentIdList, email);
             if (result) {
                 return { status: true, message: "User document created successfully", result }
             } else {
                 return { status: false, message: "User document create failed!" }
 
+            }
+        } catch (error) {
+
+            throw error;
+        }
+    },
+
+    respondUserDocument: async (is_agreed, attachment, documentId, userId, firstName, lastName, phone, reference_no) => {
+
+        try {
+            const result = await userDocumentRepo.respondUserDocument(is_agreed, attachment, documentId, userId, firstName, lastName, phone, reference_no);
+            if (result) {
+                return { status: true, message: "User document updated successfully", result }
+            } else {
+                return { status: false, message: "User document update failed!" }
             }
         } catch (error) {
 

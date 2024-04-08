@@ -4,14 +4,15 @@ import bodyParser from "body-parser";
 import sequelize from "./config/db.connection.js";
 import adminRoutes from "./routes/admin.router.js";
 import userRoutes from "./routes/user.router.js";
-import productRoute from "./routes/product.router.js";
+// import productRoute from "./routes/product.router.js";
 import documentRoute from "./routes/document.router.js";
+import userDocumentRoute from "./routes/userDocument.router.js"
 import fileUpload from "express-fileupload";
 
 
 
 
-import documentReqroute from "./routes/documentRequest.router.js"
+// import documentReqroute from "./routes/documentRequest.router.js"
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -64,9 +65,11 @@ sequelize
 // Main Routes
 app.use("/admin", adminRoutes);
 app.use("/user", userRoutes);
-app.use("/product", productRoute);
+// app.use("/product", productRoute);
 app.use("/document", documentRoute);
-app.use("/docmentReq", documentReqroute)
+app.use("/userDocument", userDocumentRoute);
+
+// app.use("/docmentReq", documentReqroute)
 
 
 //run server

@@ -9,13 +9,13 @@ const router = express.Router();
 
 
 router.post("/createDocument", documentController.createDocument);
-router.get("/getAllDocuments", documentController.getAllDocuments);
-router.get("/getDocumentById", documentController.getDocumentById);
-router.put("/updateDocument", documentController.updateDocument);
+// router.get("/getAllDocuments", documentController.getAllDocuments);
+// router.get("/getDocumentById", documentController.getDocumentById);
+// router.put("/updateDocument", documentController.updateDocument);
 
-router.get("/getDocumentByName/:name", documentController.getDocumentByName);
+// router.get("/getDocumentByName/:name", documentController.getDocumentByName);
 
-router.put("/updateDocument", documentController.updateDocument);
+// router.put("/updateDocument", documentController.updateDocument);
 
 
 

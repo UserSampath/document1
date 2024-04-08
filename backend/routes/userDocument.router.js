@@ -5,7 +5,8 @@ import adminAuthentication from "../middleware/adminAuthentication.js";
 const router = express.Router();
 
 
-router.post("/createUserDocument", adminAuthentication, userDocumentController.createUserDocument);
+router.post("/createUserDocument", userDocumentController.createUserDocument);
+router.post("/respondUserDocument", userDocumentController.respondUserDocument);
 router.put("/deleteUserDocumentById", userDocumentController.deleteUserDocumentById);
 
 

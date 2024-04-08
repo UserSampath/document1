@@ -2,10 +2,10 @@ import userRepo from "../repositories/user.repo.js";
 
 const userService = {
 
-  createUser: async (request_id, firstName, lastName, phone, reference_no) => {
+  createUser: async (email) => {
 
     try {
-      const result = await userRepo.createUser(request_id, firstName, lastName, phone, reference_no);
+      const result = await userRepo.createUser(email);
       if (result) {
         return { status: true, message: "User created successfully", result }
       } else {

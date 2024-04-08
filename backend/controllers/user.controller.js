@@ -4,9 +4,8 @@ const userController = {
 
     createUser: async (req, res) => {
         try {
-            const { request_id, firstName, lastName, phone, reference_no } = req.body;
-    
-            const result = await userService.createUser(request_id, firstName, lastName, phone, reference_no);
+            const { email } = req.body;
+            const result = await userService.createUser(email);
             if (result.status) {
                 res.status(200).json({
                     response_code: 200,
