@@ -9,6 +9,8 @@ const router = express.Router();
 
 
 router.post("/createDocument", documentController.createDocument);
+router.get("/getAllDocumentsWithFilter/:type", documentController.getAllDocumentsWithFilter);
+
 // router.get("/getAllDocuments", documentController.getAllDocuments);
 // router.get("/getDocumentById", documentController.getDocumentById);
 // router.put("/updateDocument", documentController.updateDocument);

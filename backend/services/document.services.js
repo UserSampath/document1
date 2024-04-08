@@ -17,6 +17,21 @@ const documentService = {
         }
 
     },
+
+    getAllDocumentsWithFilter: async (type) => {
+
+        try {
+            const result = await documentRepo.getAllDocumentsWithFilter(type);
+            if (result) {
+                return { status: true, message: "Get document successfully", result }
+            } else {
+                return { status: false, message: "Get document failed!" }
+            }
+        } catch (error) {
+            throw error;
+        }
+
+    },
     // getAllDocuments: async () => {
     //     try {
     //         const result = await documentRepo.getAllDocuments();

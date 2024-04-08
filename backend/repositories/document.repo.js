@@ -12,6 +12,33 @@ const documentRepo = {
             throw error;
         }
     },
+
+    getAllDocumentsWithFilter: async (type) => {
+        console.log(type, "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL")
+
+        try {
+            let query = {};
+            if (type == "all") {
+                query = {};
+            } else if (type) {
+                query.type = type;
+            }
+            
+            if (type !== "all" && (type !== "employee") && (type !== "nonEmployee")) {
+                throw new Error("Enter valid type");
+            }
+
+            const result = await Document.findAll({
+                where: query,
+            });
+
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    },
+
+
     // getAllDocuments: async () => {
     //     try {
     //         const result = await Document.findAll();
