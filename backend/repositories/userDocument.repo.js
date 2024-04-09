@@ -5,10 +5,10 @@ import { where } from "sequelize";
 
 const userDocumentRepo = {
 
-    createUserDocument: async (documentIdList, email) => {
+    createUserDocument: async (documentIdList, email, type) => {
         try {
             await sequelize.sync();
-            const userData = await userRepo.findOrCreateUser(email);
+            const userData = await userRepo.findOrCreateUser(email, type);
 
             const sentDocuments = [];
             const alreadySentDocuments = [];

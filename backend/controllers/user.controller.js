@@ -4,8 +4,8 @@ const userController = {
 
     createUser: async (req, res) => {
         try {
-            const { email } = req.body;
-            const result = await userService.createUser(email);
+            const { email,type } = req.body;
+            const result = await userService.createUser(email, type);
             if (result.status) {
                 res.status(200).json({
                     response_code: 200,
@@ -42,7 +42,37 @@ const userController = {
             res.status(500).json({
                 response_code: 500,
                 success: false,
-                message: 'Error occurred while fetching users'
+                message: error.message
+            });
+        }
+    },
+
+    getUsersByPageAndFilter: async (req, res) => {
+        try {
+            const { page = 1, limit = 3, orderBy = 'email', sortBy = 'asc', keyword, type } = req.query;
+
+
+            const users = await userService.getUsersByPageAndFilter({
+                page: +page ? +page : 1,
+                limit: +limit ? +limit : 3,
+                orderBy,
+                sortBy,
+                keyword,
+                type
+            });
+
+            res.status(200).json(
+                {
+                    response_code: 200,
+                    success: true,
+                    users
+                });
+
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({
+                response_code: 500,
+                success: false, message: 'Error occurred while fetching users'
             });
         }
     },

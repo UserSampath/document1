@@ -11,9 +11,9 @@ cloudinary.config({
 const userDocumentController = {
     createUserDocument: async (req, res) => {
         try {
-            const { documentIdList, email } = req.body;  
+            const { documentIdList, email,type } = req.body;  
           
-            const result = await UserDocumentService.createUserDocument(documentIdList, email);
+            const result = await UserDocumentService.createUserDocument(documentIdList, email, type);
             if (result.status) {
                 res.status(200).json({
                     response_code: 200,

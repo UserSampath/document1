@@ -14,8 +14,6 @@ const documentRepo = {
     },
 
     getAllDocumentsWithFilter: async (type) => {
-        console.log(type, "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL")
-
         try {
             let query = {};
             if (type == "all") {

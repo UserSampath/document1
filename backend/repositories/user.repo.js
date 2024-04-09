@@ -1,12 +1,10 @@
 
-import { User } from "../models/model.js";
+import { User, UserDocument, Document } from "../models/model.js";
 import sequelize from "../config/db.connection.js";
 import { Op, where } from "sequelize";
-import nodemailer from "nodemailer";
-
 const userRepo = {
 
-  findOrCreateUser: async (email) => {
+  findOrCreateUser: async (email, type) => {
     try {
 
       const data = await User.findOne({
@@ -15,11 +13,10 @@ const userRepo = {
         }
       });
       if (data) {
-        console.log(data,"nnnnnnnnnnnnnnnnnnnnnnnnnnnn");
         return data;
 
       }
-      const result = await User.create({ email });
+      const result = await User.create({ email, type });
 
       return result;
     } catch (error) {
@@ -52,13 +49,73 @@ const userRepo = {
 
   getAllUsers: async () => {
     try {
-      const result = await User.findAll({
+      const users = await User.findAll({
+        include: [{
+          model: Document,
+          through: {
+            model: UserDocument,
+          }
+        }]
       });
-      return result;
+
+
+
+      return users;
     } catch (error) {
       throw error;
     }
   },
+
+  getUsersByPageAndFilter: async ({ page, limit, orderBy, sortBy, keyword, type }) => {
+
+    try {
+      const query = {};
+      if (keyword) {
+        query[Op.or] = [
+          { firstName: { [Op.startsWith]: keyword } },
+          { lastName: { [Op.startsWith]: keyword } },
+          { email: { [Op.startsWith]: keyword } },
+
+        ];
+      }
+
+      if (type) {
+        query.type = type;
+      }
+
+      const queries = {
+        offset: (page - 1) * limit,
+        limit
+      }
+
+      if (orderBy) {
+        queries.order = [[orderBy, sortBy]]
+      }
+
+      const users = await User.findAndCountAll({
+        distinct: true,
+        where: query,
+        attributes: ['id', 'firstName', 'lastName', 'email'],
+        include: [{
+          model: Document,
+          through: {
+            model: UserDocument,
+          }
+        }],
+        ...queries
+      })
+
+      return {
+        totalPages: Math.ceil(users?.count / limit),
+        totalItems: users?.count,
+        data: users?.rows
+      };
+    } catch (error) {
+      throw error;
+    }
+  },
+
+
 
 
 }

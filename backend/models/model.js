@@ -118,10 +118,16 @@ export const User = sequelize.define(
         },
         reference_no: {
             type: DataTypes.STRING,
-        }
+        },
+        type: {
+            type: DataTypes.ENUM("employee", "nonEmployee"),
+            allowNull: false,
+        },
+
     },
     {
         tableName: "Users",
+        timestamps: false
     }
 );
 
@@ -145,7 +151,8 @@ export const Document = sequelize.define(
         defaultValue: false,
         allowNull: false,
     },
-}
+},
+    { timestamps: false }
 );
 
 export const Admin = sequelize.define(
@@ -160,8 +167,10 @@ export const Admin = sequelize.define(
             allowNull: false,
         },
     },
+   
     {
         tableName: "Admin",
+        timestamps: false,
     }
 );
 
