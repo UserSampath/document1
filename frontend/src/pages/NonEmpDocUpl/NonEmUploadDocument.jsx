@@ -1,32 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import NavBar from "../../components/NavBar/Navbar";
 import SideBar from "../../components/side/SideBar";
 import Button from "../../components/Button/Button";
 import { FileUploader } from "react-drag-drop-files";
-import "./Upload.css";
+import "./NonEmpUpload.css";
 import ViewDoc from "../../components/ViewDoc/ViewDoc";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 const fileTypes = ["PDF"];
-const UploadDocument = () => {
+
+const NonEmUploadDocument = () => {
   const navigate = useNavigate();
 
-  const pageNavi = ()=> {
-    navigate("/nonEmUploadDocument");
-
-  }
+  const pageNavi = () => {
+    navigate("/UploadDocument");
+  };
 
   const [sidebarOpen, setSidebarOpen] = useState(
     localStorage.getItem("sideBarOpen") === "true"
   );
   const [employeeFile, setEmployeeFile] = useState(null);
   const [nonEmployeeFile, setNonEmployeeFile] = useState(null);
-
   const [showModal, setShowModal] = useState(false);
   const [userType, setUserType] = useState("");
-
   const [employeeDocumentSrc, setEmployeeDocumentSrc] = useState("");
   const [nonEmployeeDocumentSrc, setNonEmployeeDocumentSrc] = useState("");
 
@@ -40,120 +38,49 @@ const UploadDocument = () => {
 
   useEffect(() => {
     const getAllDocuments = async () => {
-      await axios
-        .get("http://localhost:8000/document/getAllDocuments")
-        .then((response) => {
-          if (response.data.result) {
-            response.data.result.forEach((result) => {
-              if (result.name == "employee") {
-                setEmployeeDocumentSrc(result.src);
-              }
-              if (result.name == "nonEmployee") {
-                setNonEmployeeDocumentSrc(result.src);
-              }
-            });
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      try {
+        const response = await axios.get(
+          "http://localhost:8000/document/getAllDocuments"
+        );
+        if (response.data.result) {
+          response.data.result.forEach((result) => {
+            if (result.name === "employee") {
+              setEmployeeDocumentSrc(result.src);
+            }
+            if (result.name === "nonEmployee") {
+              setNonEmployeeDocumentSrc(result.src);
+            }
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
     };
     getAllDocuments();
   }, []);
 
-  // Function to handle file upload
-  const handleEmployeeFileUpload = async (e) => {
-    if (employeeFile) {
-      const formData = new FormData();
-      formData.append("pdf", employeeFile);
-      formData.append("name", "employee");
-      await axios
-        .put("http://localhost:8000/document/updateDocument", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((Response) => {
-          console.log(Response);
-          if (Response.data.result.status) {
-            toast.success("Document update success");
-          } else {
-            toast.error("Document not updated");
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } else {
-      toast.warning("Please select a document");
-    }
-  };
+  const dummyPDFs = [
+    "https://www.pdf995.com/samples/pdf.pdf",
+    "https://www.pdf995.com/samples/pdf.pdf",
+    "https://www.pdf995.com/samples/pdf.pdf",
+    "https://www.pdf995.com/samples/pdf.pdf",
+    "https://www.pdf995.com/samples/pdf.pdf",
+    "https://www.pdf995.com/samples/pdf.pdf",
+    "https://www.pdf995.com/samples/pdf.pdf",
+    "https://www.pdf995.com/samples/pdf.pdf",
+    "https://www.pdf995.com/samples/pdf.pdf",
 
-  const handleNonEmployeeFileUpload = async (e) => {
-    if (nonEmployeeFile) {
-      const formData = new FormData();
-      formData.append("pdf", nonEmployeeFile);
-      formData.append("name", "nonEmployee");
-      await axios
-        .put("http://localhost:8000/document/updateDocument", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((Response) => {
-          console.log(Response);
-          if (Response.data.result.status) {
-            toast.success("Document update success");
-          } else {
-            toast.error("Document not updated");
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } else {
-      toast.warning("Please select a document");
-    }
-  };
+    // Add more actual PDF URLs as needed
+  ];
 
-  const onEmployeeDocumentClicked = () => {
-        if (employeeDocumentSrc) {
-          window.open(employeeDocumentSrc, "_blank");
-        } else {
-          toast.warning("Document not found");
-        }
-  };
-    const onNonEmployeeDocumentClicked = () => {
-        if (nonEmployeeDocumentSrc) {
-            window.open(nonEmployeeDocumentSrc, "_blank");
-        } else {
-            toast.warning("Document not found")
-        }
-    };
+  const chunkSize = 4; // Number of PDFs to display in each row
 
+  // Splitting the dummyPDFs array into chunks
+  const chunkedPDFs = [];
+  for (let i = 0; i < dummyPDFs.length; i += chunkSize) {
+    chunkedPDFs.push(dummyPDFs.slice(i, i + chunkSize));
+  }
 
-    const dummyPDFs = [
-      "https://www.pdf995.com/samples/pdf.pdf",
-      "https://www.pdf995.com/samples/pdf.pdf",
-      "https://www.pdf995.com/samples/pdf.pdf",
-      "https://www.pdf995.com/samples/pdf.pdf",
-      "https://www.pdf995.com/samples/pdf.pdf",
-      "https://www.pdf995.com/samples/pdf.pdf",
-      "https://www.pdf995.com/samples/pdf.pdf",
-      "https://www.pdf995.com/samples/pdf.pdf",
-      "https://www.pdf995.com/samples/pdf.pdf",
-  
-      // Add more actual PDF URLs as needed
-    ];
-  
-    const chunkSize = 4; // Number of PDFs to display in each row
-  
-    // Splitting the dummyPDFs array into chunks
-    const chunkedPDFs = [];
-    for (let i = 0; i < dummyPDFs.length; i += chunkSize) {
-      chunkedPDFs.push(dummyPDFs.slice(i, i + chunkSize));
-    }
-  
   return (
     <div>
       <SideBar setSidebarOpen={setSidebarOpen} selectedNav="Upload Document">
@@ -169,7 +96,7 @@ const UploadDocument = () => {
             <div style={{ marginLeft: "80%", marginRight: "5%" }}>
               <Button
                 type={"1"}
-                text=" Non-Employee document"
+                text=" Employee document"
                 style={{ marginLeft: "10px" }}
                 onClick={pageNavi}
                 // Add margin between button and search bar
@@ -196,7 +123,7 @@ const UploadDocument = () => {
           >
             <div style={{ width: "48%" }}> {/* Adjust width as needed */}
               <h4 style={{ textAlign: "center", color: "#3232f4" }}>
-                Employee Document Update
+                Non-Employee Document Update
               </h4>
               <div style={{marginTop:"20px"}}>
                 <FileUploader
@@ -224,7 +151,7 @@ const UploadDocument = () => {
             </div>
           </div>
           <div className="d-flex justify-content-center align-items-center mt-3">
-          <h4 style={{color: "#3232f4"}}>Past Employee Documents</h4>
+          <h4 style={{color: "#3232f4"}}>Past Non-Employee Documents</h4>
         </div>
         <div style={{ marginLeft: "40px", marginRight: "40px" }}>
   <div className="d-flex flex-wrap mt-3 justify-content-between">
@@ -269,4 +196,4 @@ const UploadDocument = () => {
   );
 };
 
-export default UploadDocument;
+export default NonEmUploadDocument;

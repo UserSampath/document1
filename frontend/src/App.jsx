@@ -9,7 +9,8 @@ import Document from "./pages/Document/Document";
 import SendInvitaion from "./pages/Invitation/SendInvitaion";
 import DocumentNotFound from "./pages/DocumentNotFound/DocumentNotFound";
 import UploadDocument from "./pages/UploadDoc/UploadDocument";
-
+import NonEmUploadDocument from "./pages/NonEmpDocUpl/NonEmUploadDocument";
+NonEmUploadDocument
 function App() {
   return (
     <AuthProvider>
@@ -21,7 +22,9 @@ function App() {
           <Route path="/" element={<SendInvitaion />}></Route>
           <Route path="/Settings" element={<Settings />}></Route>
           <Route path="/AcceptedUsers" element={<UserManagement />}></Route>
-
+          <Route
+            path="/nonEmUploadDocument"
+            element={<NonEmUploadDocument />}></Route>
           <Route
             path="/documentNotFound"
             element={<DocumentNotFound />}></Route>

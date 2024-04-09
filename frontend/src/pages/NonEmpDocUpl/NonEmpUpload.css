@@ -1,0 +1,18 @@
+
+.uploadData{
+    margin-left:50px;
+}
+
+.document_update_button :hover{
+     background-color: #4a4aff; 
+  transform: scale(1.03);
+  border-radius: 5px !important;
+  cursor: pointer;
+}
+
+.document_view_button:hover{
+     background-color: #076205; 
+  transform: scale(1.01);
+  border-radius: 5px !important;
+  cursor: pointer;
+}
