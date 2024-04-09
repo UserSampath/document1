@@ -187,5 +187,12 @@ export const UserDocument = sequelize.define(
 }
 );
 
-Document.belongsToMany(User, { through: 'UserDocument' });
-User.belongsToMany(Document, { through: 'UserDocument' });
+Document.belongsToMany(User, {
+    through: 'UserDocument',
+    onDelete: 'CASCADE'
+});
+
+User.belongsToMany(Document, {
+    through: 'UserDocument',
+    onDelete: 'CASCADE'
+});
