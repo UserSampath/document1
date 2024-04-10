@@ -14,8 +14,6 @@ const documentRepo = {
     },
 
     getAllDocumentsWithFilter: async (type) => {
-        console.log(type, "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL")
-
         try {
             let query = {};
             if (type == "all") {
@@ -23,7 +21,7 @@ const documentRepo = {
             } else if (type) {
                 query.type = type;
             }
-            
+
             if (type !== "all" && (type !== "employee") && (type !== "nonEmployee")) {
                 throw new Error("Enter valid type");
             }
@@ -38,68 +36,39 @@ const documentRepo = {
         }
     },
 
+    updateDocument: async (id, name, src, is_need_attachment, type) => {
+        try {
+            console.log(id, name, is_need_attachment, type);
 
-    // getAllDocuments: async () => {
-    //     try {
-    //         const result = await Document.findAll();
-    //         return result;
-    //     } catch (error) {
-    //         throw error;
-    //     }
-    // },
-    // getDocumentById: async (id) => {
-    //     try {
-    //         const result = await Document.findOne({
-    //             where: {
-    //                 id
-    //             },
-    //         });
-    //         return result;
-    //     } catch (error) {
-    //         throw error;
+            const document = await Document.findByPk(id);
+            if (!document) {
+                throw new Error("Document not found");
+            }
+           await Document.update({
+                name, src, is_need_attachment, type
+            }, { where: { id } });
+            const result = await Document.findOne({
+                where: { id }
+            });
+            return result;
 
-    //     }
-    // },
-    // updateDocument: async (name, src) => {
-    //     try {
-    //         const updatedRaws = await Document.update({
-    //             src
-    //         }, { where: { name } });
-    //         if (updatedRaws > 0) {
-    //             const result = await Document.findOne({
-    //                 where:{name}
-    //             });
-    //             return result;
-    //         }
-    //     } catch (error) {
-    //         throw error;
-    //     }
-    // },
-    // deleteDocumentById: async (id) => {
-    //     try {
-    //         const result = await Document.destroy({
-    //             where: {
-    //                 id
-    //             }
-    //         })
-    //         return result;
-    //     } catch (error) {
-    //         throw error;
-    //     }
-    // },
-    // getDocumentByName: async (name) => {
-    //     try {
-    //         const result = await Document.findOne({
-    //             where: {
-    //                 name
-    //             },
-    //         });
-    //         return result;
-    //     } catch (error) {
-    //         throw error;
+        } catch (error) {
+            throw error;
+        }
+    },
 
-    //     }
-    // },
+    deleteDocumentById: async (id) => {
+        try {
+            const result = await Document.destroy({
+                where: {
+                    id
+                }
+            })
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    },
 
 }
 

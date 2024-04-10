@@ -2,10 +2,10 @@ import userDocumentRepo from "../repositories/userDocument.repo.js";
 
 
 const UserDocumentService = {
-    createUserDocument: async (documentIdList, email) => {
+    createUserDocument: async (documentIdList, email, type) => {
 
         try {
-            const result = await userDocumentRepo.createUserDocument(documentIdList, email);
+            const result = await userDocumentRepo.createUserDocument(documentIdList, email, type);
             if (result) {
                 return { status: true, message: "User document created successfully", result }
             } else {

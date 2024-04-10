@@ -32,62 +32,36 @@ const documentService = {
         }
 
     },
-    // getAllDocuments: async () => {
-    //     try {
-    //         const result = await documentRepo.getAllDocuments();
-    //         return result;
-    //     } catch (error) {
-    //         throw error;
-    //     }
-    // },
 
-    // getDocumentByName: async (id) => {
-    //     try {
-    //         const result = await documentRepo.getDocumentById(id);
-    //         return result;
-    //     } catch (error) {
-    //         throw error;
-    //     }
-    // },
+    updateDocument: async (id, name, src, is_need_attachment, type) => {
+        try {
 
-    // updateDocument: async (name, src) => {
-    //     try {
+            const result = await documentRepo.updateDocument(id, name, src, is_need_attachment, type);
+            if (result) {
+                return {
+                    status: true,
+                    message: "document updated successfully",
+                    result
+                }
+            } else {
+                return {
+                    status: false,
+                    message: "document not updated",
+                }
+            }
 
-    //         const result = await documentRepo.updateDocument(name, src);
-    //         if (result) {
-    //             return {
-    //                 status: true,
-    //                 message: "document updated successfully",
-    //                 result
-    //             }
-    //         } else {
-    //             return {
-    //                 status: false,
-    //                 message: "document not updated",
-    //             }
-    //         }
-
-    //     } catch (error) {
-    //         throw error;
-    //     }
-    // },
-
-    // deleteDocumentById: async (id) => {
-    //     try {
-    //         const result = await documentRepo.deleteDocumentById(id);
-    //         return result > 0;
-    //     } catch (error) {
-    //         throw error;
-    //     }
-    // },
-    // getDocumentByName: async (name) => {
-    //     try {
-    //         const result = await documentRepo.getDocumentByName(name);
-    //         return result;
-    //     } catch (error) {
-    //         throw error;
-    //     }
-    // },
+        } catch (error) {
+            throw error;
+        }
+    },
+    deleteDocumentById: async (id) => {
+        try {
+            const result = await documentRepo.deleteDocumentById(id);
+            return result > 0;
+        } catch (error) {
+            throw error;
+        }
+    },
 
 }
 export default documentService;

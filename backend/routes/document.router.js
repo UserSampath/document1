@@ -3,23 +3,14 @@ import express from "express";
 import adminAuthentication from "../middleware/adminAuthentication.js";
 import multer from 'multer';
 
-// Configure multer to handle file uploads
 const upload = multer({ dest: '/' });
 const router = express.Router();
 
 
 router.post("/createDocument", documentController.createDocument);
 router.get("/getAllDocumentsWithFilter/:type", documentController.getAllDocumentsWithFilter);
-
-// router.get("/getAllDocuments", documentController.getAllDocuments);
-// router.get("/getDocumentById", documentController.getDocumentById);
-// router.put("/updateDocument", documentController.updateDocument);
-
-// router.get("/getDocumentByName/:name", documentController.getDocumentByName);
-
-// router.put("/updateDocument", documentController.updateDocument);
-
-
+router.put("/updateDocument", documentController.updateDocument);
+router.delete("/deleteDocumentById/:id", documentController.deleteDocumentById);
 
 
 export default router;  
