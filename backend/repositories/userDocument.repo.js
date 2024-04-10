@@ -2,6 +2,7 @@ import { Document, UserDocument } from "../models/model.js";
 import sequelize from "../config/db.connection.js"
 import userRepo from "./user.repo.js"
 import { where } from "sequelize";
+import sendEmail from "../config/EmailSend/sendEmail.js";
 
 const userDocumentRepo = {
 
@@ -30,6 +31,13 @@ const userDocumentRepo = {
                 const result = await UserDocument.create({ DocumentId: documentId, UserId: userData.id });
                 sentDocuments.push(result);
             }
+
+            const message = `You have ${sentDocuments.length} documents from COMPANY_NAME.
+                http://localhost:5173/userDocuments/${userData.id}
+                `
+
+
+            sendEmail(email, message)
 
             return { sentDocuments, alreadySentDocuments };
         } catch (error) {

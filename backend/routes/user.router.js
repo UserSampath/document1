@@ -12,6 +12,8 @@ const upload = multer({ dest: '/' });
 router.post("/createUser", userController.createUser);
 router.get("/getAllUsers", userController.getAllUsers);
 router.get("/getUsersByPageAndFilter", userController.getUsersByPageAndFilter);
+router.get("/getDocumentsOfUser/:id", userController.getDocumentsOfUser);
+
 
 
 

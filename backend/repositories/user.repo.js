@@ -2,6 +2,7 @@
 import { User, UserDocument, Document } from "../models/model.js";
 import sequelize from "../config/db.connection.js";
 import { Op, where } from "sequelize";
+import { v4 as uuidv4 } from 'uuid';
 const userRepo = {
 
   findOrCreateUser: async (email, type) => {
@@ -16,7 +17,7 @@ const userRepo = {
         return data;
 
       }
-      const result = await User.create({ email, type });
+      const result = await User.create({ id: uuidv4(), email, type });
 
       return result;
     } catch (error) {
@@ -115,6 +116,29 @@ const userRepo = {
     }
   },
 
+
+
+  getDocumentsOfUser: async (id) => {
+    try {
+      const users = await User.findOne({
+        include: [{
+          model: Document,
+          through: {
+            model: UserDocument,
+            where: { is_agreed: false } 
+          },
+        }]
+        ,
+        where: {
+          id
+        }
+      });
+
+      return users;
+    } catch (error) {
+      throw error;
+    }
+  },
 
 
 

@@ -18,7 +18,9 @@ function App() {
         <Routes>
           <Route path="/login" element={<SignIn />}></Route>
           <Route path="/document/:userId" element={<Document />}></Route>
-          <Route path="/userDocuments/" element={<UserDocuments />}></Route>
+          <Route
+            path="/userDocuments/:userId"
+            element={<UserDocuments />}></Route>
 
           <Route path="/UploadDocument" element={<UploadDocument />}></Route>
           <Route path="/" element={<SendInvitaion />}></Route>

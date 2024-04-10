@@ -5,8 +5,27 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import DocumentCard from "../../components/DocumentCard/DocumentCard";
+import axios from "axios";
 const UserDocuments = () => {
   const { userId } = useParams();
+  const [documents, setDocuments] = useState([]);
+
+  useEffect(() => {
+    const fetchDocuments = async () => {
+      await axios
+        .get(`http://localhost:8000/user/getDocumentsOfUser/${userId}`)
+        .then((response) => {
+          console.log(response.data.result.Documents);
+          if (response.data.success) {
+            setDocuments(response.data.result.Documents);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+    fetchDocuments();
+  }, [userId]);
 
   const navigate = useNavigate();
   return (
@@ -22,12 +41,14 @@ const UserDocuments = () => {
         <div
           className=" d-flex  justify-content-center "
           style={{ flexWrap: "wrap" }}>
-          <DocumentCard name={"Employee Details Document"} />
-          <DocumentCard name={"Employee Document"} />
-          <DocumentCard name={"Employee Details Document"} />
-          <DocumentCard name={"Employee Details Document"} />
-          <DocumentCard name={"Employee Details Document"} />
-          <DocumentCard name={"Employee Details Document"} />
+          {documents &&
+            documents.map((document,key) => {
+              return (
+                <div key={key}>
+                  <DocumentCard name={document.name} />;
+                </div>
+              );
+            })}
         </div>
       </div>
     </div>
