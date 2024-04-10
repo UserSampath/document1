@@ -1,0 +1,41 @@
+.documentBackground {
+  background: radial-gradient(
+    ellipse at 36% 63%,
+    rgba(90, 236, 255, 1) 21%,
+    rgba(255, 255, 255, 1) 60%,
+    rgba(177, 255, 180, 1) 100%
+  );
+}
+
+.document_container {
+  backdrop-filter: blur(5px);
+  background-color: #c5c5c566;
+  border-radius: 10px;
+}
+
+.pdf-Card {
+  width: 200px;
+  background: linear-gradient(
+    358deg,
+    rgba(183, 255, 243, 1) 0%,
+    rgba(255, 255, 255, 1) 100%
+  );
+  border-radius: 6px;
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.178);
+  border: 1px solid white;
+  transition: ease-in-out 30ms;
+}
+
+.pdf-Card:hover {
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(140, 255, 236, 1) 0%,
+    rgba(255, 255, 255, 1) 100%
+  );
+
+  width: 200px;
+  border-radius: 6px;
+  box-shadow: 0 8px 10px rgba(39, 103, 240, 0.178);
+  border: 1px solid rgb(196, 196, 196);
+  cursor: pointer;
+}
