@@ -8,7 +8,8 @@ import ViewDoc from "../../components/ViewDoc/ViewDoc";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-
+import { ImFilePdf } from "react-icons/im";
+import Pdf from "../../../image/Pdf.png";
 const fileTypes = ["PDF"];
 const UploadDocument = () => {
   const navigate = useNavigate();
@@ -132,27 +133,34 @@ const UploadDocument = () => {
     };
 
 
-    const dummyPDFs = [
-      "https://www.pdf995.com/samples/pdf.pdf",
-      "https://www.pdf995.com/samples/pdf.pdf",
-      "https://www.pdf995.com/samples/pdf.pdf",
-      "https://www.pdf995.com/samples/pdf.pdf",
-      "https://www.pdf995.com/samples/pdf.pdf",
-      "https://www.pdf995.com/samples/pdf.pdf",
-      "https://www.pdf995.com/samples/pdf.pdf",
-      "https://www.pdf995.com/samples/pdf.pdf",
-      "https://www.pdf995.com/samples/pdf.pdf",
+    
   
-      // Add more actual PDF URLs as needed
-    ];
+    const [pastEmployeeDocuments, setPastEmployeeDocuments] = useState([
+      {
+        id: 1,
+        name: "Document 1",
+        date: "2024-04-01",
+        link:"https://www.pdf995.com/samples/pdf.pdf"
+      },
+      {
+        id: 2,
+        name: "Document 2",
+        date: "2024-04-02",
+        link:"https://www.pdf995.com/samples/pdf.pdf"
+
+      },
+      {
+        id: 3,
+        name: "Document 3",
+        date: "2024-04-03",
+        link:"https://www.pdf995.com/samples/pdf.pdf"
+
+      },
+    ]);
   
-    const chunkSize = 4; // Number of PDFs to display in each row
-  
-    // Splitting the dummyPDFs array into chunks
-    const chunkedPDFs = [];
-    for (let i = 0; i < dummyPDFs.length; i += chunkSize) {
-      chunkedPDFs.push(dummyPDFs.slice(i, i + chunkSize));
-    }
+    const onDeleteDocument = (documentId) => {
+      // Implement delete functionality here
+    };
   
   return (
     <div>
@@ -184,12 +192,11 @@ const UploadDocument = () => {
                 borderRadius: "10px",
               }}
             >
-                        <div >
-                        <div
+               <div >
+             <div
             className="d-flex justify-content-center align-items-center"
             style={{
-              margin: "1px 100px",
-              padding: "50px 0px",
+              padding: "30px 0px",
               backgroundColor: "#f0f0f0", // Change background color here
               borderRadius: "10px",
             }}
@@ -204,7 +211,7 @@ const UploadDocument = () => {
                   name="file"
                   types={fileTypes}
                 />
-                <div style={{marginLeft:"250px",marginRight:"50px",marginTop:"25px"}}>
+                <div style={{marginLeft:"200px",marginTop:"25px"}}>
                   <div
                         className="document_update_button"
                         style={{
@@ -216,7 +223,7 @@ const UploadDocument = () => {
                         }}>
                         <div style={{ padding: "6px 12px", color: "white" }}>
                           {" "}
-                          Update
+                          Upload
                         </div>
                       </div>
                       </div>
@@ -224,36 +231,89 @@ const UploadDocument = () => {
             </div>
           </div>
           <div className="d-flex justify-content-center align-items-center mt-3">
-          <h4 style={{color: "#3232f4"}}>Past Employee Documents</h4>
+          <h4 style={{color: "#3232f4"}}> Employee Documents</h4>
         </div>
-        <div style={{ marginLeft: "40px", marginRight: "40px" }}>
-  <div className="d-flex flex-wrap mt-3 justify-content-between">
-    {chunkedPDFs.map((chunk, index) => (
-      <div key={index} className="row mb-3">
-        {chunk.map((pdf, innerIndex) => (
-          <div key={innerIndex} className={`col-md-${chunk.length === 1 ? '12' : '3'}`}>
-            <div style={{ position: 'relative' }}>
-              <embed
-                style={{
-                  width: "100%",
-                  height: "300px", // Adjust the height as needed
-                  border: "none",
-                  cursor:'pointer'
-                }}
-                src={pdf}
-                type="application/pdf"
-              />
-              <div style={{ position: 'absolute', bottom: 0, width: '100%', background: 'rgba(255, 255, 255, 0.7)', textAlign: 'center', padding: '5px', display: 'none',cursor:'pointer' }}>
-                {pdf.substring(pdf.lastIndexOf('/') + 1)}
-              </div>
+        <div>
+      {pastEmployeeDocuments.map((document) => (
+        <div key={document.id} style={{ width: "800px" }}>
+          <div
+            style={{
+              border: "1px solid #ccc",
+              borderRadius: "5px",
+              padding: "25px",
+              display: "flex",
+              alignItems: "center",
+              marginBottom:"10px",
+              marginTop:"10px",
+              boxShadow: "0 2px 4px rgba(0,0,0,0.1)", // Added box shadow
+            }}
+          >
+            <img src={Pdf} style={{ width: "50px", marginRight: "10px",fontSize:"40px"}} />
+            <div style={{ flex: 1, textAlign: "center" ,  
+              alignItems: "center", gap:"5px",justifyContent:"center"}}>
+              <p>{document.name}</p>
             </div>
-          </div>
-        ))}
-      </div>
-    ))}
-  </div>
-        </div>
-                 </div>
+                <div style={{ flex: 1, textAlign: "center" ,  
+                  alignItems: "center", gap:"5px",justifyContent:"center"}}>
+                  <p>Attachment Need</p>
+                </div>
+                <div style={{marginLeft:"35px",     display: "flex",
+                  alignItems: "center", gap:"15px"}}>
+                    <div
+                        className="document_update_button"
+                        style={{
+                          backgroundColor: " #008000                         ",
+                          borderRadius: "5px",
+                          transition: "0.5s ease-in-out",
+                          boxShadow: " #008000                         ",
+                          textAlign: "center"
+                        }}>
+                        <div style={{ padding: "6px 12px", color: "white" }}>
+                          {" "}
+                          Update 
+                        </div>
+                      </div>
+
+                      <div
+                      className="document_preview_button"
+                      style={{
+                        backgroundColor: "#3232f4",
+                        borderRadius: "5px",
+                        transition: "0.5s ease-in-out",
+                        boxShadow: "#3232f4",
+                        textAlign: "center"
+                      }}
+                    >
+                      <a
+                        href={document.link}
+                        target="_blank"
+                        rel="noreferrer"
+                        style={{ display: "block", color: "white", textDecoration: "none", padding: "6px 12px" }}
+                      >
+                        Preview
+                      </a>
+                    </div>
+
+                     <div
+                        className="document_delete_button"
+                        style={{
+                          backgroundColor: "#ff0000                          ",
+                          borderRadius: "5px",
+                          transition: "0.5s ease-in-out",
+                          boxShadow: "#ff0000                          ",
+                          textAlign: "center"
+                        }}>
+                        <div style={{ padding: "6px 12px", color: "white" }}>
+                          {" "}
+                          Delete 
+                        </div>
+                        </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
