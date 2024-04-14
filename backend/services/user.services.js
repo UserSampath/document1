@@ -38,6 +38,15 @@ const userService = {
     }
   },
 
+  getDocumentsOfUser: async (id) => {
+    try {
+      const result = await userRepo.getDocumentsOfUser(id);
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  },
+
 }
 
 export default userService;
