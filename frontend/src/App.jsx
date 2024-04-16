@@ -17,7 +17,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<SignIn />}></Route>
-          <Route path="/document/:userId" element={<Document />}></Route>
+          <Route path="/document/:userId/:documentId" element={<Document />}></Route>
           <Route
             path="/userDocuments/:userId"
             element={<UserDocuments />}></Route>

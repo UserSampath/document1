@@ -1,8 +1,17 @@
 import React from "react";
 import Pdf from "./../../images/pdf.png";
-const DocumentCard = ({ name }) => {
+import { useNavigate } from "react-router-dom";
+const DocumentCard = ({ document, userId }) => {
+  const navigate = useNavigate();
+
+  const clickedDocumentCard = () => {
+    navigate(`/document/${userId}/${document.id}`);
+  };
+
   return (
-    <div className=" d-flex  justify-content-center pdf-Card  m-2">
+    <div
+      className=" d-flex  justify-content-center pdf-Card  m-2"
+      onClick={clickedDocumentCard}>
       <div className="  d-flex justify-content-center py-2">
         <div
           style={{
@@ -21,10 +30,10 @@ const DocumentCard = ({ name }) => {
               wordWrap: "break-word",
               lineHeight: "1.1",
             }}>
-            {name}
+            {document.name}
           </div>
         </div>
-      </div>
+      </div>  
     </div>
   );
 };

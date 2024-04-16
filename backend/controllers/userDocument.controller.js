@@ -99,6 +99,37 @@ const userDocumentController = {
 
             });
         }
+    },
+
+    getDocumentDataWithUser: async (req, res) => {
+        const { DocumentId, UserId } = req.params;
+        try {
+            const result = await UserDocumentService.getDocumentDataWithUser(DocumentId, UserId);
+
+            if (result) {
+                res.status(200).json({
+                    response_code: 200,
+                    success: true,
+                    message: 'get document successfully',
+                    result
+                });
+
+            } else {
+                res.status(404).json({
+                    response_code: 404,
+                    success: false,
+                    message: 'document not found'
+                });
+
+            }
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({
+                response_code: 500,
+                success: false, message: 'Error occurred while getting document',
+
+            });
+        }
     }
 }
 

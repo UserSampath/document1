@@ -15,9 +15,10 @@ const UserDocuments = () => {
       await axios
         .get(`http://localhost:8000/user/getDocumentsOfUser/${userId}`)
         .then((response) => {
-          console.log(response.data.result.Documents);
+          console.log(response.data.result);
           if (response.data.success) {
             setDocuments(response.data.result.Documents);
+        
           }
         })
         .catch((error) => {
@@ -42,13 +43,20 @@ const UserDocuments = () => {
           className=" d-flex  justify-content-center "
           style={{ flexWrap: "wrap" }}>
           {documents &&
-            documents.map((document,key) => {
+            documents.map((document, key) => {
               return (
                 <div key={key}>
-                  <DocumentCard name={document.name} />;
+                  <DocumentCard document={document} userId={userId} />
                 </div>
               );
             })}
+
+          {!documents ||
+            (documents.length == 0 && (
+              <div>
+                <h3>No any documents found</h3>
+              </div>
+            ))}
         </div>
       </div>
     </div>

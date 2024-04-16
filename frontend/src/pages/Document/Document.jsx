@@ -5,7 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 const Document = () => {
-  const { userId } = useParams();
+  const { userId, documentId } = useParams();
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -15,7 +15,6 @@ const Document = () => {
   const [employeeStatus, setEmployeeStatus] = useState("");
   const [src, setSrc] = useState("");
   const [agree, setAgree] = useState(false);
-
   const [firstNameError, setFirstNameError] = useState("");
   const [lastNameError, setLastNameError] = useState("");
   const [phoneError, setPhoneError] = useState("");
@@ -25,24 +24,9 @@ const Document = () => {
 
   useEffect(() => {
     const getUserData = async () => {
-      await axios
-        .get(`http://localhost:8000/docmentReq/getByID/${userId}`)
-        .then((response) => {
-          console.log(response);
-          if (!response.data.success) {
-            navigate("/documentNotFound");
-          }
-          if (response.data.result.is_agreed) {
-            toast.warning("You have already agreed");
-          }
-          // console.log(response);
-          setEmail(response.data.result.email);
-          setEmployeeStatus(response.data.result.employeeStatus);
-        })
-        .catch((err) => {
-          console.log(err);
-          navigate("/documentNotFound");
-        });
+
+      console.log(userId, documentId,"LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
+      
     };
 
     getUserData();
@@ -50,18 +34,7 @@ const Document = () => {
 
   useEffect(() => {
     const getPdf = async () => {
-      await axios
-        .get(
-          `http://localhost:8000/document/getDocumentByName/${employeeStatus}`
-        )
-        .then((response) => {
-          if (response.data.success) {
-            setSrc(response.data.result.src);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+     
     };
 
     if (employeeStatus) {

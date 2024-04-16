@@ -1,4 +1,4 @@
-import { Document, UserDocument } from "../models/model.js";
+import { Document, User, UserDocument } from "../models/model.js";
 import sequelize from "../config/db.connection.js"
 import userRepo from "./user.repo.js"
 import { where } from "sequelize";
@@ -74,7 +74,8 @@ const userDocumentRepo = {
                 is_agreed,
                 attachment
             },
-                {where: {
+                {
+                    where: {
                         DocumentId: documentId,
                         UserId: userId
                     },
@@ -105,6 +106,42 @@ const userDocumentRepo = {
                 }
             })
             return result;
+        } catch (error) {
+            throw error;
+        }
+    },
+
+    getDocumentDataWithUser: async (DocumentId, UserId) => {
+        console.log("cccccccccccccccccccccccccccccxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", DocumentId, UserId)
+
+
+        try {
+
+            const userDocument = await UserDocument.findOne({
+                where: {
+                    DocumentId,
+                    UserId
+                },
+
+            })
+
+            const user = await User.findOne({
+                where: {
+                    id: UserId
+                },
+
+            });
+
+            const document = await Document.findOne({
+                where: {
+                    id: DocumentId
+                },
+
+            })
+
+
+            return { userDocument, user, document };
+
         } catch (error) {
             throw error;
         }

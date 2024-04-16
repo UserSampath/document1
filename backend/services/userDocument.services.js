@@ -34,11 +34,20 @@ const UserDocumentService = {
         }
 
     },
-   
+
     deleteUserDocumentById: async (DocumentId, UserId) => {
         try {
             const result = await userDocumentRepo.deleteUserDocumentById(DocumentId, UserId);
             return result > 0;
+        } catch (error) {
+            throw error;
+        }
+    },
+
+    getDocumentDataWithUser: async (DocumentId, UserId) => {
+        try {
+            const result = await userDocumentRepo.getDocumentDataWithUser(DocumentId, UserId);
+            return result;
         } catch (error) {
             throw error;
         }
