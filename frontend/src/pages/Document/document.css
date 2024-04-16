@@ -49,3 +49,6 @@
   display: none;
 }
 
+.email-input :hover{
+  cursor: not-allowed !important;
+}

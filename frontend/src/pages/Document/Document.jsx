@@ -23,24 +23,60 @@ const Document = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const getUserData = async () => {
+    const getUserAndDocumentData = async () => {
+      
+      await axios.get(
+        `http://localhost:8000/userDocument/getDocumentDataWithUser/${documentId}/${userId}`
+      ).then(res => {
+        console.log(res.data.result);
+        if (!res.data.result.userDocument || !res.data.result.document || !res.data.result.user) {
+          toast.error("cant find user and document");
+        } else {
+          setEmail(res.data.result.user.email);
+          // Assuming res.data.result.user is the response object
+          setFirstName(
+            res.data.result.user.firstName !== null
+              ? res.data.result.user.firstName
+              : firstName
+          );
+          setLastName(
+            res.data.result.user.lastName !== null
+              ? res.data.result.user.lastName
+              : lastName
+          );
+           setPhone(
+             res.data.result.user.phone !== null
+               ? res.data.result.user.phone
+               : phone
+          );
+           setReferenceNo(
+             res.data.result.user.reference_no !== null
+               ? res.data.result.user.reference_no
+               : referenceNo
+          );
+          
+           setEmployeeStatus(
+             res.data.result.user.type == "employee"
+               ? "employee"
+               : "nonEmployee"
+          );
+          
+              setSrc(
+                res.data.result.document.src !== null
+                  ? res.data.result.document.src
+                  :""
+              );
+        }
 
-      console.log(userId, documentId,"LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
+      }).catch(err => {
+        console.log(err);
+          toast.error(err.response.data.error);
+      })
       
     };
 
-    getUserData();
+    getUserAndDocumentData();
   }, [userId]);
-
-  useEffect(() => {
-    const getPdf = async () => {
-     
-    };
-
-    if (employeeStatus) {
-      getPdf();
-    }
-  }, [employeeStatus]);
 
   const submitDocument = async () => {
     if (!firstName) {
@@ -168,7 +204,7 @@ const Document = () => {
                 style={{ width: "60px", fontWeight: "600", color: "#333334" }}>
                 Email
               </div>
-              <div className="inputLine2 inputLine3">
+              <div className="inputLine2 inputLine3 email-input">
                 <input
                   value={email}
                   className="input"

@@ -112,9 +112,7 @@ const userDocumentRepo = {
     },
 
     getDocumentDataWithUser: async (DocumentId, UserId) => {
-        console.log("cccccccccccccccccccccccccccccxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", DocumentId, UserId)
-
-
+    
         try {
 
             const userDocument = await UserDocument.findOne({
@@ -138,8 +136,6 @@ const userDocumentRepo = {
                 },
 
             })
-
-
             return { userDocument, user, document };
 
         } catch (error) {
