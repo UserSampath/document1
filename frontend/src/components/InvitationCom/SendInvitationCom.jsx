@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Modal, Button, Form } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Modal, Button, Form, FormGroup, FormCheck } from 'react-bootstrap';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -9,10 +9,33 @@ const SendInvitationCom = ({ handleClose, show, setShow, updateInvitations }) =>
   const [email, setEmail] = useState('');
   const [employeeStatus, setEmployeeStatus] = useState('');
   const [selectedPDFs, setSelectedPDFs] = useState([]);
+  const [documents, setDocuments] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    async function fetchDocuments() {
+      console.log(employeeStatus);
+      try {
+        if (employeeStatus) {
+          const response = await axios.get(`${backendUrl}/document/getAllDocumentsWithFilter/${employeeStatus}`);
+          console.log(response.data.result.result);
+          if (response.status === 200) {
+            setDocuments(response.data.result.result);
+          } else {
+            setError('Failed to fetch documents');
+          }
+        }
+      } catch (error) {
+        setError('Failed to fetch documents');
+      }
+    }
+
+    fetchDocuments();
+  }, [employeeStatus]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log(selectedPDFs)
     try {
       if (!email || !employeeStatus || selectedPDFs.length === 0) {
         toast.error("Please fill in all fields");
@@ -21,11 +44,11 @@ const SendInvitationCom = ({ handleClose, show, setShow, updateInvitations }) =>
 
       const requestEmail = {
         email: email,
-        employeeStatus: employeeStatus,
-        selectedPDFs: selectedPDFs // Include selected PDFs in the request
+        type: employeeStatus,
+        documentIdList: selectedPDFs // Extract only the IDs from selectedPDFs
       };
       const response = await axios.post(
-        `${backendUrl}/docmentReq/createDocReq`,
+        `${backendUrl}/userDocument/createUserDocument`,
         requestEmail
       );
       if (response.status === 200) {
@@ -44,31 +67,12 @@ const SendInvitationCom = ({ handleClose, show, setShow, updateInvitations }) =>
     }
   };
 
-  // Dummy PDF names
-  const pdfNames = ['PDF 1', 'PDF 2', 'PDF 3'];
-
-  // Render checkboxes based on selected employee status
-  const renderPDFCheckboxes = () => {
-    return pdfNames.map((pdf, index) => (
-      <Form.Check
-        key={index}
-        type="checkbox"
-        id={`pdf-checkbox-${index}`}
-        label={pdf}
-        onChange={(e) => handlePDFCheckboxChange(pdf, e.target.checked)}
-        style={{marginTop: '10px'}}
-      />
-    ));
-  };
-
-  // Handle PDF checkbox change
-  const handlePDFCheckboxChange = (pdf, isChecked) => {
-    if (isChecked) {
-      setSelectedPDFs((prevSelectedPDFs) => [...prevSelectedPDFs, pdf]);
+  const handleCheckboxChange = (e) => {
+    const { value, checked } = e.target;
+    if (checked) {
+      setSelectedPDFs(prevSelectedPDFs => [...prevSelectedPDFs, value]);
     } else {
-      setSelectedPDFs((prevSelectedPDFs) =>
-        prevSelectedPDFs.filter((selectedPDF) => selectedPDF !== pdf)
-      );
+      setSelectedPDFs(prevSelectedPDFs => prevSelectedPDFs.filter(pdf => pdf !== value));
     }
   };
 
@@ -94,8 +98,20 @@ const SendInvitationCom = ({ handleClose, show, setShow, updateInvitations }) =>
               </Form.Control>
             </Form.Group>
 
-            {renderPDFCheckboxes()}
-
+            <Form.Group controlId="formSelectedPDFs">
+              <Form.Label>Select Documents</Form.Label>
+              {documents.map((doc, index) => (
+                <FormGroup key={index} controlId={`checkbox_${doc.id}`}>
+                  <FormCheck
+                    type="checkbox"
+                    id={`checkbox_${doc.id}`}
+                    label={doc.name}
+                    value={doc.id}
+                    onChange={handleCheckboxChange}
+                  />
+                </FormGroup>
+              ))}
+            </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
