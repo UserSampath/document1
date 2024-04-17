@@ -17,7 +17,7 @@ const SendInvitation = () => {
     );
     const [searchText, setSearchText] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
-    const [DocReqs, setDocReq] = useState([]);
+    const [users, setUsers] = useState([]);
     // Dummy user data
 
 
@@ -32,27 +32,27 @@ const SendInvitation = () => {
 
       const fetchDocData = async() =>{
         await axios
-        .get(`${backendUrl}/docmentReq/getReqDocByPage`, {
-          params: {
-            limit: 10,
-            page: currentPage,
-            sortBy: "asc",
-            keyword: searchText,
-          }
-        })
-        .then((res) => {
-          if (res.data.success) {
-            setDocReq(res.data.requirmentDoc);
-
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+          .get(`${backendUrl}/user/getUsersByPageAndFilter`, {
+            params: {
+              limit: 10,
+              page: currentPage,
+              sortBy: "asc",
+              keyword: searchText,
+            },
+          })
+          .then((res) => {
+            if (res.data.success) {
+              setUsers(res.data.users);
+              console.log(res.data.users)
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       }
 
       const updateInvitations = (newInvitation) => {
-        setDocReq([newInvitation, ...DocReqs]);
+        setUsers([newInvitation, ...users]);
       };
 
     return (
@@ -71,7 +71,7 @@ const SendInvitation = () => {
                   <Pagination
                     currentPage={currentPage}
                     setCurrentPage={setCurrentPage}
-                    totalPages={DocReqs.totalPages ? DocReqs.totalPages : 1}
+                    totalPages={users.totalPages ? users.totalPages : 1}
                   />
                   <div
                     style={{
@@ -79,9 +79,9 @@ const SendInvitation = () => {
                       color: "gray",
                       paddingTop: "5px",
                     }}>
-                    {DocReqs.totalPages !== 0
+                    {users.totalPages !== 0
                       ? `${currentPage} of ${
-                          DocReqs.totalPages ? DocReqs.totalPages : 1
+                          users.totalPages ? users.totalPages : 1
                         } pages`
                       : "No ReqDoc available"}
                   </div>
@@ -121,33 +121,36 @@ const SendInvitation = () => {
                           height: "35px",
                           color: "#000000dd",
                           fontWeight: "600",
-                          padding: "5px 0px 5px 0px",
+                          padding: "5px 10px 5px 12px",
                           marginBottom: "5px",
                         }}>
-                        <div className="col-4 ">
-                          <div
-                            style={{ paddingLeft: "45px" }}
-                            className=" d-flex justify-content-center">
+                        <div className="col-3 ">
+                          <div style={{}} className="">
                             Email
                           </div>
                         </div>
-                        <div className="col-4 d-flex justify-content-center">
+                        <div className="col-3 d-flex justify-content-center">
                           Employee Status
                         </div>
                         <div
-                          className="col-4 d-flex justify-content-center"
-                          style={{ paddingLeft: "10px" }}>
-                          Is Agreed{" "}
+                          className="col-3 d-flex justify-content-center"
+                          style={{}}>
+                          Pending Documents
+                        </div>
+                        <div
+                          className="col-3 d-flex justify-content-center"
+                          style={{}}>
+                          Accepted Documents
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  {DocReqs.data?.map((DocReq, index) => {
+                  {users.data?.map((user, index) => {
                     return (
                       <Invites
                         key={index}
-                        DocReq={DocReq}
+                        user={user}
                         fetchDocData={fetchDocData}
                       />
                     );

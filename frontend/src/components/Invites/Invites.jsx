@@ -1,6 +1,7 @@
 import React from "react";
 
-const Invites = ({ DocReq }) => {
+const Invites = ({ user }) => {
+  console.log(user)
     return (
       <div
         onClick={() => console.log("user clicked")}
@@ -15,28 +16,36 @@ const Invites = ({ DocReq }) => {
               height: "45px",
               color: "#353434dd",
             }}>
-            <div className="col-4">
+            <div className="col-3">
+              <div style={{ fontSize: "16px" }} className="">
+                {user.email}
+              </div>{" "}
+            </div>
+            <div className="col-3">
               <div
                 style={{ fontSize: "16px" }}
                 className="d-flex justify-content-center">
-                {DocReq.email}
+                {user.type}
               </div>{" "}
-              {/* Assuming 'email' is a property in DocReq */}
             </div>
-            <div className="col-4">
-              <div
-                style={{ fontSize: "16px" }}
-                className="d-flex justify-content-center">
-                {DocReq.employeeStatus}
-              </div>{" "}
-              {/* Assuming 'employeeStatus' is a property in DocReq */}
-            </div>
-            <div className="col-4">
+            <div className="col-3">
               <div
                 style={{ fontSize: "16px", paddingLeft: "8px" }}
                 className="d-flex justify-content-center">
-                {DocReq.isAgreed ? "Yes" : "No"}{" "}
-                {/* Assuming 'isAgreed' is a boolean property in DocReq */}
+                {user.Documents &&
+                  user.Documents.filter(
+                    (doc) => doc.UserDocument.is_agreed == false
+                  ).length}
+              </div>
+            </div>
+            <div className="col-3">
+              <div
+                style={{ fontSize: "16px", paddingLeft: "8px" }}
+                className="d-flex justify-content-center">
+                {user.Documents &&
+                  user.Documents.filter(
+                    (doc) => doc.UserDocument.is_agreed == true
+                  ).length}
               </div>
             </div>
           </div>

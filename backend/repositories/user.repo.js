@@ -96,7 +96,6 @@ const userRepo = {
       const users = await User.findAndCountAll({
         distinct: true,
         where: query,
-        attributes: ['id', 'firstName', 'lastName', 'email'],
         include: [{
           model: Document,
           through: {
@@ -133,7 +132,6 @@ const userRepo = {
           id
         }
       });
-
       return users;
     } catch (error) {
       throw error;
