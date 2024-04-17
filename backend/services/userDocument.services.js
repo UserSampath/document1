@@ -1,6 +1,4 @@
 import userDocumentRepo from "../repositories/userDocument.repo.js";
-
-
 const UserDocumentService = {
     createUserDocument: async (documentIdList, email, type) => {
 

@@ -112,7 +112,7 @@ const userDocumentRepo = {
     },
 
     getDocumentDataWithUser: async (DocumentId, UserId) => {
-    
+      
         try {
 
             const userDocument = await UserDocument.findOne({

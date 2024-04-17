@@ -52,3 +52,21 @@
 .email-input :hover{
   cursor: not-allowed !important;
 }
+
+.documentErrorMessageShowInPdf {
+  position: absolute;
+  background-color: rgba(250, 217, 217, 0.908);
+  border: 1px red solid;
+  color: red;
+  padding: 2px 8px 2px 8px;
+  /* width: 268px; */
+  border-radius: 0px 5px 5px 5px;
+  margin-left: 20px;
+  margin-top: 40px;
+  font-size: 14px;
+  z-index: 1;
+}
+
+.documentErrorMessageHideInPdf {
+  display: none;
+}

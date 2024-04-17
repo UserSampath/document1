@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { FileUploader } from "react-drag-drop-files";
+const fileTypes = ["PDF"];
 const Document = () => {
   const { userId, documentId } = useParams();
 
@@ -19,60 +21,73 @@ const Document = () => {
   const [lastNameError, setLastNameError] = useState("");
   const [phoneError, setPhoneError] = useState("");
   const [referenceNoError, setReferenceNoError] = useState("");
+  const [attachmentPdfError, setAttachmentPdfError] = useState(null);
+
+  const [isAttachmentNeed, setIsAttachmentNeed] = useState(false);
+  const [attachmentPdf, setAttachmentPdf] = useState(null);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const getUserAndDocumentData = async () => {
-      
-      await axios.get(
-        `http://localhost:8000/userDocument/getDocumentDataWithUser/${documentId}/${userId}`
-      ).then(res => {
-        console.log(res.data.result);
-        if (!res.data.result.userDocument || !res.data.result.document || !res.data.result.user) {
-          toast.error("cant find user and document");
-        } else {
-          setEmail(res.data.result.user.email);
-          // Assuming res.data.result.user is the response object
-          setFirstName(
-            res.data.result.user.firstName !== null
-              ? res.data.result.user.firstName
-              : firstName
-          );
-          setLastName(
-            res.data.result.user.lastName !== null
-              ? res.data.result.user.lastName
-              : lastName
-          );
-           setPhone(
-             res.data.result.user.phone !== null
-               ? res.data.result.user.phone
-               : phone
-          );
-           setReferenceNo(
-             res.data.result.user.reference_no !== null
-               ? res.data.result.user.reference_no
-               : referenceNo
-          );
-          
-           setEmployeeStatus(
-             res.data.result.user.type == "employee"
-               ? "employee"
-               : "nonEmployee"
-          );
-          
-              setSrc(
-                res.data.result.document.src !== null
-                  ? res.data.result.document.src
-                  :""
-              );
-        }
+      await axios
+        .get(
+          `http://localhost:8000/userDocument/getDocumentDataWithUser/${documentId}/${userId}`
+        )
+        .then((res) => {
+          console.log(res.data.result);
+          if (
+            !res.data.result.userDocument ||
+            !res.data.result.document ||
+            !res.data.result.user
+          ) {
+            toast.error("cant find user and document");
+          } else {
+            setEmail(res.data.result.user.email);
+            // Assuming res.data.result.user is the response object
+            setFirstName(
+              res.data.result.user.firstName !== null
+                ? res.data.result.user.firstName
+                : firstName
+            );
+            setLastName(
+              res.data.result.user.lastName !== null
+                ? res.data.result.user.lastName
+                : lastName
+            );
+            setPhone(
+              res.data.result.user.phone !== null
+                ? res.data.result.user.phone
+                : phone
+            );
+            setReferenceNo(
+              res.data.result.user.reference_no !== null
+                ? res.data.result.user.reference_no
+                : referenceNo
+            );
 
-      }).catch(err => {
-        console.log(err);
+            setEmployeeStatus(
+              res.data.result.user.type == "employee"
+                ? "employee"
+                : "nonEmployee"
+            );
+
+            setSrc(
+              res.data.result.document.src !== null
+                ? res.data.result.document.src
+                : ""
+            );
+            setIsAttachmentNeed(
+              res.data.result.document.is_need_attachment !== null
+                ? res.data.result.document.is_need_attachment
+                : false
+            );
+          }
+        })
+        .catch((err) => {
+          console.log(err);
           toast.error(err.response.data.error);
-      })
-      
+        });
     };
 
     getUserAndDocumentData();
@@ -95,28 +110,53 @@ const Document = () => {
         setReferenceNoError("NIC number is required");
       }
     }
-    if (firstName && lastName && phone && referenceNo && agree) {
-      await axios
-        .post("http://localhost:8000/user/createUser", {
-          request_id: userId,
-          firstName,
-          lastName,
-          phone,
-          reference_no: referenceNo,
-        })
-        .then((response) => {
-          console.log(response.data.result);
-          if (response.data.result.status) {
-            toast.success("your data has submitted successfully");
-          }
-        })
-        .catch((error) => {
-          console.log(error.response.data.error);
-          if (error.response.data.error) {
-            toast.error(error.response.data.error);
-          }
-        });
+
+    if (isAttachmentNeed && !attachmentPdf) {
+      setAttachmentPdfError("Attachment is required");
     }
+
+    if (
+      firstName &&
+      lastName &&
+      phone &&
+      referenceNo &&
+      agree &&
+      attachmentPdf
+    ) {
+      const formData = new FormData();
+      formData.append("attachment", attachmentPdf);
+      formData.append("is_agreed", agree);
+      formData.append("documentId", documentId);
+      formData.append("userId", userId);
+      formData.append("firstName", firstName);
+      formData.append("lastName", lastName);
+      formData.append("phone", phone);
+      formData.append("reference_no", referenceNo);
+
+  await axios
+    .post("http://localhost:8000/userDocument/respondUserDocument", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((response) => {
+      console.log(response.data.result);
+      if (response.data.result.status) {
+        toast.success("your data has submitted successfully");
+      }
+    })
+    .catch((error) => {
+      console.log(error.response.data.error);
+      if (error.response.data.error) {
+        toast.error(error.response.data.error);
+      }
+    });
+    }
+  };
+
+  const handleAttachmentChange = (file) => {
+    setAttachmentPdfError("");
+    setAttachmentPdf(file);
   };
   return (
     <div
@@ -289,6 +329,36 @@ const Document = () => {
           />
         </div>
 
+        {isAttachmentNeed && (
+          <div className=" d-flex justify-content-center align-items-center mt-3">
+            <div className=" d-flex align-items-center">
+              <div
+                style={{
+                  fontSize: "18px",
+                  marginRight: "10px",
+                  fontWeight: "bold",
+                }}>
+                Attachment :
+              </div>
+              <div>
+                <div
+                  className={
+                    attachmentPdfError && attachmentPdfError != ""
+                      ? "documentErrorMessageShowInPdf"
+                      : "documentErrorMessageHideInPdf"
+                  }>
+                  {attachmentPdfError && attachmentPdfError}
+                </div>
+                <FileUploader
+                  handleChange={handleAttachmentChange}
+                  name="file"
+                  types={fileTypes}
+                />
+              </div>
+            </div>
+          </div>
+        )}
+
         <div className=" d-flex align-items-center mt-2 justify-content-center mb-5 pb-4 pt-3">
           <div className=" d-flex align-items-center">
             <div
@@ -305,7 +375,12 @@ const Document = () => {
               style={{ width: "16px", height: "16px" }}
               type="checkbox"
             />
-            {firstName && lastName && phone && referenceNo && agree ? (
+            {firstName &&
+            lastName &&
+            phone &&
+            referenceNo &&
+            agree &&
+            attachmentPdf ? (
               <div
                 onClick={submitDocument}
                 className="document_submit_button"

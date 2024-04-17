@@ -39,6 +39,8 @@ const userDocumentController = {
         try {
             const { is_agreed, documentId, userId, firstName, lastName, phone, reference_no } = req.body;
             const file = req.files && req.files.attachment;
+          
+
             let data = { secure_url: null };
             if (file) {
                 data = await cloudinary.uploader.upload(file.tempFilePath, {
