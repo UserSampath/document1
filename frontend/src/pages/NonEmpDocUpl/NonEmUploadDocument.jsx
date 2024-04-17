@@ -9,6 +9,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import Pdf from "../../../image/Pdf.png";
+import UploadDoc from "../../components/uploadDocCom/UploadDoc";
 
 const fileTypes = ["PDF"];
 
@@ -28,6 +29,7 @@ const NonEmUploadDocument = () => {
   const [userType, setUserType] = useState("");
   const [employeeDocumentSrc, setEmployeeDocumentSrc] = useState("");
   const [nonEmployeeDocumentSrc, setNonEmployeeDocumentSrc] = useState("");
+  const [showUploadModal, setUploadShowModal] = useState(false);
 
   const handleEmployeeDocumentChange = (file) => {
     setEmployeeFile(file);
@@ -82,6 +84,9 @@ const NonEmUploadDocument = () => {
 
     },
   ]);
+  const handleUploadClick = () => {
+    setUploadShowModal(true);
+  };
 
   const onDeleteDocument = (documentId) => {
     // Implement delete functionality here
@@ -99,7 +104,14 @@ const NonEmUploadDocument = () => {
             paddingLeft: sidebarOpen ? "240px" : "60px",
           }}
         >
-          <div style={{ marginLeft: "80%", marginRight: "5%" }}>
+          <div style={{ marginLeft: "65%", marginRight: "5%" ,display:"flex",gap:"5px" }}>
+          <Button
+                type={"2"}
+                text="Upload documents"
+                style={{ marginLeft: "10px" }}
+                onClick={handleUploadClick}
+                // Add margin between button and search bar
+              />
             <Button
               type={"1"}
               text=" Employee document"
@@ -111,51 +123,15 @@ const NonEmUploadDocument = () => {
           <div
             className="d-flex flex-wrap justify-content-center align-items-center"
             style={{
-              margin: "40px 100px",
+              margin: "30px 100px",
               padding: "50px 0px",
               backgroundColor: "white",
               borderRadius: "10px",
             }}
           >
              <div >
-           <div
-          className="d-flex justify-content-center align-items-center"
-          style={{
-            padding: "30px 0px",
-            backgroundColor: "#f0f0f0", // Change background color here
-            borderRadius: "10px",
-          }}
-        >
-          <div style={{ width: "48%" }}> {/* Adjust width as needed */}
-            <h4 style={{ textAlign: "center", color: "#3232f4" }}>
-              Non-Employee Document Update
-            </h4>
-            <div style={{marginTop:"20px"}}>
-              <FileUploader
-                handleChange={handleNonEmployeeDocumentChange}
-                name="file"
-                types={fileTypes}
-              />
-              <div style={{marginLeft:"200px",marginTop:"25px"}}>
-                <div
-                      className="document_update_button"
-                      style={{
-                        backgroundColor: "#6464ff",
-                        borderRadius: "5px",
-                        transition: "0.5s ease-in-out",
-                        boxShadow: "0 8px 10px rgba(0, 0, 0, 0.178)",
-                        textAlign: "center"
-                      }}>
-                      <div style={{ padding: "6px 12px", color: "white" }}>
-                        {" "}
-                        Upload
-                      </div>
-                    </div>
-                    </div>
-            </div>
-          </div>
-        </div>
-        <div className="d-flex justify-content-center align-items-center mt-3">
+       
+        <div className="d-flex justify-content-center align-items-center ">
         <h4 style={{color: "#3232f4"}}> Non-Employee Documents</h4>
       </div>
       <div>
@@ -250,6 +226,11 @@ const NonEmUploadDocument = () => {
       setShow={setShowModal}
       handleClose={() => setShowModal(false)}
     />
+     <UploadDoc
+      show={showUploadModal}
+      setShow={setUploadShowModal}
+      handleClose={() => setUploadShowModal(false)}
+      />
   </div>
   );
 };

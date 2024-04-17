@@ -14,7 +14,6 @@ const SendInvitationCom = ({ handleClose, show, setShow, updateInvitations }) =>
 
   useEffect(() => {
     async function fetchDocuments() {
-      console.log(employeeStatus);
       try {
         if (employeeStatus) {
           const response = await axios.get(`${backendUrl}/document/getAllDocumentsWithFilter/${employeeStatus}`);
@@ -35,7 +34,6 @@ const SendInvitationCom = ({ handleClose, show, setShow, updateInvitations }) =>
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(selectedPDFs)
     try {
       if (!email || !employeeStatus || selectedPDFs.length === 0) {
         toast.error("Please fill in all fields");
@@ -45,7 +43,7 @@ const SendInvitationCom = ({ handleClose, show, setShow, updateInvitations }) =>
       const requestEmail = {
         email: email,
         type: employeeStatus,
-        documentIdList: selectedPDFs // Extract only the IDs from selectedPDFs
+        documentIdList: selectedPDFs 
       };
       const response = await axios.post(
         `${backendUrl}/userDocument/createUserDocument`,
