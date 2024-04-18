@@ -4,12 +4,25 @@
 }
 
 .document_update_button :hover{
-     background-color: #4a4aff; 
+     background-color: #03ff03; 
   transform: scale(1.03);
   border-radius: 5px !important;
   cursor: pointer;
 }
 
+.document_preview_button :hover{
+  background-color: #4a4aff; 
+transform: scale(1.03);
+border-radius: 5px !important;
+cursor: pointer;
+}
+
+.document_delete_button :hover{
+  background-color: #ff1803; 
+transform: scale(1.03);
+border-radius: 5px !important;
+cursor: pointer;
+}
 .document_view_button:hover{
      background-color: #076205; 
   transform: scale(1.01);
