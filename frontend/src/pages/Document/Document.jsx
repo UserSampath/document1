@@ -121,7 +121,7 @@ const Document = () => {
       phone &&
       referenceNo &&
       agree &&
-      attachmentPdf
+      ((isAttachmentNeed && attachmentPdf) || !isAttachmentNeed)
     ) {
       const formData = new FormData();
       formData.append("attachment", attachmentPdf);
@@ -133,24 +133,28 @@ const Document = () => {
       formData.append("phone", phone);
       formData.append("reference_no", referenceNo);
 
-  await axios
-    .post("http://localhost:8000/userDocument/respondUserDocument", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
-    .then((response) => {
-      console.log(response.data.result);
-      if (response.data.result.status) {
-        toast.success("your data has submitted successfully");
-      }
-    })
-    .catch((error) => {
-      console.log(error.response.data.error);
-      if (error.response.data.error) {
-        toast.error(error.response.data.error);
-      }
-    });
+      await axios
+        .post(
+          "http://localhost:8000/userDocument/respondUserDocument",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response.data.result);
+          if (response.data.result.status) {
+            toast.success("your data has submitted successfully");
+          }
+        })
+        .catch((error) => {
+          console.log(error.response.data.error);
+          if (error.response.data.error) {
+            toast.error(error.response.data.error);
+          }
+        });
     }
   };
 
@@ -379,8 +383,9 @@ const Document = () => {
             lastName &&
             phone &&
             referenceNo &&
-            agree &&
-            attachmentPdf ? (
+              agree &&
+              ((isAttachmentNeed && attachmentPdf) || !isAttachmentNeed )
+            ? (
               <div
                 onClick={submitDocument}
                 className="document_submit_button"

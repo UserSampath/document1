@@ -183,7 +183,7 @@ const UserDetails = () => {
                         }}>
                         {userData.type == "employee"
                           ? "E Number"
-                          : "Employee Number"}
+                          : "NIC Number"}
                       </div>
                     </div>
                     <div style={{ fontWeight: "bold" }} className=" me-1">

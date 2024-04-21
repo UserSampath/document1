@@ -23,6 +23,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(fileUpload({
+    useTempFiles: true,
     limits: { fileSize: 50 * 2024 * 1024 }
 }));
 
