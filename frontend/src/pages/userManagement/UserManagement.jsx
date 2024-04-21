@@ -131,10 +131,11 @@ const UserManagement = () => {
                       }}>
                       <div className="col-2">Name</div>
                       <div className="col-3">Email</div>
-                      <div className="col-2">Phone</div>
+                      <div className="col-1">Phone</div>
                       <div className="col-1">employee</div>
                       <div className="col-2">Reference</div>
-                      <div className="col-2">Accept Date</div>
+                      <div className="col-1">Accept Date</div>
+                      <div className="col-2">Accept Time</div>
                     </div>
                   </div>
                 </div>

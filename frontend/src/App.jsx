@@ -12,6 +12,8 @@ import DocumentNotFound from "./pages/DocumentNotFound/DocumentNotFound";
 import UploadDocument from "./pages/UploadDoc/UploadDocument";
 import UserDetails from "./pages/userDetails/UserDetails";
 
+import NonEmUploadDocument from "./pages/NonEmpDocUpl/NonEmUploadDocument";
+NonEmUploadDocument
 function App() {
   return (
     <AuthProvider>
@@ -31,6 +33,9 @@ function App() {
           <Route path="/AcceptedUsers" element={<UserManagement />}></Route>
           <Route path="/userDetails/:userId" element={<UserDetails />}></Route>
 
+          <Route
+            path="/nonEmUploadDocument"
+            element={<NonEmUploadDocument />}></Route>
           <Route
             path="/documentNotFound"
             element={<DocumentNotFound />}></Route>

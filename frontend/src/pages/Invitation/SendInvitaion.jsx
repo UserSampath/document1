@@ -51,6 +51,9 @@ const SendInvitation = () => {
           });
       }
 
+
+      
+
       const updateInvitations = (newInvitation) => {
         setUsers([newInvitation, ...users]);
       };

@@ -1,40 +1,43 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import NavBar from "../../components/NavBar/Navbar";
 import SideBar from "../../components/side/SideBar";
 import Button from "../../components/Button/Button";
 import { FileUploader } from "react-drag-drop-files";
-import "./Upload.css";
+import "./NonEmpUpload.css";
 import ViewDoc from "../../components/ViewDoc/ViewDoc";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { ImFilePdf } from "react-icons/im";
 import Pdf from "../../../image/Pdf.png";
-import UploadDoc from "../../components/uploadDocCom/UploadDoc";
+import UploadDoc from "../../components/NonEmpuploadDocCom/UploadDoc";
 import { Modal,  } from 'react-bootstrap';
 
-const UploadDocument = () => {
+const fileTypes = ["PDF"];
+
+const NonEmUploadDocument = () => {
   const navigate = useNavigate();
 
   const pageNavi = () => {
-    navigate("/nonEmUploadDocument");
+    navigate("/UploadDocument");
   };
 
   const [sidebarOpen, setSidebarOpen] = useState(
     localStorage.getItem("sideBarOpen") === "true"
   );
-  const [employeeDocuments, setEmployeeDocuments] = useState([]);
-  const [documentToDelete, setDocumentToDelete] = useState(null);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [nonEmployeeDocument, setNonEmployeeDocument] = useState([]);
   const [showUploadModal, setUploadShowModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [documentToDelete, setDocumentToDelete] = useState(null);
+
+
 
   useEffect(() => {
     const getAllDocuments = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8000/document/getAllDocumentsWithFilter/employee"
+          "http://localhost:8000/document/getAllDocumentsWithFilter/nonEmployee"
         );
-        setEmployeeDocuments(response.data.result.result);
+        setNonEmployeeDocument(response.data.result.result)
       } catch (error) {
         console.log(error);
       }
@@ -42,19 +45,22 @@ const UploadDocument = () => {
     getAllDocuments();
   }, []);
 
- 
-
+  
+  const handleUploadClick = () => {
+    setUploadShowModal(true);
+  };
   const handleDeleteClick = (documentId) => {
     setDocumentToDelete(documentId);
     setShowDeleteModal(true);
   };
+  
 
   const handleConfirmDelete = async () => {
     try {
       const response = await axios.delete(`http://localhost:8000/document/deleteDocumentById/${documentToDelete}`);
       if (response.status === 200) {
         toast.success("Document deleted successfully");
-        setEmployeeDocuments(employeeDocuments.filter(doc => doc.id !== documentToDelete));
+        setNonEmployeeDocument(nonEmployeeDocument.filter(doc => doc.id !== documentToDelete));
         setShowDeleteModal(false);
       }
     } catch (error) {
@@ -62,18 +68,14 @@ const UploadDocument = () => {
       toast.error("Error deleting document");
     }
   };
-
-  const handleUploadClick = () => {
-    setUploadShowModal(true);
-  };
-
   const handleDocumentUpload = (newDocument) => {
-    setEmployeeDocuments(prevDocuments => [...prevDocuments, newDocument]);
+    setNonEmployeeDocument(prevDocuments => [...prevDocuments, newDocument]);
     setUploadShowModal(false); // Close the modal after successful upload
   };
 
-  const renderEmployeeDocuments = () => {
-    return employeeDocuments.map((document) => (
+
+  const renderNonEmployeeDocuments = () => {
+    return nonEmployeeDocument.map((document) => (
       <div key={document.id} style={{ width: "1000px" }}>
         <div
       
@@ -145,43 +147,55 @@ const UploadDocument = () => {
 
   return (
     <div>
-      <SideBar setSidebarOpen={setSidebarOpen} selectedNav="Upload Document">
-        <div>
-          <NavBar sidebarOpen={sidebarOpen} />
-          <div
-            style={{
-              transition: "padding-left 300ms",
-              paddingTop: "50px",
-              paddingLeft: sidebarOpen ? "240px" : "60px",
-            }}
-          >
-            <div style={{ marginLeft: "60%", marginRight: "5%", display: "flex", gap: "5px" }}>
-              <Button
+    <SideBar setSidebarOpen={setSidebarOpen} selectedNav="Upload Document">
+      <div>
+        <NavBar sidebarOpen={sidebarOpen} />
+        <div
+          style={{
+            transition: "padding-left 300ms",
+            paddingTop: "50px",
+            paddingLeft: sidebarOpen ? "240px" : "60px",
+          }}
+        >
+          <div style={{ marginLeft: "65%", marginRight: "5%" ,display:"flex",gap:"5px" }}>
+          <Button
                 type={"2"}
                 text="Upload documents"
                 style={{ marginLeft: "10px" }}
                 onClick={handleUploadClick}
+                // Add margin between button and search bar
               />
-              <Button
-                type={"1"}
-                text=" Non-Employee document"
-                style={{ marginLeft: "10px" }}
-                onClick={pageNavi}
-              />
-            </div>
-            <div className="d-flex flex-wrap justify-content-center align-items-center" style={{ margin: "30px 100px", padding: "50px 0px", backgroundColor: "white", borderRadius: "10px" }}>
-              <div>
-                <div className="d-flex justify-content-center align-items-center ">
-                  <h4 style={{ color: "#3232f4" }}> Employee Documents</h4>
-                </div>
-                {renderEmployeeDocuments()}
-              </div>
+            <Button
+              type={"1"}
+              text=" Employee document"
+              style={{ marginLeft: "10px" }}
+              onClick={pageNavi}
+              // Add margin between button and search bar
+            />
+          </div>
+          <div
+            className="d-flex flex-wrap justify-content-center align-items-center"
+            style={{
+              margin: "30px 100px",
+              padding: "50px 0px",
+              backgroundColor: "white",
+              borderRadius: "10px",
+            }}
+          >
+             <div >
+       
+        <div className="d-flex justify-content-center align-items-center ">
+        <h4 style={{color: "#3232f4"}}> Non-Employee Documents</h4>
+      </div>
+      {renderNonEmployeeDocuments()}
+
             </div>
           </div>
         </div>
-      </SideBar>
-      {/* Delete Confirmation Modal */}
-      {showDeleteModal && (
+      </div>
+    </SideBar>
+    {/* Modal component */}
+    {showDeleteModal && (
          <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
          <Modal.Header closeButton>
            <Modal.Title>Delete Document</Modal.Title>
@@ -203,12 +217,15 @@ const UploadDocument = () => {
          </Modal.Footer>
        </Modal>
       )}
-      {/* Modal component */}
-      <UploadDoc show={showUploadModal} setShow={setUploadShowModal} handleClose={() => setUploadShowModal(false)} 
+     <UploadDoc
+      show={showUploadModal}
+      setShow={setUploadShowModal}
+      handleClose={() => setUploadShowModal(false)}
       onUpload={handleDocumentUpload}
+
       />
-    </div>
+  </div>
   );
 };
 
-export default UploadDocument;
+export default NonEmUploadDocument;

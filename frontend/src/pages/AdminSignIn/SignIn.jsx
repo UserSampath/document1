@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MdError } from "react-icons/md";
 import { IoCheckmarkDoneCircleSharp } from "react-icons/io5";
+import background from "../../../image/background.jpg";
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const SignIn = () => {
@@ -59,7 +60,7 @@ const SignIn = () => {
 
   return (
     <div className="signUpPage">
-      <div className="boxContainer">
+      <div className="boxContainer" >
         <div className="signInBox ">
           <div style={{ position: "absolute", left: "10px", top: "10px" }}>
             <img style={{ width: "40px " }} src="../../../image/Logo.png" />

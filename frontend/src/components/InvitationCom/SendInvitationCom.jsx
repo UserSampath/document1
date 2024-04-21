@@ -1,45 +1,76 @@
-import React, { useState } from 'react';
-import { Modal, Button, Form } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Modal, Button, Form, FormGroup, FormCheck } from 'react-bootstrap';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-const SendInvitationCom = ({ handleClose, show, setShow, updateInvitations }) => { // Added updateInvitations prop
+const SendInvitationCom = ({ handleClose, show, setShow, updateInvitations }) => {
   const [email, setEmail] = useState('');
   const [employeeStatus, setEmployeeStatus] = useState('');
+  const [selectedPDFs, setSelectedPDFs] = useState([]);
+  const [documents, setDocuments] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    async function fetchDocuments() {
+      try {
+        if (employeeStatus) {
+          const response = await axios.get(`${backendUrl}/document/getAllDocumentsWithFilter/${employeeStatus}`);
+          console.log(response.data.result.result);
+          if (response.status === 200) {
+            setDocuments(response.data.result.result);
+          } else {
+            setError('Failed to fetch documents');
+          }
+        }
+      } catch (error) {
+        setError('Failed to fetch documents');
+      }
+    }
+
+    fetchDocuments();
+  }, [employeeStatus]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      if (!email || !employeeStatus ) {
+      if (!email || !employeeStatus || selectedPDFs.length === 0) {
         toast.error("Please fill in all fields");
         return;
       }
 
       const requestEmail = {
         email: email,
-        employeeStatus: employeeStatus,
+        type: employeeStatus,
+        documentIdList: selectedPDFs 
       };
       const response = await axios.post(
-        `${backendUrl}/docmentReq/createDocReq`, // Corrected URL
+        `${backendUrl}/userDocument/createUserDocument`,
         requestEmail
       );
-      console.log(response);
       if (response.status === 200) {
         toast.success('Invitation sent successfully!');
         setShow(false);
         setEmail("");
         setEmployeeStatus("");
-        updateInvitations(response.data.result); 
-      }else if(response.status===500){
+        setSelectedPDFs([]);
+        updateInvitations(response.data.result);
+      } else if (response.status === 500) {
         console.log(response);
       }
     } catch (error) {
-      console.log(error);
-      toast.error(error.response.data.error);
       console.error(error.response.data.error);
+      toast.error(error.response.data.error);
+    }
+  };
+
+  const handleCheckboxChange = (e) => {
+    const { value, checked } = e.target;
+    if (checked) {
+      setSelectedPDFs(prevSelectedPDFs => [...prevSelectedPDFs, value]);
+    } else {
+      setSelectedPDFs(prevSelectedPDFs => prevSelectedPDFs.filter(pdf => pdf !== value));
     }
   };
 
@@ -65,6 +96,20 @@ const SendInvitationCom = ({ handleClose, show, setShow, updateInvitations }) =>
               </Form.Control>
             </Form.Group>
 
+            <Form.Group controlId="formSelectedPDFs">
+              <Form.Label>Select Documents</Form.Label>
+              {documents.map((doc, index) => (
+                <FormGroup key={index} controlId={`checkbox_${doc.id}`}>
+                  <FormCheck
+                    type="checkbox"
+                    id={`checkbox_${doc.id}`}
+                    label={doc.name}
+                    value={doc.id}
+                    onChange={handleCheckboxChange}
+                  />
+                </FormGroup>
+              ))}
+            </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
