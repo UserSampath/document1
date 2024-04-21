@@ -1,0 +1,21 @@
+.pagination .page-item.active .page-link {
+  background-color: #9fa2f7 !important;
+  color: #ffffff !important;
+  /* border: #004a99 !important; */
+  font-weight: 600 !important;
+}
+
+.page-item a {
+  outline: none !important;
+  box-shadow: none !important;
+  color: rgb(91, 91, 91);
+}
+
+.form-control::placeholder {
+  font-size: 16px;
+}
+
+.userDetails-container:hover {
+  background-color: #eeeff9b4 !important;
+  border-radius: 6px;
+}

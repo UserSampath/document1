@@ -115,6 +115,29 @@ const userRepo = {
     }
   },
 
+  getUserAllDataById: async (id) => {
+    try {
+
+      const result = await User.findOne({
+        where: {
+          id
+        },
+        include: [{
+          model: Document,
+          through: {
+            model: UserDocument,
+          }
+        }],
+      })
+
+
+      return result;
+
+    } catch (error) {
+      throw error;
+    }
+  },
+
 
 
   getDocumentsOfUser: async (id) => {
@@ -124,7 +147,7 @@ const userRepo = {
           model: Document,
           through: {
             model: UserDocument,
-            where: { is_agreed: false } 
+            where: { is_agreed: false }
           },
         }]
         ,

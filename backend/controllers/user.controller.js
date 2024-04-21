@@ -4,7 +4,7 @@ const userController = {
 
     createUser: async (req, res) => {
         try {
-            const { email,type } = req.body;
+            const { email, type } = req.body;
             const result = await userService.createUser(email, type);
             if (result.status) {
                 res.status(200).json({
@@ -73,6 +73,28 @@ const userController = {
             res.status(500).json({
                 response_code: 500,
                 success: false, message: 'Error occurred while fetching users'
+            });
+        }
+    },
+
+    getUserAllDataById: async (req, res) => {
+        try {
+            const { id } = req.params;
+
+            const result = await userService.getUserAllDataById(id);
+
+            res.status(200).json(
+                {
+                    response_code: 200,
+                    success: true,
+                    result
+                });
+
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({
+                response_code: 500,
+                success: false, message: error.message
             });
         }
     },

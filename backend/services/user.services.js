@@ -38,6 +38,22 @@ const userService = {
     }
   },
 
+  getUserAllDataById: async (id) => {
+    try {
+      const result = await userRepo.getUserAllDataById(id);
+
+      if (result) {
+        return result;
+      } else {
+        throw new Error("User not found");
+      }
+
+
+    } catch (error) {
+      throw error;
+    }
+  },
+
   getDocumentsOfUser: async (id) => {
     try {
       const result = await userRepo.getDocumentsOfUser(id);

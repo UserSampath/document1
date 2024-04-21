@@ -1,10 +1,15 @@
 import React from "react";
-
+import { useNavigate } from "react-router-dom";
 const Invites = ({ user }) => {
+  const navigate = useNavigate();
+
+  const userClicked = async () => {
+    navigate(`/userDetails/${user.id}`);
+  }
   console.log(user)
     return (
       <div
-        onClick={() => console.log("user clicked")}
+        onClick={userClicked}
         className="container-fluid "
         style={{
           borderBottom: "1px solid #ececec",

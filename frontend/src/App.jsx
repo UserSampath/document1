@@ -10,6 +10,7 @@ import UserDocuments from "./pages/UserDocuments/UserDocuments"
 import SendInvitaion from "./pages/Invitation/SendInvitaion";
 import DocumentNotFound from "./pages/DocumentNotFound/DocumentNotFound";
 import UploadDocument from "./pages/UploadDoc/UploadDocument";
+import UserDetails from "./pages/userDetails/UserDetails";
 
 function App() {
   return (
@@ -17,7 +18,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<SignIn />}></Route>
-          <Route path="/document/:userId/:documentId" element={<Document />}></Route>
+          <Route
+            path="/document/:userId/:documentId"
+            element={<Document />}></Route>
           <Route
             path="/userDocuments/:userId"
             element={<UserDocuments />}></Route>
@@ -26,6 +29,7 @@ function App() {
           <Route path="/" element={<SendInvitaion />}></Route>
           <Route path="/Settings" element={<Settings />}></Route>
           <Route path="/AcceptedUsers" element={<UserManagement />}></Route>
+          <Route path="/userDetails/:userId" element={<UserDetails />}></Route>
 
           <Route
             path="/documentNotFound"

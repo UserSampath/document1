@@ -1,0 +1,20 @@
+.pdfNameAccepted{
+
+}
+
+.pdfNameAccepted:hover{
+    color: blue;
+    cursor: pointer;
+}
+
+.viewAttachmentAccepted{
+    background-color: #cce5fedd;
+    transition: 0.1s ease-in;
+
+}
+
+.viewAttachmentAccepted:hover{
+    background-color: #a6d1fddd;
+    cursor: pointer;
+
+}
