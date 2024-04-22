@@ -19,7 +19,6 @@ const SideBar = ({ children, selectedNav, setSidebarOpen }) => {
 
   const Menus = [
     { title: "Send Invitation", navigation: "/" },
-    { title: "Accepted Users", navigation: "/AcceptedUsers" },
     { title: "Upload Document", navigation: "/UploadDocument" },
     { title: "Settings", navigation: "/Settings" },
   ];

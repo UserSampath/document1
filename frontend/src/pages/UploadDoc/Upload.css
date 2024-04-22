@@ -1,31 +1,59 @@
-
-.uploadData{
-    margin-left:50px;
+.uploadData {
+  margin-left: 50px;
 }
 
-.document_update_button :hover{
-     background-color: #03ff03; 
+.document_update_button :hover {
+  background-color: #03ff03;
   transform: scale(1.03);
   border-radius: 5px !important;
   cursor: pointer;
 }
 
-.document_preview_button :hover{
-  background-color: #4a4aff; 
-transform: scale(1.03);
-border-radius: 5px !important;
-cursor: pointer;
+.document_preview_button :hover {
+  background-color: #4a4aff;
+  transform: scale(1.03);
+  border-radius: 5px !important;
+  cursor: pointer;
 }
 
-.document_delete_button :hover{
-  background-color: #ff1803; 
-transform: scale(1.03);
-border-radius: 5px !important;
-cursor: pointer;
+.document_delete_button :hover {
+  background-color: #ff1803;
+  transform: scale(1.03);
+  border-radius: 5px !important;
+  cursor: pointer;
 }
-.document_view_button:hover{
-     background-color: #076205; 
+.document_view_button:hover {
+  background-color: #076205;
   transform: scale(1.01);
   border-radius: 5px !important;
   cursor: pointer;
+}
+
+
+.selected-document-type{
+  background: #3232f4;
+  color: white;
+  padding: 6px 10px ;
+  border-radius: 5px;
+  margin-right: 10px;
+  box-shadow:0 8px 10px rgba(0, 0, 0, 0.178) ;
+  font-weight: bold;
+}
+
+.non-selected-document-type{
+background: #c8c8ff;
+padding: 6px 10px;
+border-radius: 5px;
+margin-right: 10px;
+font-weight: bold;
+}
+
+
+.selected-document-type:hover{
+  background: #3232f4;
+
+}
+
+.non-selected-document-type:hover{
+background: #aeaef1;
 }

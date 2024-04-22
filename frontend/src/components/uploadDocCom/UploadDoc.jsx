@@ -9,13 +9,14 @@ const UploadDoc = ({ show, handleClose ,onUpload}) => {
   const [documentName, setDocumentName] = useState('');
   const [employeeFile, setEmployeeFile] = useState(null);
   const [isAttachments, setIsAttachments] = useState(false);
+  const [documentType, setDocumentType] = useState("employee");
 
   const handleEmployeeFileUpload = async () => {
     try {
       const formData = new FormData();
       formData.append("pdf", employeeFile);
       formData.append("name", documentName);
-      formData.append("type", 'employee');
+      formData.append("type", documentType);
       formData.append("is_need_attachment", isAttachments);
 
       const response = await axios.post("http://localhost:8000/document/createDocument", formData, {
@@ -50,6 +51,10 @@ const UploadDoc = ({ show, handleClose ,onUpload}) => {
     setDocumentName(event.target.value);
   };
 
+    const handleDocumentTypeChange = (event) => {
+      setDocumentType(event.target.value);
+    };
+
   const handleCheckboxChange = (event) => {
     setIsAttachments(event.target.checked);
   };
@@ -70,9 +75,24 @@ const UploadDoc = ({ show, handleClose ,onUpload}) => {
               onChange={handleDocumentNameChange}
             />
           </Form.Group>
+          <Form.Group controlId="documentType">
+            <Form.Label>Select Type</Form.Label>
+            <Form.Control
+              as="select"
+              value={documentType}
+              onChange={handleDocumentTypeChange}>
+              <option value="employee">Employee</option>
+              <option value="nonEmployee">Non-Employee</option>
+            </Form.Control>
+          </Form.Group>
           <Form.Group controlId="attachmentCheckbox">
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <span style={{ marginRight: '10px' }}>Need Attachment</span>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginTop: "5px",
+              }}>
+              <span style={{ marginRight: "10px" }}>Need Attachment</span>
               <FormCheck
                 type="checkbox"
                 checked={isAttachments}
