@@ -137,6 +137,35 @@ const documentController = {
         }
     },
 
+    getDocumentById: async (req, res) => {
+        const id = req.params.id;
+
+        try {
+            const result = await documentService.getDocumentById(id);
+
+            if (result.success) {
+                res.status(200).json({
+                    response_code: 200,
+                    result
+                });
+
+            } else {
+                res.status(404).json({
+                    response_code: 404,
+                    result
+                });
+
+            }
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({
+                response_code: 500,
+                success: false, message: 'Error occurred while getting document',
+
+            });
+        }
+    },
+
 
 }
 

@@ -11,6 +11,6 @@ router.post("/createDocument", documentController.createDocument);
 router.get("/getAllDocumentsWithFilter/:type", documentController.getAllDocumentsWithFilter);
 router.put("/updateDocument", documentController.updateDocument);
 router.delete("/deleteDocumentById/:id", documentController.deleteDocumentById);
-
+router.get("/getDocumentById/:id", documentController.getDocumentById);
 
 export default router;  

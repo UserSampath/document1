@@ -13,6 +13,7 @@ import Pdf from "../../../image/Pdf.png";
 import UploadDoc from "../../components/uploadDocCom/UploadDoc";
 import { Modal } from "react-bootstrap";
 import { IoDocumentAttachOutline } from "react-icons/io5";
+import UpdateDoc from "../../components/updateDoc/UpdateDoc";
 const UploadDocument = () => {
   const navigate = useNavigate();
 
@@ -27,9 +28,13 @@ const UploadDocument = () => {
   const [documentToDelete, setDocumentToDelete] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showUploadModal, setUploadShowModal] = useState(false);
+  const [showUpdate, setUpdateShow] = useState(false);
+  const [updatingDocId, setUpdatingDocId] = useState("");
   const [selectedDocumentType, setSelectedDocumentType] = useState("employee"); //nonEmployee
 
-  useEffect(() => {
+
+
+
     const getAllDocuments = async () => {
       try {
         const response = await axios.get(
@@ -40,6 +45,8 @@ const UploadDocument = () => {
         console.log(error);
       }
     };
+  useEffect(() => {
+  
     getAllDocuments();
   }, [selectedDocumentType]);
 
@@ -71,8 +78,12 @@ const UploadDocument = () => {
   };
 
   const handleDocumentUpload = (newDocument) => {
-    setEmployeeDocuments((prevDocuments) => [...prevDocuments, newDocument]);
-    setUploadShowModal(false); // Close the modal after successful upload
+    getAllDocuments();
+  };
+  const handleUploadSuccess = (newDocument) => {
+    console.log("updated");
+    getAllDocuments();
+    setUpdateShow(false);
   };
 
   const renderEmployeeDocuments = () => {
@@ -111,7 +122,7 @@ const UploadDocument = () => {
               className="d-flex flex-wrap justify-content-center align-items-center"
               style={{
                 margin: "10px 3% 30px 3%",
-                padding: "20px 0px 50px 0px",
+                padding: "20px 0px 20px 0px",
                 backgroundColor: "white",
                 borderRadius: "10px",
               }}>
@@ -145,118 +156,125 @@ const UploadDocument = () => {
                   </div>
                 </div>
                 {employeeDocuments.map((document) => (
-                  <div
-                    key={document.id}
-                    style={{ width: "100%" }}
-                    className=" d-flex container-lg justify-content-center">
+                  <div key={document.id}>
                     <div
-                      style={{
-                        width: "100%",
-                        border: "1px solid #ccc",
-                        borderRadius: "5px",
-                        padding: "10px",
-                        display: "flex",
-                        alignItems: "center",
-                        boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-                        margin: "5px 0px",
-                      }}>
-                      <img
-                        src={Pdf}
-                        style={{
-                          width: "60px",
-                          marginRight: "10px",
-                          fontSize: "40px",
-                        }}
-                      />
+                      style={{ width: "100%" }}
+                      className=" d-flex container-lg justify-content-center">
                       <div
                         style={{
-                          flex: 1,
-
-                          alignItems: "center",
-
-                          justifyContent: "center",
-                        }}>
-                        <p className=" mt-3 ms-2">{document.name}</p>
-                      </div>
-                      <div
-                        style={{
-                          flex: 1,
-                          textAlign: "center",
-                          alignItems: "center",
-                          gap: "5px",
-                          justifyContent: "center",
-                        }}>
-                        <p className=" mt-3">
-                          {document.is_need_attachment ? (
-                            <>
-                              <IoDocumentAttachOutline
-                                style={{ color: "gray" }}
-                                size={24}
-                              />
-                            </>
-                          ) : (
-                            <></>
-                          )}
-                        </p>
-                      </div>
-                      <div
-                        style={{
-                          marginLeft: "35px",
+                          width: "100%",
+                          border: "1px solid #ccc",
+                          borderRadius: "5px",
+                          padding: "10px",
                           display: "flex",
                           alignItems: "center",
-                          gap: "15px",
+                          boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+                          margin: "5px 0px",
                         }}>
-                        <div
-                          className="document_update_button"
+                        <img
+                          src={Pdf}
                           style={{
-                            backgroundColor: "#008000",
-                            borderRadius: "5px",
-                            transition: "0.5s ease-in-out",
-                            boxShadow: "#008000",
-                            textAlign: "center",
-                          }}>
-                          <div style={{ padding: "6px 12px", color: "white" }}>
-                            {" "}
-                            Update{" "}
-                          </div>
-                        </div>
-
-                        <div
-                          className="document_preview_button"
-                          style={{
-                            backgroundColor: "#3232f4",
-                            borderRadius: "5px",
-                            transition: "0.5s ease-in-out",
-                            boxShadow: "#3232f4",
-                            textAlign: "center",
-                          }}>
-                          <a
-                            href={document.src}
-                            target="_blank"
-                            rel="noreferrer"
-                            style={{
-                              display: "block",
-                              color: "white",
-                              textDecoration: "none",
-                              padding: "6px 12px",
-                            }}>
-                            Preview
-                          </a>
-                        </div>
-
-                        <div
-                          className="document_delete_button"
-                          style={{
-                            backgroundColor: "#ff0000",
-                            borderRadius: "5px",
-                            transition: "0.5s ease-in-out",
-                            boxShadow: "#c23815",
-                            textAlign: "center",
+                            width: "60px",
+                            marginRight: "10px",
+                            fontSize: "40px",
                           }}
-                          onClick={() => handleDeleteClick(document.id)}>
-                          <div style={{ padding: "6px 12px", color: "white" }}>
-                            {" "}
-                            Delete{" "}
+                        />
+                        <div
+                          style={{
+                            flex: 1,
+
+                            alignItems: "center",
+
+                            justifyContent: "center",
+                          }}>
+                          <p className=" mt-3 ms-2">{document.name}</p>
+                        </div>
+                        <div
+                          style={{
+                            flex: 1,
+                            textAlign: "center",
+                            alignItems: "center",
+                            gap: "5px",
+                            justifyContent: "center",
+                          }}>
+                          <p className=" mt-3">
+                            {document.is_need_attachment ? (
+                              <>
+                                <IoDocumentAttachOutline
+                                  style={{ color: "gray" }}
+                                  size={24}
+                                />
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                          </p>
+                        </div>
+                        <div
+                          style={{
+                            marginLeft: "35px",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "15px",
+                          }}>
+                          <div
+                            onClick={() => {
+                              setUpdateShow(true);
+                              setUpdatingDocId(document.id);
+                            }}
+                            className="document_update_button"
+                            style={{
+                              backgroundColor: "#008000",
+                              borderRadius: "5px",
+                              transition: "0.5s ease-in-out",
+                              boxShadow: "#008000",
+                              textAlign: "center",
+                            }}>
+                            <div
+                              style={{ padding: "6px 12px", color: "white" }}>
+                              {" "}
+                              Update{" "}
+                            </div>
+                          </div>
+
+                          <div
+                            className="document_preview_button"
+                            style={{
+                              backgroundColor: "#3232f4",
+                              borderRadius: "5px",
+                              transition: "0.5s ease-in-out",
+                              boxShadow: "#3232f4",
+                              textAlign: "center",
+                            }}>
+                            <a
+                              href={document.src}
+                              target="_blank"
+                              rel="noreferrer"
+                              style={{
+                                display: "block",
+                                color: "white",
+                                textDecoration: "none",
+                                padding: "6px 12px",
+                              }}>
+                              Preview
+                            </a>
+                          </div>
+
+                          <div
+                            className="document_delete_button"
+                            style={{
+                              backgroundColor: "#ff0000",
+                              borderRadius: "5px",
+                              transition: "0.5s ease-in-out",
+                              boxShadow: "#c23815",
+                              textAlign: "center",
+                            }}
+                            onClick={() => handleDeleteClick(document.id)}>
+                            <div
+                              style={{ padding: "6px 12px", color: "white" }}>
+                              {" "}
+                              Delete{" "}
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -299,6 +317,19 @@ const UploadDocument = () => {
         handleClose={() => setUploadShowModal(false)}
         onUpload={handleDocumentUpload}
       />
+
+      {showUpdate && (
+        <>
+          {" "}
+          <UpdateDoc
+            show={showUpdate}
+            setShow={setUpdateShow}
+            handleClose={() => setUpdateShow(false)}
+            onUpload={handleUploadSuccess}
+            id={updatingDocId}
+          />
+        </>
+      )}
     </div>
   );
 };

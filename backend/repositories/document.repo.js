@@ -70,6 +70,15 @@ const documentRepo = {
         }
     },
 
+    getDocumentById: async (id) => {
+        try {
+            const result = await Document.findByPk(id)
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    },
+
 }
 
 export default documentRepo;

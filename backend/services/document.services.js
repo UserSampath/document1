@@ -62,6 +62,25 @@ const documentService = {
             throw error;
         }
     },
+    getDocumentById: async (id) => {
+        try {
+            const result = await documentRepo.getDocumentById(id);
+            if (result) {
+                return {
+                    success: true,
+                    result
+                }
+            } else {
+                return {
+                    success: false,
+                    message: "Document not found"
+                }
+            }
+
+        } catch (error) {
+            throw error;
+        }
+    },
 
 }
 export default documentService;

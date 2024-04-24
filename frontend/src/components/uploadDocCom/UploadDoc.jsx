@@ -62,7 +62,7 @@ const UploadDoc = ({ show, handleClose ,onUpload}) => {
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Upload Document</Modal.Title>
+        <Modal.Title>New Document</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
