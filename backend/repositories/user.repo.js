@@ -26,6 +26,32 @@ const userRepo = {
     }
   },
 
+  createUser: async (email, type) => {
+    try {
+
+      const data = await User.findOne({
+        where: {
+          email: email
+        }
+      });
+      if (data) {
+        return {
+          status: false,
+          message:"User already exists"
+        }
+      }
+      const result = await User.create({ id: uuidv4(), email, type });
+      return {
+        status: false,
+        message: "User already exists",
+        result
+      }
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  },
+
   updateUser: async (userId, firstName, lastName, phone, reference_no) => {
     try {
 

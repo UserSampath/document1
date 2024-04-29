@@ -132,7 +132,32 @@ const userDocumentController = {
 
             });
         }
-    }
+    },
+
+    createUserDocumentForExistingUser: async (req, res) => {
+        try {
+            const { documentIdList, userId } = req.body;
+
+            const result = await UserDocumentService.createUserDocumentForExistingUser(documentIdList, userId);
+            if (result.status) {
+                res.status(200).json({
+                    response_code: 200,
+                    result
+                });
+            } else {
+                res.status(400).json({
+                    response_code: 400,
+                    result
+                });
+            }
+        } catch (error) {
+            res.status(500).json({
+                response_code: 500,
+                status: false,
+                error: error.message
+            });
+        }
+    },
 }
 
 export default userDocumentController;

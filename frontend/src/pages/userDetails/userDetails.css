@@ -19,3 +19,13 @@
   background-color: #eeeff9b4 !important;
   border-radius: 6px;
 }
+
+
+.send-document-button{
+  transition: 100ms ease-in-out !important;
+}
+.send-document-button:hover {
+   transform: scale(1.01) ;
+   background-color: #454bf7 !important;
+
+}

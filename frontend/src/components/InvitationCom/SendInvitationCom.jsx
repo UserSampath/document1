@@ -78,18 +78,26 @@ const SendInvitationCom = ({ handleClose, show, setShow, updateInvitations }) =>
     <div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Send Request</Modal.Title>
+          <Modal.Title>Send Document</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)} />
+              <Form.Control
+                type="email"
+                placeholder="Enter email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </Form.Group>
 
             <Form.Group controlId="formEmployeeStatus">
               <Form.Label>Employee Status</Form.Label>
-              <Form.Control as="select" value={employeeStatus} onChange={(e) => setEmployeeStatus(e.target.value)}>
+              <Form.Control
+                as="select"
+                value={employeeStatus}
+                onChange={(e) => setEmployeeStatus(e.target.value)}>
                 <option value="">Select status</option>
                 <option value="employee">Employee</option>
                 <option value="nonEmployee">Non-Employee</option>
@@ -97,7 +105,8 @@ const SendInvitationCom = ({ handleClose, show, setShow, updateInvitations }) =>
             </Form.Group>
 
             <Form.Group controlId="formSelectedPDFs">
-              <Form.Label>Select Documents</Form.Label>
+              {documents.length>0 && <Form.Label>Select Documents</Form.Label>}
+
               {documents.map((doc, index) => (
                 <FormGroup key={index} controlId={`checkbox_${doc.id}`}>
                   <FormCheck

@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useParams } from "react-router-dom";
 import { GoDotFill } from "react-icons/go";
 import PdfViewCard from "../../components/pdfViewCard/PdfViewCard";
+import { IoIosSend } from "react-icons/io";
 
 const UserDetails = () => {
   const [sidebarOpen, setSidebarOpen] = useState(
@@ -194,6 +195,28 @@ const UserDetails = () => {
                 )}
               </div>
 
+              <div className=" d-flex justify-content-end  container me-5 align-items-center ">
+                <div
+                  style={{
+                    backgroundColor: "#3232f4",
+                    borderRadius: "5px",
+                    transition: "0.5s ease-in-out",
+                    boxShadow: "#3232f4",
+                    textAlign: "center",
+                    color: "white",
+                  }}
+                  className=" d-flex justify-content-center align-items-center p-2 send-document-button  ">
+                  {" "}
+                  <div>Send New Document</div>{" "}
+                  <IoIosSend
+                    style={{
+                      marginTop: "2px",
+                      fontSize: "20px",
+                      marginLeft: "4px",
+                    }}
+                  />
+                </div>
+              </div>
               {userData &&
                 userData.Documents &&
                 userData.Documents.filter(
@@ -205,7 +228,6 @@ const UserDetails = () => {
                     </div>
                   </div>
                 )}
-
               {userData &&
                 userData.Documents &&
                 userData.Documents.filter(
@@ -217,7 +239,6 @@ const UserDetails = () => {
                     </div>
                   );
                 })}
-
               {userData &&
                 userData.Documents &&
                 userData.Documents.filter(
@@ -229,7 +250,6 @@ const UserDetails = () => {
                     </div>
                   </div>
                 )}
-
               {userData &&
                 userData.Documents &&
                 userData.Documents.filter(
@@ -241,7 +261,6 @@ const UserDetails = () => {
                     </div>
                   );
                 })}
-
               {/* 
               <PdfViewCard />
               <PdfViewCard /> */}

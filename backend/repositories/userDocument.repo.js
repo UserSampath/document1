@@ -9,7 +9,10 @@ const userDocumentRepo = {
     createUserDocument: async (documentIdList, email, type) => {
         try {
             await sequelize.sync();
-            const userData = await userRepo.findOrCreateUser(email, type);
+            const userData = await userRepo.createUser(email, type);
+            if (userData.status === false) {
+                throw new Error(userData.message);
+            }
 
             const sentDocuments = [];
             const alreadySentDocuments = [];
@@ -141,7 +144,54 @@ const userDocumentRepo = {
         } catch (error) {
             throw error;
         }
-    }
+    },
+
+
+    createUserDocumentForExistingUser: async (documentIdList,userId) => {
+        try {
+            await sequelize.sync();
+            const user = await User.findByPk(userId);
+            if (!user) {
+                throw new Error("User not found")
+            }
+
+            const sentDocuments = [];
+            const alreadySentDocuments = [];
+
+            for (const documentId of documentIdList) {
+                const isExistingUserDocument = await UserDocument.findOne({
+                    where: {
+                        DocumentId: documentId,
+                        UserId: userId
+                    }
+                });
+
+                if (isExistingUserDocument) {
+                    const document = await Document.findByPk(documentId);
+                    alreadySentDocuments.push(document);
+                    continue;
+                }
+
+                const result = await UserDocument.create({ DocumentId: documentId, UserId: userId });
+                sentDocuments.push(result);
+            }
+
+            
+
+            if (sentDocuments.length > 0) {
+                const message = `You have ${sentDocuments.length} documents from COMPANY_NAME.
+                http://localhost:5173/userDocuments/${userId}
+                `
+                sendEmail(user.email, message)
+
+            }
+              
+            return { sentDocuments, alreadySentDocuments };
+        } catch (error) {
+            throw error;
+        }
+    },
+
 
 }
 

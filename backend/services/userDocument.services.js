@@ -50,6 +50,21 @@ const UserDocumentService = {
             throw error;
         }
     },
+    createUserDocumentForExistingUser: async (documentIdList, userId) => {
+
+        try {
+            const result = await userDocumentRepo.createUserDocumentForExistingUser(documentIdList, userId);
+            if (result) {
+                return { status: true, message: "User document created successfully", result }
+            } else {
+                return { status: false, message: "User document create failed!" }
+
+            }
+        } catch (error) {
+
+            throw error;
+        }
+    },
 
 }
 export default UserDocumentService;
