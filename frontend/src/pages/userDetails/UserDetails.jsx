@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 import { GoDotFill } from "react-icons/go";
 import PdfViewCard from "../../components/pdfViewCard/PdfViewCard";
 import { IoIosSend } from "react-icons/io";
+import SendDocumentForExistingUser from "../../components/sendDocumentForExistingUser/SendDocumentForExistingUser";
 
 const UserDetails = () => {
   const [sidebarOpen, setSidebarOpen] = useState(
@@ -17,6 +18,8 @@ const UserDetails = () => {
 
   const { userId } = useParams();
   const [userData, setUserData] = useState({});
+  const [showNewDocument, setShowNewDocument] = useState(false)
+  const [newDocuments, setNewDocuments] = useState({});
 
   useEffect(() => {
     const getUserData = async () => {
@@ -32,7 +35,12 @@ const UserDetails = () => {
     };
 
     getUserData();
-  }, [userId]);
+  }, [userId, newDocuments]);
+
+  const updateInvitations = (data) => {
+    setNewDocuments(data)
+    console.log(data);
+  }
 
   return (
     <div>
@@ -197,6 +205,7 @@ const UserDetails = () => {
 
               <div className=" d-flex justify-content-end  container me-5 align-items-center ">
                 <div
+                  onClick={() => setShowNewDocument(true)}
                   style={{
                     backgroundColor: "#3232f4",
                     borderRadius: "5px",
@@ -261,9 +270,14 @@ const UserDetails = () => {
                     </div>
                   );
                 })}
-              {/* 
-              <PdfViewCard />
-              <PdfViewCard /> */}
+
+              <SendDocumentForExistingUser
+                userData={userData}
+                show={showNewDocument}
+                setShow={setShowNewDocument}
+                handleClose={() => setShowNewDocument(false)}
+                updateInvitations={updateInvitations}
+              />
             </div>
           </div>
         </div>

@@ -5,11 +5,12 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-const SendInvitationCom = ({
+const SendDocumentForExistingUser = ({
   handleClose,
   show,
   setShow,
   updateInvitations,
+  userData,
 }) => {
   const [email, setEmail] = useState("");
   const [employeeStatus, setEmployeeStatus] = useState("");
@@ -20,61 +21,49 @@ const SendInvitationCom = ({
   useEffect(() => {
     async function fetchDocuments() {
       try {
-        if (employeeStatus) {
-          const response = await axios.get(
-            `${backendUrl}/document/getAllDocumentsWithFilter/${employeeStatus}`
-          );
-          console.log(response.data.result.result);
-          if (response.status === 200) {
-            setDocuments(response.data.result.result);
-          } else {
-            setError("Failed to fetch documents");
-          }
+        const response = await axios.get(
+          `${backendUrl}/document/getAllDocumentsWithFilter/${userData.type}`
+        );
+        console.log(response.data.result.result);
+        if (response.status === 200) {
+          setDocuments(response.data.result.result);
+        } else {
+          setError("Failed to fetch documents");
         }
       } catch (error) {
         setError("Failed to fetch documents");
       }
     }
 
-    fetchDocuments();
-  }, [employeeStatus]);
+    if (userData && Object.keys(userData).length !== 0) {
+      console.log(userData);
+      fetchDocuments();
+    }
+  }, [userData]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (!email || !employeeStatus) {
-        toast.error("Please fill in all fields");
-        return;
-      }
-      if (selectedPDFs.length == 0) {
-        toast.error("Select documents");
-        return;
-      }
-
-      const emailFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailFormat.test(email)) {
-        toast.error("Please enter a valid email address");
-        return;
-      }
-
-      const requestEmail = {
-        email: email,
-        type: employeeStatus,
-        documentIdList: selectedPDFs,
-      };
       const response = await axios.post(
-        `${backendUrl}/userDocument/createUserDocument`,
-        requestEmail
+        `${backendUrl}/userDocument/createUserDocumentForExistingUser`,
+        {
+          userId: userData.id,
+          documentIdList: selectedPDFs,
+        }
       );
-      if (response.status === 200) {
-        toast.success("Invitation sent successfully!");
+      if (response.data.result.status) {
+        console.log(response.data.result);
+        toast.success("Document sent successfully!");
+
+        if (response.data.result.result.alreadySentDocuments.length > 0) {
+        toast.warning(
+          `${response.data.result.result.alreadySentDocuments.length} document/s already sent to this user`
+        );
+          
+        }
         setShow(false);
-        setEmail("");
-        setEmployeeStatus("");
         setSelectedPDFs([]);
-        updateInvitations(response.data.result);
-      } else if (response.status === 500) {
-        console.log(response);
+        updateInvitations(response.data.result.result);
       }
     } catch (error) {
       console.error(error.response.data.error);
@@ -97,32 +86,10 @@ const SendInvitationCom = ({
     <div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Send Document</Modal.Title>
+          <Modal.Title>Send Documents</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Group controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="Enter email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="formEmployeeStatus">
-              <Form.Label>Employee Status</Form.Label>
-              <Form.Control
-                as="select"
-                value={employeeStatus}
-                onChange={(e) => setEmployeeStatus(e.target.value)}>
-                <option value="">Select status</option>
-                <option value="employee">Employee</option>
-                <option value="nonEmployee">Non-Employee</option>
-              </Form.Control>
-            </Form.Group>
-
             <Form.Group controlId="formSelectedPDFs">
               {documents.length > 0 && (
                 <Form.Label>Select Documents</Form.Label>
@@ -155,4 +122,4 @@ const SendInvitationCom = ({
   );
 };
 
-export default SendInvitationCom;
+export default SendDocumentForExistingUser;

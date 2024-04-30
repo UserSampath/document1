@@ -21,7 +21,7 @@ const userDocumentRepo = {
                 const isExistingUserDocument = await UserDocument.findOne({
                     where: {
                         DocumentId: documentId,
-                        UserId: userData.id
+                        UserId: userData.result.id
                     }
                 });
 
@@ -31,12 +31,12 @@ const userDocumentRepo = {
                     continue;
                 }
 
-                const result = await UserDocument.create({ DocumentId: documentId, UserId: userData.id });
+                const result = await UserDocument.create({ DocumentId: documentId, UserId: userData.result.id });
                 sentDocuments.push(result);
             }
 
             const message = `You have ${sentDocuments.length} documents from COMPANY_NAME.
-                http://localhost:5173/userDocuments/${userData.id}
+                http://localhost:5173/userDocuments/${userData.result.id}
                 `
 
 
@@ -115,7 +115,7 @@ const userDocumentRepo = {
     },
 
     getDocumentDataWithUser: async (DocumentId, UserId) => {
-      
+
         try {
 
             const userDocument = await UserDocument.findOne({
@@ -147,7 +147,7 @@ const userDocumentRepo = {
     },
 
 
-    createUserDocumentForExistingUser: async (documentIdList,userId) => {
+    createUserDocumentForExistingUser: async (documentIdList, userId) => {
         try {
             await sequelize.sync();
             const user = await User.findByPk(userId);
@@ -176,7 +176,7 @@ const userDocumentRepo = {
                 sentDocuments.push(result);
             }
 
-            
+
 
             if (sentDocuments.length > 0) {
                 const message = `You have ${sentDocuments.length} documents from COMPANY_NAME.
@@ -185,14 +185,12 @@ const userDocumentRepo = {
                 sendEmail(user.email, message)
 
             }
-              
+
             return { sentDocuments, alreadySentDocuments };
         } catch (error) {
             throw error;
         }
     },
-
-
 }
 
 export default userDocumentRepo;

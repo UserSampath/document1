@@ -17,7 +17,8 @@ const SendInvitation = () => {
     );
     const [searchText, setSearchText] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
-    const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [newUser,setNewUser]=useState({})
     // Dummy user data
 
 
@@ -27,14 +28,14 @@ const SendInvitation = () => {
     
       useEffect(() => {
         fetchDocData();
-      }, [searchText, currentPage]);
+      }, [searchText, currentPage, newUser]);
 
 
       const fetchDocData = async() =>{
         await axios
           .get(`${backendUrl}/user/getUsersByPageAndFilter`, {
             params: {
-              limit: 10,
+              limit: 9,
               page: currentPage,
               sortBy: "asc",
               keyword: searchText,
@@ -55,7 +56,7 @@ const SendInvitation = () => {
       
 
       const updateInvitations = (newInvitation) => {
-        setUsers([newInvitation, ...users]);
+       setNewUser(newInvitation)
       };
 
     return (
@@ -101,9 +102,9 @@ const SendInvitation = () => {
                   <div>
                     <Button
                       type={"1"}
-                      text="send Invitation"
+                      text="send document for new user"
                       onClick={() => setShow(true)}
-                      style={{ marginLeft: "10px" }} // Add margin between button and search bar
+                      style={{ marginLeft: "10px" }} 
                     />
                   </div>
                 </div>
@@ -169,7 +170,7 @@ const SendInvitation = () => {
           show={show}
           setShow={setShow}
           handleClose={() => setShow(false)}
-          updateInvitations={updateInvitations} // Pass the function to update invitations
+          updateInvitations={updateInvitations} 
         />
       </div>
     );

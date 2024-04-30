@@ -42,8 +42,8 @@ const userRepo = {
       }
       const result = await User.create({ id: uuidv4(), email, type });
       return {
-        status: false,
-        message: "User already exists",
+        status: true,
+        message: "User created successfully",
         result
       }
     } catch (error) {
