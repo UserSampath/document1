@@ -9,6 +9,9 @@ import Invites from '../../components/Invites/Invites';
 import axios from "axios";
 import Pagination from '../../components/pagination/Pagination';
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
+import { useAuth } from "../../utils/AuthContext";
+import { useNavigate } from 'react-router-dom';
+import Select from "react-dropdown-select";
 
 const SendInvitation = () => {
     const [show, setShow] = useState(false);
@@ -18,8 +21,27 @@ const SendInvitation = () => {
     const [searchText, setSearchText] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
   const [users, setUsers] = useState([]);
-  const [newUser,setNewUser]=useState({})
-    // Dummy user data
+  const [newUser, setNewUser] = useState({})
+  const [selectedUserType, setSelectedUserType] = useState([
+    {
+      id: 1,
+      name: "All Users",
+    },
+  ]);
+  const navigate = useNavigate();
+
+
+      const token = JSON.parse(localStorage.getItem("token"));
+      const { authUser } = useAuth();
+      useEffect(() => {
+        const authenticate = async () => {
+          const isUserValid = await authUser(token);
+          if (!isUserValid) {
+            navigate("/login", { replace: true });
+          }
+        };
+        authenticate();
+      }, [authUser, token]);
 
 
     useEffect(() => {
@@ -58,7 +80,27 @@ const SendInvitation = () => {
       const updateInvitations = (newInvitation) => {
        setNewUser(newInvitation)
       };
-
+ const options = [
+   {
+     id: 1,
+     name: "All Users",
+   },
+   {
+     id: 2,
+     name: "Non Employee",
+   },
+   {
+     id: 3,
+     name: "Employee",
+   },
+ ];
+  
+  const handleSelectUserType = (selectedOption) => {
+    setSelectedUserType([selectedOption]);
+    console.log(selectedOption)
+  };
+  
+  
     return (
       <div>
         <SideBar setSidebarOpen={setSidebarOpen} selectedNav="Send Invitation">
@@ -92,7 +134,28 @@ const SendInvitation = () => {
                 </div>
                 <div
                   className="d-flex "
-                  style={{ marginRight: "75px", gap: "25px" }}>
+                  style={{ marginRight: "75px", gap: "10px" }}>
+                  <div
+                    style={{
+                      width: "200px",
+                      backgroundColor: "white",
+                      height: "35px",
+                    }}>
+                    <Select
+                      options={options}
+                      labelField="name"
+                      valueField="id"
+                      values={selectedUserType}
+                      dropdownHandle={true}
+                      searchable={false}
+                      color="#9fa2f7"
+                      placeholder="User Type"
+                      onChange={(selectedOption) =>
+                        handleSelectUserType(selectedOption)
+                      }
+                    />
+                  </div>
+
                   <div>
                     <InSearchBar
                       setSearchText={setSearchText}
@@ -104,7 +167,7 @@ const SendInvitation = () => {
                       type={"1"}
                       text="send document for new user"
                       onClick={() => setShow(true)}
-                      style={{ marginLeft: "10px" }} 
+                      style={{ marginLeft: "10px" }}
                     />
                   </div>
                 </div>
@@ -170,7 +233,7 @@ const SendInvitation = () => {
           show={show}
           setShow={setShow}
           handleClose={() => setShow(false)}
-          updateInvitations={updateInvitations} 
+          updateInvitations={updateInvitations}
         />
       </div>
     );

@@ -27,7 +27,7 @@ const InSearchBar = (props) => {
         style={{ width: "142px", height: "35px" }}
         type="text"
         className="form-control border-0 shadow-none bg-transparent"
-        placeholder="Search Invites.."
+        placeholder="Search users.."
         aria-describedby="btnGroupAddon2"
         value={searchText}
         onChange={(e) => setSearchText(e.target.value)}

@@ -14,12 +14,9 @@ import UploadDoc from "../../components/uploadDocCom/UploadDoc";
 import { Modal } from "react-bootstrap";
 import { IoDocumentAttachOutline } from "react-icons/io5";
 import UpdateDoc from "../../components/updateDoc/UpdateDoc";
+import { useAuth } from "../../utils/AuthContext";
 const UploadDocument = () => {
   const navigate = useNavigate();
-
-  const pageNavi = () => {
-    navigate("/nonEmUploadDocument");
-  };
 
   const [sidebarOpen, setSidebarOpen] = useState(
     localStorage.getItem("sideBarOpen") === "true"
@@ -33,6 +30,18 @@ const UploadDocument = () => {
   const [selectedDocumentType, setSelectedDocumentType] = useState("employee"); //nonEmployee
 
 
+
+    const token = JSON.parse(localStorage.getItem("token"));
+    const { authUser } = useAuth();
+    useEffect(() => {
+      const authenticate = async () => {
+        const isUserValid = await authUser(token);
+        if (!isUserValid) {
+          navigate("/login", { replace: true });
+        }
+      };
+      authenticate();
+    }, [authUser, token]);
 
 
     const getAllDocuments = async () => {
