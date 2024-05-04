@@ -26,6 +26,7 @@ const SendInvitation = () => {
     {
       id: 1,
       name: "All Users",
+      value:""
     },
   ]);
   const navigate = useNavigate();
@@ -50,10 +51,10 @@ const SendInvitation = () => {
     
       useEffect(() => {
         fetchDocData();
-      }, [searchText, currentPage, newUser]);
+      }, [searchText, currentPage, newUser,selectedUserType]);
 
 
-      const fetchDocData = async() =>{
+  const fetchDocData = async () => {
         await axios
           .get(`${backendUrl}/user/getUsersByPageAndFilter`, {
             params: {
@@ -61,21 +62,20 @@ const SendInvitation = () => {
               page: currentPage,
               sortBy: "asc",
               keyword: searchText,
+              type:
+                selectedUserType[0].value 
             },
           })
           .then((res) => {
             if (res.data.success) {
               setUsers(res.data.users);
-              console.log(res.data.users)
+              console.log(res.data.users);
             }
           })
           .catch((err) => {
             console.log(err);
           });
       }
-
-
-      
 
       const updateInvitations = (newInvitation) => {
        setNewUser(newInvitation)
@@ -84,19 +84,22 @@ const SendInvitation = () => {
    {
      id: 1,
      name: "All Users",
+     value: "",
    },
    {
      id: 2,
      name: "Non Employee",
+     value: "nonEmployee",
    },
    {
      id: 3,
      name: "Employee",
+     value: "employee",
    },
  ];
   
   const handleSelectUserType = (selectedOption) => {
-    setSelectedUserType([selectedOption]);
+    setSelectedUserType(selectedOption);
     console.log(selectedOption)
   };
   

@@ -51,6 +51,9 @@ const userController = {
         try {
             const { page = 1, limit = 3, orderBy = 'email', sortBy = 'asc', keyword, type } = req.query;
 
+            console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",type);
+            
+
 
             const users = await userService.getUsersByPageAndFilter({
                 page: +page ? +page : 1,

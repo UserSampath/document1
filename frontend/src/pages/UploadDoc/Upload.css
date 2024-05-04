@@ -29,7 +29,6 @@
   cursor: pointer;
 }
 
-
 .selected-document-type{
   background: #3232f4;
   color: white;
@@ -48,12 +47,12 @@ margin-right: 10px;
 font-weight: bold;
 }
 
-
 .selected-document-type:hover{
   background: #3232f4;
-
+  scale: 1.01;
 }
 
 .non-selected-document-type:hover{
 background: #aeaef1;
+scale: 1.02;
 }
